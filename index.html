@@ -417,7 +417,7 @@ input,select,textarea{min-height:40px;padding:9px 11px}
 
 /* Study Planner layout repair */
 #study .subject-preparation-card{grid-column:1/-1;min-width:0}
-#study .study-work-row{display:grid;grid-template-columns:minmax(0,7fr) minmax(260px,3fr);gap:16px;align-items:stretch;margin-top:16px}
+#study .study-work-row{grid-column:1/-1;width:100%;min-width:0;display:grid;grid-template-columns:minmax(0,7fr) minmax(260px,3fr);gap:16px;align-items:stretch;margin-top:16px}
 #study .study-work-row>.study-session-card,#study .study-work-row>.study-log-card{grid-column:auto;min-width:0;height:100%}
 #study .study-session-card h2{margin-bottom:13px}
 #study .study-session-card .study-log-launch{min-height:88px}
