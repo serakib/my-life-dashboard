@@ -61,10 +61,47 @@ hr{border-color:#e8edf5!important}
 @media(max-width:900px){.app{padding:15px;gap:12px}.hero{padding:24px}.sidebar{display:none}.mobilebar{left:12px;right:12px;bottom:12px;border-radius:18px}.main{padding-bottom:82px}}
 @media(max-width:560px){.app{padding:12px}.hero{padding:21px;border-radius:19px}.card{padding:16px}.top{margin-bottom:15px}.mobilebar{overflow-x:auto}.mobilebar button{font-size:11px;padding:9px 10px}}
 
+
+/* Sidebar v2 — compact grouped student navigation */
+.app{grid-template-columns:236px minmax(0,1fr);gap:25px;max-width:1480px;padding:22px 26px}
+.sidebar{height:calc(100vh - 44px);top:22px;padding:17px 13px 14px;border-radius:21px;background:#fff;border:1px solid #e8ecf5;box-shadow:0 12px 34px #26365b0b;overflow-y:auto;scrollbar-width:thin}
+.brand{gap:11px;padding:4px 7px 17px;margin:0 0 12px;border-bottom:1px solid #edf0f6}
+.logo{width:39px;height:39px;flex:0 0 39px;border-radius:13px;color:#fff;font-size:19px;background:linear-gradient(140deg,#756be8,#47b9ae);box-shadow:0 5px 13px #756be82b}
+.brand b{font-size:14px;letter-spacing:1.1px;color:#283550}.brand small{display:block;margin-top:1px;font-size:9px;letter-spacing:1.15px;font-weight:800;color:#929db0}
+.side-caption{font-size:9px;letter-spacing:1.7px;font-weight:850;color:#a0aabd;padding:8px 10px 1px}
+.side-group{margin:2px 0 11px}.navlabel{font-size:9px;letter-spacing:1.35px;font-weight:850;color:#a0aabd;margin:11px 10px 5px}
+#sideNav{display:flex;flex-direction:column;gap:2px}
+#sideNav .side-link{position:relative;display:flex;align-items:center;gap:11px;width:100%;min-height:42px;padding:8px 10px;border:1px solid transparent;border-radius:11px;background:transparent;color:#68758d;text-align:left;font-size:12px;font-weight:650;transition:background .16s,color .16s,border-color .16s}
+#sideNav .side-icon{display:grid;place-items:center;width:27px;height:27px;flex:0 0 27px;border-radius:8px;background:#f3f5fa;color:#78859a;font-size:15px}
+#sideNav .side-link-label{flex:1}
+#sideNav .side-arrow{font-size:17px;color:#c0c8d5;opacity:0;transform:translateX(-3px);transition:.16s}
+#sideNav .side-link:hover{background:#f7f7ff;color:#574fc8}
+#sideNav .side-link:hover .side-icon{background:#eeedff;color:#6259d9}
+#sideNav .side-link.active{background:#f0efff;border-color:#e8e6ff;color:#5148c8;font-weight:750}
+#sideNav .side-link.active:before{content:"";position:absolute;left:-1px;top:9px;bottom:9px;width:3px;border-radius:0 4px 4px 0;background:#675ee0}
+#sideNav .side-link.active .side-icon{background:#dedcff;color:#5148c8}
+#sideNav .side-link.active .side-arrow{opacity:1;transform:none;color:#7068dc}
+.sidefoot{margin-top:auto;padding:13px 10px 3px;border-top:1px solid #edf0f6;color:#64718a}
+.sidefoot>b{display:block;color:#4e5870!important;font-size:12px;margin:3px 0}
+.sidefoot .small{font-size:10px;line-height:1.55;color:#8793a8}
+.side-tip-icon{display:grid;place-items:center;width:27px;height:27px;border-radius:9px;background:#f0efff;color:#6259d9;font-size:16px;margin-bottom:7px}
+.side-local{display:flex;align-items:center;gap:6px;margin-top:11px;padding-top:9px;border-top:1px solid #f0f2f7;font-size:9px;color:#98a3b5}
+.local-dot{width:6px;height:6px;border-radius:50%;background:#36ad8b}
+.dark .sidebar{background:#18243a;border-color:#2d3b54}
+.dark .brand{border-color:#2d3b54}.dark .brand b{color:#edf2ff}
+.dark .brand small,.dark .side-caption,.dark .navlabel{color:#8d9bb2}
+.dark #sideNav .side-link{color:#a6b3c9}.dark #sideNav .side-link:hover{background:#24334d;color:#fff}
+.dark #sideNav .side-link.active{background:#302e59;border-color:#48447b;color:#e2dfff}
+.dark #sideNav .side-icon{background:#22314a;color:#a6b3c9}.dark #sideNav .side-link.active .side-icon{background:#48447b;color:#fff}
+.dark .sidefoot{border-color:#2d3b54;color:#dce5f5}.dark .sidefoot>b{color:#edf2ff!important}.dark .sidefoot .small,.dark .side-local{color:#a3b0c6}.dark .side-tip-icon{background:#302e59;color:#d7d3ff}.dark .side-local{border-color:#2d3b54}
+.mobilebar button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-width:64px;font-size:15px}
+.mobilebar button span{font-size:9px}
+@media(max-width:900px){.app{grid-template-columns:minmax(0,1fr);padding:15px;gap:12px}.sidebar{display:none}}
+@media(max-width:560px){.app{padding:12px}.mobilebar{justify-content:flex-start}.mobilebar button{min-width:62px}}
+
 </style></head>
 <body><div class="app">
-<aside class="sidebar"><div class="brand"><div class="logo">M</div><div><b>MY LIFE</b><small>Personal Life OS</small></div></div>
-<div class="navlabel">YOUR SPACE</div><nav id="sideNav"></nav><div class="sidefoot"><div class="small">একদিনে পুরো জীবন বদলাতে হবে না।</div><b style="color:var(--accent)">আজকের পরের সঠিক পদক্ষেপ।</b><div class="small" style="margin-top:10px">Local-first · Your data stays in this browser</div></div></aside>
+<aside class="sidebar"><div class="brand"><div class="logo">✦</div><div><b>MY LIFE</b><small>STUDENT DASHBOARD</small></div></div><div class="side-caption">WORKSPACE</div><nav id="sideNav"></nav><div class="sidefoot"><div class="side-tip-icon">✧</div><b>একদিনে সব নয়।</b><div class="small">আজকের ছোট পদক্ষেপই আগামী দিনের অগ্রগতি।</div><div class="side-local"><span class="local-dot"></span> ব্যক্তিগত · এই browser-এ সংরক্ষিত</div></div></aside>
 <main class="main"><div class="top"><div><div class="date" id="dateNow"></div><div class="small" id="greeting">স্বাগতম</div></div><div class="row"><button class="ghost" id="themeBtn" title="Theme">☼ Theme</button><button class="ghost" id="backupBtn">↓ Backup</button></div></div>
 <section class="view active" id="home"><div class="hero"><span class="pill">PRESENT · PURPOSE · PROGRESS</span><h1 id="hello">আজ তোমার জীবনের একটি নতুন দিন।</h1><p>তোমার প্রধান লক্ষ্য—জ্ঞান, চরিত্র, ঈমান ও সুস্থতার যত্ন নিয়ে একজন দক্ষ ও মানবিক ডাক্তার হওয়ার পথে এগিয়ে যাওয়া।</p></div>
 <div class="grid"><div class="card span3 stat">আজকের কাজ<strong id="homeTaskStat">0 / 0</strong><div class="bar"><i id="homeTaskBar"></i></div></div><div class="card span3 stat">আজকের পড়া<strong id="homeStudyStat">0 min</strong><span class="small">Study log থেকে</span></div><div class="card span3 stat">আজকের Website time<strong id="homeScreenStat">0 min</strong><span class="small">এই Dashboard-এ</span></div><div class="card span3 stat">সাপ্তাহিক পড়া<strong id="homeWeekStat">0h</strong><span class="small">Logged sessions</span></div>
@@ -87,7 +124,7 @@ let data;try{data={...defaults(),...JSON.parse(localStorage.getItem(KEY)||'{}')}
 if(!localStorage.getItem('myLifeVisualRefreshV1')){data.theme='light';localStorage.setItem(KEY,JSON.stringify(data));localStorage.setItem('myLifeVisualRefreshV1','1')}
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(data));render()}catch(e){toast('Storage পূর্ণ—Backup নিয়ে কিছু পুরোনো log মুছুন।')}},toast=t=>{const el=$('toast');el.textContent=t;el.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>el.style.display='none',2200)},esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])),tasks=()=>data.tasks[today()]||(data.tasks[today()]=[]),fmt=n=>Math.round(n)+' min',sumLogs=arr=>arr.reduce((a,x)=>a+(+x.mins||0),0);
 function go(id){document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===id));document.querySelectorAll('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===id));if(id==='progress')renderProgress();if(id==='screen')renderScreen();window.scrollTo({top:0,behavior:'smooth'})}
-function initNav(){const make=()=>nav.map(([id,ic,label])=>'<button data-view="'+id+'">'+ic+' &nbsp;'+label+'</button>').join('');$('sideNav').innerHTML=make();$('mobileNav').innerHTML=make();document.addEventListener('click',e=>{const b=e.target.closest('[data-view],[data-go]');if(b)go(b.dataset.view||b.dataset.go)})}
+function initNav(){const groups=[{title:'DASHBOARD',ids:['home']},{title:'STUDY SPACE',ids:['routine','tasks','study','progress']},{title:'PERSONAL GROWTH',ids:['screen','learn','guide']},{title:'PREFERENCES',ids:['settings']}];const item=([id,ic,label])=>'<button class="side-link" data-view="'+id+'"><span class="side-icon">'+ic+'</span><span class="side-link-label">'+label+'</span><span class="side-arrow">›</span></button>';const byId=id=>nav.find(x=>x[0]===id);$('sideNav').innerHTML=groups.map(g=>'<div class="side-group"><div class="navlabel">'+g.title+'</div>'+g.ids.map(id=>item(byId(id))).join('')+'</div>').join('');$('mobileNav').innerHTML=nav.map(([id,ic,label])=>'<button data-view="'+id+'">'+ic+'<span>'+label+'</span></button>').join('');document.addEventListener('click',e=>{const b=e.target.closest('[data-view],[data-go]');if(b)go(b.dataset.view||b.dataset.go)})}
 function renderTasks(){const a=tasks(),done=a.filter(x=>x.done).length,p=a.length?done/a.length*100:0;$('homeTaskStat').textContent=done+' / '+a.length;$('homeTaskBar').style.width=p+'%';$('taskBar').style.width=p+'%';$('taskPercent').textContent=Math.round(p)+'% সম্পন্ন';const row=x=>'<div class="item '+(x.done?'done':'')+'"><input class="check" type="checkbox" '+(x.done?'checked':'')+' data-taskcheck="'+x.id+'"><div class="grow"><div class="itemtitle">'+esc(x.title)+'</div><div class="itemmeta">'+esc(x.cat)+' · '+esc(x.priority||'Normal')+'</div></div><div class="actions"><button data-edit-task="'+x.id+'">Edit</button><button class="danger" data-del-task="'+x.id+'">×</button></div></div>';$('taskList').innerHTML=a.length?a.map(row).join(''):'<div class="empty">আজকের কাজ যোগ করে শুরু করো।</div>';$('homeTasks').innerHTML=a.slice(0,4).map(row).join('')||'<div class="empty">আজকের জন্য এখনো কাজ যোগ করোনি।</div>'}
 function renderRoutine(){const a=[...data.routine].sort((x,y)=>x.time.localeCompare(y.time));const row=x=>'<div class="item"><b class="routine-time">'+esc(x.time)+'</b><div class="grow"><div class="itemtitle">'+esc(x.title)+'</div><div class="itemmeta">'+esc(x.category)+' '+(x.detail?'· '+esc(x.detail):'')+'</div></div><div class="actions"><button data-edit-r="'+x.id+'">Edit</button><button class="danger" data-del-r="'+x.id+'">×</button></div></div>';$('routineList').innerHTML=a.length?a.map(row).join(''):'<div class="empty">তোমার সময় অনুযায়ী প্রথম routine item যোগ করো।</div>';$('homeRoutine').innerHTML=a.slice(0,5).map(row).join('')||'<div class="empty">রুটিন সেট করো।</div>';$('routineCount').textContent=a.length+' items'}
 function renderStudy(){ $('subjects').innerHTML=data.subjects.map(s=>'<div style="margin:12px 0"><div class="row between"><b>'+esc(s.name)+'</b><span class="small">'+s.progress+'%</span></div><input aria-label="'+esc(s.name)+' progress" type="range" min="0" max="100" value="'+s.progress+'" data-subject="'+esc(s.name)+'" style="padding:0;accent-color:var(--accent)"></div>').join('');$('studyLogs').innerHTML=data.logs.filter(x=>x.date===today()).slice().reverse().map(x=>'<div class="item"><div class="grow"><b>'+esc(x.subject)+'</b><div class="itemmeta">'+esc(x.note||'Study session')+'</div></div><b>'+x.mins+'m</b><button class="danger" data-del-log="'+x.id+'">×</button></div>').join('')||'<div class="empty">আজকের Study Session এখনো log হয়নি।</div>'}
