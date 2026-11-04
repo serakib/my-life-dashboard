@@ -103,10 +103,10 @@ hr{border-color:#e8edf5!important}
 /* Fullscreen focus timer */
 .focus-fullscreen{position:fixed;inset:0;z-index:1000;background:radial-gradient(ellipse at 50% 35%,#24235a 0%,#11152e 48%,#0b1020 100%);color:#f8f8ff;display:grid;place-items:center;padding:24px;overflow:auto}
 .focus-shell{width:min(900px,100%);min-height:min(760px,calc(100dvh - 48px));display:flex;flex-direction:column;justify-content:space-between}
-.focus-top,.focus-bottom{display:none}
+.focus-top{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:52px}.focus-bottom{display:none}
 .focus-eyebrow{display:none}
 .focus-mode{font-size:14px;letter-spacing:2px;font-weight:800;color:#a9a5ff;margin-top:8px}
-.focus-close{width:44px;height:44px;border-radius:50%;border:1px solid #ffffff30;background:#ffffff12;color:#fff;font-size:20px}
+.focus-close{display:grid;place-items:center;flex:0 0 44px;width:44px;height:44px;border-radius:50%;border:1px solid #ffffff55;background:#ffffff20;color:#fff;font-size:20px;cursor:pointer;position:relative;z-index:2;transition:background .18s,border-color .18s}.focus-close:hover{background:#ffffff35;border-color:#ffffff90}
 .focus-center{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:35px 0}
 .focus-ring{width:min(62vw,390px);height:min(62vw,390px);min-width:240px;min-height:240px;border-radius:50%;border:1px solid #aaa4ff55;box-shadow:0 0 0 13px #aaa4ff0b,0 0 75px #756be833,inset 0 0 55px #756be81c;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(circle,#28264f 0%,#191b39 68%,#14172f 100%)}
 .focus-time{font-size:clamp(58px,12vw,104px);font-weight:750;letter-spacing:-4px;font-variant-numeric:tabular-nums;line-height:1.1}
