@@ -1,62 +1,46 @@
-# My Life Dashboard
+# My Life — Personal Dashboard
 
-A Bengali, local-first Personal Life Management website for daily routines, HSC Science study planning, Medical Admission preparation, checklists, progress reviews, learning notes, faith, wellbeing and intentional screen-time tracking.
+A responsive, Bangla-first personal life management dashboard focused on HSC study, medical-career preparation, faith, health, routines and sustainable progress.
 
 ## Features
+- Responsive desktop and mobile navigation
+- Editable daily routine with time, category and detail
+- Daily checklist with priorities, completion, edit, delete and carry-over
+- HSC subject study logs and editable subject progress
+- Focus / break timer
+- Progress summaries, seven-day study chart and weekly reflection
+- Dashboard active-time tracker and manual app-time entries
+- Daily learning cards and saved notes
+- Daily life revision guide and practical problem-solving steps
+- Dark/light theme
+- JSON backup and restore
 
-- Responsive Bengali dashboard for Windows laptop, tablet and mobile.
-- Editable daily timetable and daily checklist.
-- Study planner for Biology, Chemistry, Physics, Higher Mathematics, English and ICT.
-- Focus timer and manual study-session log.
-- Seven-day task and study-progress charts.
-- Website active-time tracker, plus manual entries for other Windows applications.
-- Daily micro-lessons and a topic-based Life Guide with a two-minute daily revision.
-- Daily reflection and weekly review.
-- JSON export/import backup.
-- Browser Local Storage persistence and a service worker for offline caching on HTTPS/localhost.
-- No account, analytics, external API or backend required.
+## Live site
+https://serakib.github.io/my-life-dashboard/
 
-## Run on Windows
+## Run locally
+Open index.html in a modern browser. No build tools or dependencies are required.
 
-1. Download this repository as a ZIP, or clone it.
-2. Open the project folder.
-3. Double-click `index.html` to preview the app in Chrome or Edge.
-4. Your routine, checklist, study and notes are saved in that browser's Local Storage.
-
-The core app works when opened directly. Installable offline caching requires a secure origin such as GitHub Pages (`https://...`) or `localhost`.
-
-## Publish with GitHub Pages
-
-1. Open this repository on GitHub.
-2. Go to **Settings → Pages**.
-3. Under **Build and deployment**, choose **Deploy from a branch**.
-4. Select branch **main** and folder **/(root)**, then save.
-5. Open the Pages URL shown by GitHub after deployment completes.
-
-No build command, Node.js, database, API key or paid hosting is required.
+## Deploy with GitHub Pages
+1. Open repository Settings → Pages.
+2. Select Deploy from a branch.
+3. Choose main and /(root), then Save.
+4. Wait for deployment and open the Pages URL.
 
 ## First-time setup
+1. Edit the sample timetable to match your real college schedule, prayer times, commute and sleep.
+2. Set your name and weekly study goal in Settings.
+3. Add three realistic priorities to the Daily Checklist.
+4. Log real study sessions and update subject progress.
+5. Read the Daily Life Revision section regularly.
+6. Download JSON backups often.
 
-1. Open **আমার রুটিন** and change the sample times to match your actual college schedule, local prayer times, commute and sleep needs.
-2. Open **সেটিংস ও Backup** and set your wake/sleep targets and weekly study goal.
-3. Open **আজকের Checklist** and personalize the starter tasks.
-4. In **Study Planner**, adjust each subject's progress and add real study sessions.
-5. Use **Screen Time** for this website's active tab time. Add other app usage manually if you want an approximate overall picture.
-6. Read **Life Guide → দৈনিক Life Revision** each morning or evening.
-7. Download a JSON backup regularly.
+## Data and limitations
+- Data is stored locally in the current browser using Local Storage. There is no account or cloud sync.
+- Download JSON backups before clearing browser data or changing devices.
+- Automatic screen-time tracking measures only this dashboard while its tab is visible and the browser window is focused. It cannot read usage of other Windows applications; add those manually.
+- Study totals are based on sessions you record. Subject completion percentages are manually maintained estimates.
+- This version does not include a service worker or guaranteed offline caching. Open it from GitHub Pages while online, or directly from the downloaded index.html for a basic local preview.
+- This dashboard is a planning tool, not a substitute for medical, mental-health, academic or religious professional advice.
 
-## Screen-time limitation
-
-A normal website cannot read the total usage time of other Windows applications. This app measures time while its own tab is visible and the browser window is focused. Usage of other apps must be entered manually. This is a browser security limitation, not a missing permission in the app.
-
-## Data and privacy
-
-- Routine, checklist, study logs, reflections and screen-time records are stored in this browser's Local Storage.
-- The app does not automatically upload personal data to GitHub or any server.
-- Different browsers and devices do not sync automatically.
-- Clearing browser site data may erase saved information. Use **Settings → Backup & Restore** regularly.
-- Keep a separate backup of important personal or academic records.
-
-## A supportive tool, not a score of your worth
-
-A missed task does not make the day a failure. Adjust the routine to real life, rest when needed and restart with the next useful step.
+See START-HERE-BANGLA.txt, LIFE-GUIDE.txt and DAILY-QUICK-REVISION.txt for Bangla instructions.
