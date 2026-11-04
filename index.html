@@ -206,6 +206,7 @@ $('studyForm').onsubmit=e=>{e.preventDefault();data.logs.push({id:uid(),date:tod
 $('manualForm').onsubmit=e=>{e.preventDefault();data.manual.push({id:uid(),name:$('appName').value.trim(),mins:+$('appMins').value,date:today()});e.target.reset();save();toast('সময় যোগ হয়েছে')};
 $('saveScreenGoal').onclick=()=>{data.settings.screenGoal=Math.max(15,Math.min(1440,+$('screenGoal').value||120));save();toast('লক্ষ্য সংরক্ষিত')};
 $('settingsForm').onsubmit=e=>{e.preventDefault();data.settings.name=$('displayName').value.trim();data.settings.goal=Math.max(1,Math.min(80,+$('weeklyGoal').value||25));data.settings.studyYear=$('studyYear').value;activeSubjectKey=null;save();toast('Settings সংরক্ষিত')};
+$('studyYear').onchange=()=>{data.settings.studyYear=$('studyYear').value;activeSubjectKey=null;save();toast('Syllabus year পরিবর্তন হয়েছে')};
 $('saveReview').onclick=()=>{data.reviews[weekKey()]={good:$('reviewGood').value,improve:$('reviewImprove').value,goal:$('reviewGoal').value};save();toast('Weekly review সংরক্ষিত')};
 $('backupData').onclick=backup;
 $('restoreFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const x=JSON.parse(await f.text());if(!x||typeof x!=='object'||!x.settings)throw Error();if(!confirm('বর্তমান data backup দিয়ে replace হবে। চালিয়ে যাবে?'))return;data={...defaults(),...x};save();toast('Backup restore হয়েছে')}catch{toast('সঠিক My Life JSON backup নির্বাচন করো')}e.target.value=''};
