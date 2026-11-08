@@ -375,8 +375,8 @@ button:active{transform:none}
   <p class="sub" id="editModeLabel"></p>
   <p class="sub">প্রতিটি কাজের শুরুর ও শেষের সময় সেট করো। যেমন: ফজর — সকাল ৫:০০ থেকে ৫:৩০।</p>
   <div class="editor-list" id="routineEditor"></div>
+  <div id="overlapWarning" class="warning hidden" aria-live="polite"></div>
   <div class="actions"><button class="primary" id="addRoutineBtn">+ নিয়মিত কাজ যোগ</button><button id="saveRoutineBtn">পরিবর্তন সংরক্ষণ</button></div>
-  <div id="overlapWarning" class="warning hidden"></div>
   <p class="hint">শুরুর ও শেষের সময় আলাদাভাবে সেট করতে পারবে। সময় না দিলেও সমস্যা নেই।</p>
 </section>
 <section id="historyView" class="panel hidden">
@@ -590,12 +590,17 @@ function readRoutineEditor(){
   if(time&&endTime&&parseMinutes(endTime)<=parseMinutes(time))issues.push((title||"একটি কাজ")+"-এর শেষের সময় শুরুর সময়ের পরে হতে হবে।");
   updated.push({id:row.dataset.id,title:title,time:time,endTime:endTime});
  });
- var scheduled=updated.filter(function(t){return t.time&&t.endTime&&parseMinutes(t.endTime)>parseMinutes(t.time)}).map(function(t){return {title:t.title,start:parseMinutes(t.time),end:parseMinutes(t.endTime)}});
+ var scheduled=updated.filter(function(t){return !!t.time}).map(function(t){
+  return {title:t.title,start:parseMinutes(t.time),end:t.endTime&&parseMinutes(t.endTime)>parseMinutes(t.time)?parseMinutes(t.endTime):null};
+ });
  var overlaps=[];
  for(var i=0;i<scheduled.length;i++)for(var j=i+1;j<scheduled.length;j++){
-  if(scheduled[i].start<scheduled[j].end&&scheduled[j].start<scheduled[i].end){
-   overlaps.push("“"+scheduled[i].title+"” ও “"+scheduled[j].title+"”");
-  }
+  var a=scheduled[i],b=scheduled[j],conflict=false;
+  if(a.end!==null&&b.end!==null)conflict=a.start<b.end&&b.start<a.end;
+  else if(a.end!==null)conflict=b.start>=a.start&&b.start<a.end;
+  else if(b.end!==null)conflict=a.start>=b.start&&a.start<b.end;
+  else conflict=a.start===b.start;
+  if(conflict)overlaps.push("“"+a.title+"” ও “"+b.title+"”");
  }
  if(overlaps.length)issues.push("সময় overlap হচ্ছে: "+overlaps.join("; ")+"। একটি কাজের সময় পরিবর্তন করো।");
  return {updated:updated,issues:Array.from(new Set(issues))};
