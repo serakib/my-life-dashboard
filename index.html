@@ -362,6 +362,9 @@ button:active{transform:none}
 .save-status{position:fixed;left:50%;bottom:max(18px,env(safe-area-inset-bottom));z-index:1100;display:flex;align-items:center;gap:9px;max-width:calc(100vw - 28px);padding:10px 15px;border:1px solid #dce8df;border-radius:999px;background:#fff;color:#294b3d;box-shadow:0 8px 28px rgba(28,55,40,.14);font-size:13px;font-weight:700;white-space:nowrap;opacity:0;visibility:hidden;transform:translate(-50%,12px);pointer-events:none;transition:opacity .2s ease,transform .2s ease,visibility .2s ease}
 .save-status.is-visible{opacity:1;visibility:visible;transform:translate(-50%,0)}
 .save-status.is-saving{background:#f8fbf9;border-color:#d8e8df}
+button.save-button-saving{opacity:.78;cursor:wait;border-color:#9bbdad}
+button.save-button-saved{border-color:#a8cfb7;color:#286247;background:#edf7f0}
+button.save-button-error{border-color:#e5b8aa;color:#934b3d;background:#fff6f3}
 .save-status.is-saved{background:#edf7f0;border-color:#d4e8da;color:#286247}
 .save-status.is-error{background:#fff6f3;border-color:#f0d4cb;color:#934b3d;white-space:normal;text-align:center}
 .save-spinner{width:15px;height:15px;flex:0 0 15px;border:2px solid #d5e7dc;border-top-color:#28755c;border-radius:50%;animation:saveSpin .75s linear infinite}
@@ -672,7 +675,21 @@ function loadStore(){
  }catch(e){}
  var profiles=defaults;return {version:1,routine:clone(profiles.college),profiles:profiles,activeProfile:"college",days:{},exam:null};
 }
-var saveStatusToken=0,saveStatusTimer=null,saveStatusHideTimer=null;
+var saveStatusToken=0,saveStatusTimer=null,saveStatusHideTimer=null,saveStatusButton=null,saveStatusButtonLabel="";
+function resetSaveButton(){
+ if(!saveStatusButton)return;
+ saveStatusButton.disabled=false;
+ saveStatusButton.classList.remove("save-button-saving","save-button-saved","save-button-error");
+ saveStatusButton.textContent=saveStatusButtonLabel;
+ saveStatusButton=null;saveStatusButtonLabel="";
+}
+function updateSaveButton(state){
+ if(!saveStatusButton)return;
+ saveStatusButton.classList.remove("save-button-saving","save-button-saved","save-button-error");
+ saveStatusButton.classList.add("save-button-"+state);
+ saveStatusButton.disabled=state==="saving";
+ saveStatusButton.textContent=state==="saving"?"Saving...":state==="saved"?"Saved ✓":"Save failed";
+}
 function paintSaveStatus(state){
  var node=document.getElementById("saveStatus");if(!node)return;
  node.innerHTML="";node.className="save-status is-visible is-"+state;
@@ -681,7 +698,7 @@ function paintSaveStatus(state){
  if(state==="error")mark.textContent="!";
  node.appendChild(mark);
  var label=document.createElement("span");
- label.textContent=state==="saving"?"সংরক্ষণ হচ্ছে":state==="saved"?"সংরক্ষণ সম্পন্ন":"সংরক্ষণ করা যায়নি — আবার চেষ্টা করো";
+ label.textContent=state==="saving"?"Saving...":state==="saved"?"Saved":"Couldn’t save — try again";
  node.appendChild(label);
  if(state==="saving"){
   var dots=document.createElement("span");dots.className="save-dots";
@@ -689,7 +706,12 @@ function paintSaveStatus(state){
   node.appendChild(dots);
  }
 }
-function save(){
+function save(trigger){
+ resetSaveButton();
+ if(trigger&&trigger.tagName==="BUTTON"){
+  saveStatusButton=trigger;saveStatusButtonLabel=trigger.textContent;
+  updateSaveButton("saving");
+ }
  store.profiles=store.profiles||{};store.profiles[store.activeProfile]=store.routine;
  if(typeof store.exam==="undefined")store.exam=null;
  var token=++saveStatusToken;
@@ -699,17 +721,17 @@ function save(){
  try{
   localStorage.setItem(STORAGE_KEY,JSON.stringify(store));
  }catch(error){
-  paintSaveStatus("error");
-  saveStatusHideTimer=setTimeout(function(){if(token===saveStatusToken){var node=document.getElementById("saveStatus");if(node)node.classList.remove("is-visible")}},2600);
+  paintSaveStatus("error");updateSaveButton("error");
+  saveStatusHideTimer=setTimeout(function(){if(token===saveStatusToken){var node=document.getElementById("saveStatus");if(node)node.classList.remove("is-visible");resetSaveButton()}},2600);
   console.error("Routine data could not be saved.",error);
   return false;
  }
  // LocalStorage writes are synchronous; keep the Bengali saving cue visible briefly.
  saveStatusTimer=setTimeout(function(){
   if(token!==saveStatusToken)return;
-  paintSaveStatus("saved");
+  paintSaveStatus("saved");updateSaveButton("saved");
   saveStatusHideTimer=setTimeout(function(){
-   if(token===saveStatusToken){var node=document.getElementById("saveStatus");if(node)node.classList.remove("is-visible")}
+   if(token===saveStatusToken){var node=document.getElementById("saveStatus");if(node)node.classList.remove("is-visible");resetSaveButton()}
   },1500);
  },420);
  return true;
@@ -719,13 +741,13 @@ function ensureToday(){
  if(!store.days[todayKey].profile)store.days[todayKey].profile=store.activeProfile;
  store.activeProfile=store.days[todayKey].profile;store.routine=store.profiles[store.activeProfile]||store.profiles.college;
 }
-function setProfile(profile){
+function setProfile(profile,trigger){
  if(!PROFILE_LABELS[profile])return;
  store.activeProfile=profile;store.routine=store.profiles[profile];
  var day=store.days[todayKey],old={};day.tasks.forEach(function(t){old[t.id]=t});
  var extras=day.tasks.filter(function(t){return t.extra});
  day.tasks=store.routine.map(function(t){var prev=old[t.id];return {id:t.id,title:t.title,time:t.time||"",endTime:t.endTime||"",done:prev?!!prev.done:false,extra:false}}).concat(extras);
- day.profile=profile;save();renderToday();renderEditor();
+ day.profile=profile;save(trigger);renderToday();renderEditor();
 }
 function bn(n){return new Intl.NumberFormat("bn-BD").format(n)}
 function displayDate(key){var d=new Date(key+"T12:00:00");return new Intl.DateTimeFormat("bn-BD",{weekday:"long",day:"numeric",month:"long",year:"numeric"}).format(d)}
@@ -751,7 +773,7 @@ function renderToday(){
   var row=document.createElement("label");row.className="task"+(task.done?" done":"");row.draggable=false;row.dataset.id=task.id;
   var grip=document.createElement("span");grip.className="drag-handle";grip.textContent="⠿";grip.title="ধরে টেনে যেখানে রাখতে চাও, সেখানে ছেড়ে দাও";
   var check=document.createElement("input");check.type="checkbox";check.checked=!!task.done;check.setAttribute("aria-label",task.title);
-  check.addEventListener("change",function(){task.done=check.checked;save();renderToday()});
+  check.addEventListener("change",function(){task.done=check.checked;save(check);renderToday()});
   var name=document.createElement("span");name.className="task-name";name.textContent=task.title;
   if(task.extra){var tag=document.createElement("small");tag.className="task-extra";tag.textContent="আজকের অতিরিক্ত";name.appendChild(tag)}
   var meta=document.createElement("div");meta.className="task-meta";
@@ -774,7 +796,7 @@ function renderEditor(){
   var endTimeInput=document.createElement("input");endTimeInput.type="time";endTimeInput.value=task.endTime||"";endTimeInput.className="edit-end-time";endTime.appendChild(endTimeInput);
   timeInput.addEventListener("input",validateRoutineTimes);timeInput.addEventListener("change",validateRoutineTimes);endTimeInput.addEventListener("input",validateRoutineTimes);endTimeInput.addEventListener("change",validateRoutineTimes);
   var del=document.createElement("button");del.className="icon-btn danger";del.type="button";del.textContent="×";del.title="কাজ বাদ দাও";
-  del.addEventListener("click",function(){if(!confirm("এই নিয়মিত কাজটি বাদ দিতে চাও?"))return;store.routine=store.routine.filter(function(t){return t.id!==task.id});syncTodayFromRoutine();save();render()});
+  del.addEventListener("click",function(){if(!confirm("এই নিয়মিত কাজটি বাদ দিতে চাও?"))return;store.routine=store.routine.filter(function(t){return t.id!==task.id});syncTodayFromRoutine();save(del);render()});
   row.appendChild(grip);row.appendChild(name);row.appendChild(time);row.appendChild(endTime);row.appendChild(del);root.appendChild(row);
  });
  validateRoutineTimes();
@@ -798,7 +820,7 @@ function switchTab(tab){
 }
 document.querySelectorAll(".tabs button").forEach(function(b){b.addEventListener("click",function(){switchTab(b.dataset.tab)})});
 document.getElementById("dayMode").value=store.activeProfile;
-document.getElementById("dayMode").addEventListener("change",function(){setProfile(this.value)});
+document.getElementById("dayMode").addEventListener("change",function(){setProfile(this.value,this)});
 function addCalendarMonths(date,amount){
  var result=new Date(date.getTime()),day=result.getDate();
  result.setDate(1);result.setMonth(result.getMonth()+amount);
@@ -882,13 +904,13 @@ document.getElementById("saveExamBtn").addEventListener("click",function(){
  if(timestamp<=Date.now()){error.textContent="ভবিষ্যতের একটি তারিখ ও সময় নির্বাচন করো।";return}
  var previousExam=store.exam;
  store.exam={title:title,timestamp:timestamp};
- if(!save()){store.exam=previousExam;updateExamCountdown();error.textContent="ডেটা সংরক্ষণ হয়নি। Browser storage পরীক্ষা করে আবার চেষ্টা করো।";return}
+ if(!save(this)){store.exam=previousExam;updateExamCountdown();error.textContent="ডেটা সংরক্ষণ হয়নি। Browser storage পরীক্ষা করে আবার চেষ্টা করো।";return}
  document.getElementById("examSettings").classList.add("hidden");
  updateExamCountdown();
 });
 document.getElementById("clearExamBtn").addEventListener("click",function(){
  var previousExam=store.exam;store.exam=null;
- if(!save()){store.exam=previousExam;updateExamCountdown();document.getElementById("examFormError").textContent="কাউন্টডাউন মুছে ফেলা যায়নি। আবার চেষ্টা করো।";return}
+ if(!save(this)){store.exam=previousExam;updateExamCountdown();document.getElementById("examFormError").textContent="কাউন্টডাউন মুছে ফেলা যায়নি। আবার চেষ্টা করো।";return}
  document.getElementById("examSettings").classList.add("hidden");
  updateExamCountdown();
 });
@@ -897,7 +919,7 @@ document.getElementById("addTodayBtn").addEventListener("click",function(){docum
 document.getElementById("saveExtraBtn").addEventListener("click",function(){
  var name=document.getElementById("extraName").value.trim();if(!name){document.getElementById("extraName").focus();return}
  store.days[todayKey].tasks.push({id:makeId(),title:name,time:document.getElementById("extraTime").value,endTime:"",done:false,extra:true});
- document.getElementById("extraName").value="";document.getElementById("extraTime").value="";document.getElementById("addTodayForm").classList.add("hidden");save();renderToday();
+ document.getElementById("extraName").value="";document.getElementById("extraTime").value="";document.getElementById("addTodayForm").classList.add("hidden");save(this);renderToday();
 });
 document.getElementById("addRoutineBtn").addEventListener("click",function(){
  store.routine.push({id:makeId(),title:"নতুন কাজ",time:"",endTime:""});renderEditor();
@@ -977,7 +999,7 @@ function validateRoutineTimes(){
 document.getElementById("saveRoutineBtn").addEventListener("click",function(){
  var result=validateRoutineTimes();
  if(result.issues.length){document.getElementById("overlapWarning").scrollIntoView({behavior:"smooth",block:"nearest"});return}
- store.routine=result.updated;syncTodayFromRoutine();save();render();switchTab("edit");
+ store.routine=result.updated;syncTodayFromRoutine();save(this);render();switchTab("edit");
  document.getElementById("overlapWarning").classList.add("hidden");
 });
 function enableDrag(container,selector,onOrder){
@@ -1126,7 +1148,7 @@ document.getElementById("importBtn").addEventListener("click",function(){
  var reader=new FileReader();reader.onload=function(){
   try{var data=JSON.parse(reader.result);if(data.version!==1||!Array.isArray(data.routine)||!data.days||typeof data.days!=="object")throw new Error("invalid");
    if(!confirm("Restore করলে বর্তমান data replace হবে। চালিয়ে যাবে?"))return;
-   store=data;ensureToday();save();render();switchTab("today");alert("Backup restore হয়েছে।");
+   store=data;ensureToday();save(this);render();switchTab("today");alert("Backup restore হয়েছে।");
   }catch(e){alert("এই backup file সঠিক নয় বা পড়া যাচ্ছে না।")}
  };reader.readAsText(file);
 });
