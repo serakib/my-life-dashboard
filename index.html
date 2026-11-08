@@ -172,8 +172,9 @@ function loadStore(){
 }
 function save(){store.profiles=store.profiles||{};store.profiles[store.activeProfile]=store.routine;localStorage.setItem(STORAGE_KEY,JSON.stringify(store))}
 function ensureToday(){
- if(!store.days[todayKey])store.days[todayKey]={profile:store.activeProfile,tasks:store.routine.map(function(t){return {id:t.id,title:t.title,time:t.time||"",done:false,extra:false}}),createdAt:new Date().toISOString()};
+ if(!store.days[todayKey]){store.activeProfile="college";store.routine=store.profiles.college;store.days[todayKey]={profile:"college",tasks:store.routine.map(function(t){return {id:t.id,title:t.title,time:t.time||"",done:false,extra:false}}),createdAt:new Date().toISOString()};}
  if(!store.days[todayKey].profile)store.days[todayKey].profile=store.activeProfile;
+ store.activeProfile=store.days[todayKey].profile;store.routine=store.profiles[store.activeProfile]||store.profiles.college;
 }
 function setProfile(profile){
  if(!PROFILE_LABELS[profile])return;
