@@ -123,6 +123,7 @@ footer{text-align:center;color:var(--muted);font-size:11px;margin-top:18px}
 var STORAGE_KEY="my-life-routine-manager-v1";
 var todayKey=localDateKey(new Date());
 var defaultRoutine=[
+{id:"fajr",title:"Fajr জামাত (এরপর আবার একটু ঘুম)",time:"05:00"},
 {id:"wake",title:"ঘুম থেকে ওঠা, fresh হওয়া ও হালকা খাবার",time:"06:00"},
 {id:"study1",title:"Self-study — সকাল",time:"06:35"},
 {id:"breakfast",title:"নাশতা",time:"08:00"},
@@ -131,10 +132,13 @@ var defaultRoutine=[
 {id:"lunch",title:"Lunch",time:"12:30"},
 {id:"zuhr",title:"Zuhr জামাত",time:"13:00"},
 {id:"study3",title:"Self-study — দুপুর",time:"13:30"},
-{id:"class2",title:"Online class ২ (Asr ও Maghrib-এর বিরতিসহ)",time:"14:00"},
+{id:"class2",title:"Online class ২ (Asr-এর বিরতি; Maghrib-এর আগে শেষ)",time:"14:00"},
+{id:"asr",title:"Asr জামাত",time:"16:00"},
+{id:"maghrib",title:"Maghrib জামাত",time:"17:20"},
 {id:"study4",title:"Self-study — সন্ধ্যা",time:"17:50"},
 {id:"exercise",title:"হালকা exercise",time:"18:25"},
 {id:"quran",title:"Quran / religious activities",time:"18:40"},
+{id:"shower",title:"Shower ও personal hygiene (৩০–৪০ মিনিট)",time:""},
 {id:"dinner",title:"Dinner",time:"19:30"},
 {id:"social",title:"Friends / social time",time:"20:00"},
 {id:"isha",title:"Isha জামাত",time:"20:20"},
