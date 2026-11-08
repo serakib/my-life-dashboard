@@ -527,7 +527,7 @@ function loadStore(){
 var saveStatusToken=0,saveStatusTimer=null,saveStatusHideTimer=null;
 function paintSaveStatus(state){
  var node=document.getElementById("saveStatus");if(!node)return;
- node.innerHTML="";node.className="save-status is-visible "+state;
+ node.innerHTML="";node.className="save-status is-visible is-"+state;
  var mark=document.createElement("span");mark.className=state==="saving"?"save-spinner":"save-mark";
  if(state==="saved")mark.textContent="✓";
  if(state==="error")mark.textContent="!";
