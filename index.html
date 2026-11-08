@@ -1,605 +1,271 @@
 <!doctype html>
 <html lang="bn">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#101a2c"><meta name="description" content="A calm, practical personal life dashboard for study, faith, health and growth.">
-<title>My Life — Personal Dashboard</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f5f7f8">
+<meta name="description" content="A simple personal routine and daily checklist.">
+<title>আমার রুটিন</title>
 <style>
-:root{--bg:#0b1220;--panel:#121e31;--panel2:#17263c;--text:#eef4ff;--muted:#9cacc4;--line:#263750;--accent:#8ce0c0;--accent2:#76b9f5;--danger:#ff8e9b;--gold:#f4ce79;--shadow:0 16px 44px #0003;color-scheme:dark}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 12% 0%,#19334a 0,transparent 34%),var(--bg);color:var(--text);font:15px/1.6 Inter,"Noto Sans Bengali","Segoe UI",sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer;border:1px solid var(--line);border-radius:12px;padding:9px 13px;background:var(--panel2);color:var(--text);transition:.18s}button:hover{border-color:var(--accent);transform:translateY(-1px)}button.primary{background:var(--accent);color:#082019;border-color:transparent;font-weight:750}button.ghost{background:transparent}button.danger{color:var(--danger)}input,select,textarea{width:100%;background:#0b1728;border:1px solid var(--line);border-radius:10px;padding:10px;color:var(--text);outline:none}input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px #8ce0c022}label{display:grid;gap:5px;color:var(--muted);font-size:13px}h1,h2,h3,p{margin-top:0}h1{font-size:clamp(25px,4vw,36px);line-height:1.2;margin-bottom:8px}h2{font-size:19px;margin-bottom:12px}h3{font-size:15px}.muted,.small{color:var(--muted)}.small{font-size:12px}.app{max-width:1440px;margin:auto;padding:18px;display:grid;grid-template-columns:245px minmax(0,1fr);gap:20px}.sidebar{position:sticky;top:18px;height:calc(100vh - 36px);background:#101b2dcc;border:1px solid var(--line);border-radius:22px;padding:18px;display:flex;flex-direction:column;box-shadow:var(--shadow)}.brand{display:flex;gap:11px;align-items:center;margin-bottom:22px}.logo{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:grid;place-items:center;color:#09201d;font-weight:900;font-size:20px}.brand b{display:block;font-size:15px}.brand small{color:var(--muted)}nav{display:grid;gap:6px}nav button{text-align:left;background:transparent;border-color:transparent;color:var(--muted);padding:10px 12px}nav button.active,nav button:hover{background:#20344d;color:var(--text);border-color:#2b4562}.navlabel{font-size:10px;letter-spacing:1.4px;color:#70839d;margin:17px 10px 5px}.sidefoot{margin-top:auto;border-top:1px solid var(--line);padding-top:14px}.main{min-width:0}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}.date{color:var(--muted);font-size:13px}.view{display:none}.view.active{display:block;animation:fade .22s ease}@keyframes fade{from{opacity:.3;transform:translateY(5px)}to{opacity:1;transform:none}}.hero{background:linear-gradient(115deg,#193a4a,#1a2d4a 65%,#28304d);border:1px solid #31516a;border-radius:22px;padding:25px;margin-bottom:17px;position:relative;overflow:hidden}.hero:after{content:"";position:absolute;width:230px;height:230px;border-radius:50%;background:#8ce0c011;right:-60px;top:-100px}.hero h1{max-width:700px}.hero p{color:#c0d1e3;margin-bottom:0}.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:14px}.card{grid-column:span 12;background:linear-gradient(145deg,var(--panel),#101a2a);border:1px solid var(--line);border-radius:17px;padding:17px;box-shadow:0 7px 22px #0002;min-width:0}.span3{grid-column:span 3}.span4{grid-column:span 4}.span5{grid-column:span 5}.span6{grid-column:span 6}.span7{grid-column:span 7}.span8{grid-column:span 8}.stat{font-size:12px;color:var(--muted)}.stat strong{display:block;font-size:27px;color:var(--text);margin-top:3px}.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.between{justify-content:space-between}.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.formgrid .wide{grid-column:1/-1}.actions{display:flex;gap:6px;align-items:center}.actions button{padding:5px 9px;font-size:12px}.list{display:grid;gap:8px}.item{display:flex;gap:10px;align-items:center;padding:10px;border:1px solid var(--line);border-radius:12px;background:#0d1929}.item .grow{flex:1;min-width:0}.item.done .itemtitle{text-decoration:line-through;color:var(--muted)}.itemtitle{font-weight:650;overflow-wrap:anywhere}.itemmeta{font-size:12px;color:var(--muted)}.check{width:19px;height:19px;accent-color:var(--accent);flex:0 0 auto}.bar{height:9px;background:#26364c;border-radius:99px;overflow:hidden}.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:99px;transition:width .25s}.progressrow{display:grid;grid-template-columns:100px 1fr 45px;gap:10px;align-items:center;margin:11px 0;font-size:13px}.pill{display:inline-flex;padding:3px 9px;border:1px solid #426b68;border-radius:99px;color:var(--accent);font-size:11px}.quote{border-left:3px solid var(--accent);padding:13px 16px;background:#8ce0c010;border-radius:0 12px 12px 0;font-size:17px;font-weight:700;margin:14px 0}.routine-time{font-variant-numeric:tabular-nums;color:var(--accent);font-weight:750;min-width:58px}.timer{font-size:46px;font-weight:800;letter-spacing:2px;font-variant-numeric:tabular-nums;text-align:center;padding:10px}.timercontrols{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}.lessonbox{padding:15px;background:#0c1929;border:1px solid var(--line);border-radius:13px}.lessonbox b{color:var(--accent)}.empty{padding:18px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:12px}.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#e5fff5;color:#0a2920;padding:10px 16px;border-radius:12px;box-shadow:var(--shadow);display:none;z-index:10;font-weight:700}.mobilebar{display:none}.hidden{display:none!important}.daychip{font-size:11px;color:var(--muted)}.notearea{min-height:100px}.light{--bg:#f2f6f8;--panel:#fff;--panel2:#edf3f5;--text:#172536;--muted:#647589;--line:#d9e3e9;--shadow:0 12px 35px #21394a12;color-scheme:light;background:radial-gradient(ellipse at 12% 0%,#d7f0e8 0,transparent 34%),var(--bg)}.light .sidebar{background:#ffffffdd}.light input,.light select,.light textarea{background:#f7fafb;color:var(--text)}.light .item,.light .lessonbox{background:#f7fafb}.light .hero{color:#fff}.light .hero p{color:#e2f0f8}
-@media(max-width:900px){.app{grid-template-columns:1fr;padding:12px}.sidebar{display:none}.mobilebar{display:flex;position:fixed;z-index:9;bottom:10px;left:10px;right:10px;background:#101b2df2;border:1px solid var(--line);border-radius:16px;padding:6px;overflow-x:auto;gap:4px;backdrop-filter:blur(14px)}.mobilebar button{white-space:nowrap;font-size:12px;padding:9px}.main{padding-bottom:75px}.span3,.span4{grid-column:span 6}.span5,.span7,.span8{grid-column:span 12}}@media(max-width:560px){.span3,.span4,.span6{grid-column:span 12}.formgrid{grid-template-columns:1fr}.formgrid .wide{grid-column:auto}.top{align-items:flex-start}.hero{padding:19px}.card{padding:14px}.progressrow{grid-template-columns:82px 1fr 38px}}
-
-/* ===== Student-first visual refresh ===== */
-:root{--bg:#f4f7ff;--panel:#ffffff;--panel2:#eef3ff;--text:#1c2940;--muted:#687791;--line:#e1e8f4;--accent:#635bdb;--accent2:#32a6a0;--danger:#d95370;--gold:#c58b24;--shadow:0 12px 34px #273d6810;color-scheme:light}
-body{background:#f4f7ff;color:var(--text);font-family:Inter,"Noto Sans Bengali","Segoe UI",sans-serif;line-height:1.65}
-.app{max-width:1500px;padding:22px;grid-template-columns:252px minmax(0,1fr);gap:24px}
-.sidebar{top:20px;height:calc(100vh - 40px);background:#fff;border:1px solid #e5eaf4;border-radius:22px;padding:20px;box-shadow:0 10px 35px #24365b0d}
-.logo{background:linear-gradient(135deg,#766df0,#43c6b5);color:white;border-radius:14px;box-shadow:0 7px 18px #766df033}
-.brand{margin-bottom:26px}.brand b{font-size:16px;letter-spacing:.4px}.brand small{font-size:11px}
-.navlabel{color:#99a5ba;font-weight:800;font-size:10px;letter-spacing:1.6px}
-nav{gap:5px}nav button{color:#6e7b91;border-radius:12px;padding:11px 13px;font-weight:650;transition:background .16s,color .16s,border .16s}
-nav button.active{background:#eeedff;color:#5148c8;border-color:#e4e1ff}
-nav button:hover{background:#f3f5ff;color:#5148c8;border-color:#e8eaff;transform:none}
-.sidefoot{border-color:#edf0f6}.sidefoot b{color:#5148c8!important}
-.top{margin:3px 0 22px}.date{font-weight:700;color:#64728b}.top .small{margin-top:3px}
-button{background:#f5f6fc;border-color:#e4e8f2;color:#34415a;border-radius:11px;font-weight:650;padding:9px 14px}
-button:hover{border-color:#b9b4fa;background:#f0efff;color:#5148c8;transform:translateY(-1px)}
-button.primary{background:#6259d9;color:white;border-color:#6259d9;box-shadow:0 5px 13px #6259d926}
-button.primary:hover{background:#5148c8;color:white}
-input,select,textarea{background:#fbfcff;border:1px solid #dfe6f1;color:#25324a;border-radius:11px;padding:11px 12px}
-input:focus,select:focus,textarea:focus{border-color:#8b83ed;box-shadow:0 0 0 3px #756be91a}
-label{color:#687791;font-weight:600}
-.hero{background:linear-gradient(112deg,#635bdb 0%,#7971e8 54%,#43b8b1 120%);border:0;border-radius:24px;padding:30px 32px;box-shadow:0 15px 35px #655cda25;margin-bottom:20px}
-.hero h1{font-size:clamp(27px,3.4vw,39px);letter-spacing:-.8px}.hero p{color:#f0efff;max-width:760px;font-size:15px}
-.hero .pill{color:#fff;border-color:#ffffff55;background:#ffffff17}
-.grid{gap:16px}
-.card{background:#fff;border:1px solid #e8edf5;border-radius:18px;padding:20px;box-shadow:0 5px 22px #24365b08;transition:box-shadow .18s,border-color .18s}
-.card:hover{box-shadow:0 9px 26px #24365b0c;border-color:#dce3f1}
-.stat{color:#77839a;font-weight:650}.stat strong{font-size:29px;color:#25334c;letter-spacing:-.6px;margin:5px 0}
-h1{color:#202e47;font-weight:800;letter-spacing:-.6px}h2{font-size:18px;color:#263650;font-weight:750}h3{color:#34415a}
-.item{background:#fafbff;border:1px solid #edf0f7;border-radius:13px;padding:12px}
-.item:hover{border-color:#d9d7fb;background:#f8f7ff}
-.itemmeta,.small,.muted{color:#78859b}
-.routine-time{color:#5c54cf}
-.bar{height:9px;background:#edf0f8}.bar i{background:linear-gradient(90deg,#6c63df,#45b9ad)}
-.progressrow{margin:14px 0}
-.quote{background:#f2f1ff;border-left-color:#6a61dd;color:#45408c;border-radius:0 13px 13px 0}
-.lessonbox{background:#f7f8ff;border-color:#e8eafa}.lessonbox b{color:#5951ca}
-.empty{background:#fafbff;border-color:#e1e6f1}
-.pill{background:#f1f0ff;color:#5b53cc;border-color:#dfdcff}
-.timer{color:#5b53cc;font-size:52px}
-hr{border-color:#e8edf5!important}
-.toast{background:#23334f;color:#fff}
-.light{--bg:#f4f7ff;--panel:#fff;--panel2:#eef3ff;--text:#1c2940;--muted:#687791;--line:#e1e8f4;--accent:#635bdb;--accent2:#32a6a0;color-scheme:light;background:#f4f7ff}
-.light .sidebar{background:#fff}.light input,.light select,.light textarea{background:#fbfcff;color:#25324a}.light .item,.light .lessonbox{background:#fafbff}
-.dark{--bg:#101827;--panel:#18243a;--panel2:#22314a;--text:#edf2ff;--muted:#a3b0c6;--line:#2d3b54;--accent:#9b94ff;--accent2:#55c8bb;--danger:#ff8d9f;--shadow:0 16px 44px #0003;color-scheme:dark;background:#101827}
-.dark .sidebar{background:#18243a;border-color:#2d3b54}.dark nav button.active{background:#302e59;color:#d7d3ff;border-color:#48447b}.dark nav button:hover{background:#26334c;color:#fff;border-color:#394b68}
-.dark .card{background:#18243a;border-color:#2d3b54}.dark .item,.dark .lessonbox,.dark input,.dark select,.dark textarea{background:#111d30;color:#edf2ff;border-color:#34435e}.dark h1,.dark h2,.dark h3,.dark .stat strong{color:#edf2ff}.dark .quote{background:#29284a;color:#e2dfff}.dark .hero{background:linear-gradient(112deg,#4540a4,#344e75 65%,#237b78)}
-.dark button{background:#22314a;border-color:#34435e;color:#edf2ff}.dark button.primary{background:#8178ee;color:#fff;border-color:#8178ee}.dark .bar{background:#2d3b54}
-.mobilebar{background:#fff;border:1px solid #e2e8f2;box-shadow:0 8px 28px #24365b1c}
-.mobilebar button{color:#66738a;background:transparent}.mobilebar button.active{background:#eeedff;color:#5148c8}
-@media(max-width:900px){.app{padding:15px;gap:12px}.hero{padding:24px}.sidebar{display:none}.mobilebar{left:12px;right:12px;bottom:12px;border-radius:18px}.main{padding-bottom:82px}}
-@media(max-width:560px){.app{padding:12px}.hero{padding:21px;border-radius:19px}.card{padding:16px}.top{margin-bottom:15px}.mobilebar{overflow-x:auto}.mobilebar button{font-size:11px;padding:9px 10px}}
-
-
-/* Sidebar v2 — compact grouped student navigation */
-.app{grid-template-columns:236px minmax(0,1fr);gap:25px;max-width:1480px;padding:22px 26px}
-.sidebar{height:calc(100vh - 44px);top:22px;padding:17px 13px 14px;border-radius:21px;background:#fff;border:1px solid #e8ecf5;box-shadow:0 12px 34px #26365b0b;overflow-y:auto;scrollbar-width:thin}
-.brand{gap:11px;padding:4px 7px 17px;margin:0 0 12px;border-bottom:1px solid #edf0f6}
-.logo{width:39px;height:39px;flex:0 0 39px;border-radius:13px;color:#fff;font-size:19px;background:linear-gradient(140deg,#756be8,#47b9ae);box-shadow:0 5px 13px #756be82b}
-.brand b{font-size:14px;letter-spacing:1.1px;color:#283550}.brand small{display:block;margin-top:1px;font-size:9px;letter-spacing:1.15px;font-weight:800;color:#929db0}
-.side-caption{font-size:9px;letter-spacing:1.7px;font-weight:850;color:#a0aabd;padding:8px 10px 1px}
-.side-group{margin:2px 0 11px}.navlabel{font-size:9px;letter-spacing:1.35px;font-weight:850;color:#a0aabd;margin:11px 10px 5px}
-#sideNav{display:flex;flex-direction:column;gap:2px}
-#sideNav .side-link{position:relative;display:flex;align-items:center;gap:11px;width:100%;min-height:42px;padding:8px 10px;border:1px solid transparent;border-radius:11px;background:transparent;color:#68758d;text-align:left;font-size:12px;font-weight:650;transition:background .16s,color .16s,border-color .16s}
-#sideNav .side-icon{display:grid;place-items:center;width:27px;height:27px;flex:0 0 27px;border-radius:8px;background:#f3f5fa;color:#78859a;font-size:15px}
-#sideNav .side-link-label{flex:1}
-#sideNav .side-arrow{font-size:17px;color:#c0c8d5;opacity:0;transform:translateX(-3px);transition:.16s}
-#sideNav .side-link:hover{background:#f7f7ff;color:#574fc8}
-#sideNav .side-link:hover .side-icon{background:#eeedff;color:#6259d9}
-#sideNav .side-link.active{background:#f0efff;border-color:#e8e6ff;color:#5148c8;font-weight:750}
-#sideNav .side-link.active:before{content:"";position:absolute;left:-1px;top:9px;bottom:9px;width:3px;border-radius:0 4px 4px 0;background:#675ee0}
-#sideNav .side-link.active .side-icon{background:#dedcff;color:#5148c8}
-#sideNav .side-link.active .side-arrow{opacity:1;transform:none;color:#7068dc}
-.sidefoot{margin-top:auto;padding:13px 10px 3px;border-top:1px solid #edf0f6;color:#64718a}
-.sidefoot>b{display:block;color:#4e5870!important;font-size:12px;margin:3px 0}
-.sidefoot .small{font-size:10px;line-height:1.55;color:#8793a8}
-.side-tip-icon{display:grid;place-items:center;width:27px;height:27px;border-radius:9px;background:#f0efff;color:#6259d9;font-size:16px;margin-bottom:7px}
-.side-local{display:flex;align-items:center;gap:6px;margin-top:11px;padding-top:9px;border-top:1px solid #f0f2f7;font-size:9px;color:#98a3b5}
-.local-dot{width:6px;height:6px;border-radius:50%;background:#36ad8b}
-.dark .sidebar{background:#18243a;border-color:#2d3b54}
-.dark .brand{border-color:#2d3b54}.dark .brand b{color:#edf2ff}
-.dark .brand small,.dark .side-caption,.dark .navlabel{color:#8d9bb2}
-.dark #sideNav .side-link{color:#a6b3c9}.dark #sideNav .side-link:hover{background:#24334d;color:#fff}
-.dark #sideNav .side-link.active{background:#302e59;border-color:#48447b;color:#e2dfff}
-.dark #sideNav .side-icon{background:#22314a;color:#a6b3c9}.dark #sideNav .side-link.active .side-icon{background:#48447b;color:#fff}
-.dark .sidefoot{border-color:#2d3b54;color:#dce5f5}.dark .sidefoot>b{color:#edf2ff!important}.dark .sidefoot .small,.dark .side-local{color:#a3b0c6}.dark .side-tip-icon{background:#302e59;color:#d7d3ff}.dark .side-local{border-color:#2d3b54}
-.mobilebar button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-width:64px;font-size:15px}
-.mobilebar button span{font-size:9px}
-@media(max-width:900px){.app{grid-template-columns:minmax(0,1fr);padding:15px;gap:12px}.sidebar{display:none}}
-@media(max-width:560px){.app{padding:12px}.mobilebar{justify-content:flex-start}.mobilebar button{min-width:62px}}
-
-
-/* Fullscreen focus timer */
-.focus-fullscreen{position:fixed;inset:0;z-index:1000;background:radial-gradient(ellipse at 50% 35%,#24235a 0%,#11152e 48%,#0b1020 100%);color:#f8f8ff;display:grid;place-items:center;padding:24px;overflow:auto}
-.focus-shell{width:min(900px,100%);min-height:min(760px,calc(100dvh - 48px));display:flex;flex-direction:column;justify-content:space-between}
-.focus-top{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:52px}.focus-bottom{display:none}
-.focus-eyebrow{display:none}
-.focus-mode{font-size:14px;letter-spacing:2px;font-weight:800;color:#a9a5ff;margin-top:8px}
-.focus-close{display:grid;place-items:center;flex:0 0 44px;width:44px;height:44px;border-radius:50%;border:1px solid #ffffff55;background:#ffffff20;color:#fff;font-size:20px;cursor:pointer;position:relative;z-index:2;transition:background .18s,border-color .18s}.focus-close:hover{background:#ffffff35;border-color:#ffffff90}
-.focus-center{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:35px 0}
-.focus-ring{width:min(62vw,390px);height:min(62vw,390px);min-width:240px;min-height:240px;border-radius:50%;border:1px solid #aaa4ff55;box-shadow:0 0 0 13px #aaa4ff0b,0 0 75px #756be833,inset 0 0 55px #756be81c;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(circle,#28264f 0%,#191b39 68%,#14172f 100%)}
-.focus-time{font-size:clamp(58px,12vw,104px);font-weight:750;letter-spacing:-4px;font-variant-numeric:tabular-nums;line-height:1.1}
-.focus-caption{display:none}
-.focus-full-controls{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:36px}
-.focus-full-controls button{min-width:112px;padding:13px 20px;border-radius:13px;font-weight:750}
-.focus-main-btn{background:#8278f2;color:#fff;border:1px solid #a39cff;box-shadow:0 8px 24px #756be84a}
-.focus-secondary-btn{background:#ffffff12;color:#eeeefe;border:1px solid #ffffff2b}
-.focus-full-note{min-height:24px;text-align:center;color:#aaaed0;font-size:13px;margin-top:19px}
-.focus-bottom{font-size:11px;color:#9298bd;border-top:1px solid #ffffff18;padding-top:15px}
-@media(max-width:520px){.focus-fullscreen{padding:17px}.focus-shell{min-height:calc(100dvh - 34px)}.focus-bottom{font-size:10px}.focus-ring{width:75vw;height:75vw}.focus-full-controls button{min-width:95px;padding:12px 14px}}
-
-
-/* Subject-first chapter accordion */
-.subject-accordion{margin:11px 0;border:1px solid #e6eaf3;border-radius:15px;background:#fff;overflow:hidden}
-.subject-select{width:100%;display:flex;align-items:center;gap:12px;text-align:left;background:#fff;border:0;border-radius:0;padding:15px 16px;color:#263650}
-.subject-select:hover{background:#f8f8ff;transform:none}
-.subject-select-main{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}.subject-select-main b{font-size:15px}.subject-select-main small,.subject-select-progress small{font-size:11px;color:#8490a5;font-weight:500}
-.subject-select-progress{display:flex;flex-direction:column;align-items:flex-end;gap:1px}.subject-select-progress b{font-size:14px;color:#5b53cc}.subject-chevron{display:grid;place-items:center;width:27px;height:27px;border-radius:9px;background:#f0efff;color:#5b53cc;font-size:18px;font-weight:800}
-.subject-content{padding:0 13px 13px;border-top:1px solid #edf0f6}.paper-panel{padding:13px 3px 10px}.paper-panel+.paper-panel{border-top:1px dashed #e5e9f1}.paper-heading{padding:0 2px 7px}.paper-heading>b{font-size:13px;color:#48556e}.paper-bar{height:6px;margin-bottom:11px}.chapter-row{padding:7px 9px;border:1px solid #edf0f6;border-radius:10px;background:#fbfcff}.dark .subject-accordion,.dark .subject-select{background:#18243a;border-color:#2d3b54;color:#edf2ff}.dark .subject-select:hover{background:#22314a}.dark .subject-content{border-color:#2d3b54}.dark .paper-heading>b{color:#dce5f5}.dark .chapter-row{background:#111d30;border-color:#34435e}.dark .subject-select-main small,.dark .subject-select-progress small{color:#a3b0c6}
-
-/* Polished HSC year selector */
-.study-year-field{gap:8px!important}.study-year-label{font-size:13px;font-weight:750;color:var(--text);letter-spacing:.2px}.study-year-control{position:relative;display:flex;align-items:center;min-height:54px;padding:0 15px;border:1px solid #344761;border-radius:15px;background:linear-gradient(135deg,#172a40,#101d30);box-shadow:inset 0 1px 0 #ffffff0a;transition:border-color .18s,box-shadow .18s}.study-year-control:focus-within{border-color:var(--accent);box-shadow:0 0 0 4px #8ce0c01c}.study-year-icon{display:grid;place-items:center;width:34px;height:34px;margin-right:11px;border-radius:10px;background:#8ce0c018;color:var(--accent);font-size:19px}.study-year-control select{appearance:none;-webkit-appearance:none;flex:1;width:100%;min-width:0;padding:14px 32px 14px 0;border:0!important;border-radius:0;background:transparent!important;color:var(--text);font-size:14px;font-weight:700;box-shadow:none!important;cursor:pointer}.study-year-control select option{background:#142238;color:#eef4ff}.study-year-arrow{position:absolute;right:16px;top:50%;transform:translateY(-58%);color:var(--accent);font-size:23px;pointer-events:none}.study-year-help{font-size:11px;color:var(--muted);font-weight:450}
-
-/* In-app add/edit modals */
-.routine-add-card{min-height:190px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:8px}.routine-add-card h2,.routine-add-card p{margin:0}.routine-add-icon{width:42px;height:42px;display:grid;place-items:center;border-radius:14px;background:#8ce0c018;color:var(--accent);font-size:25px}.study-log-launch{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:15px;margin-bottom:16px;border:1px solid var(--line);border-radius:15px;background:var(--panel2)}.study-log-launch p{margin:4px 0 0}.modal-backdrop{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:18px;background:#050b16b8;backdrop-filter:blur(8px)}.modal-backdrop.hidden{display:none}.modal-card{width:min(100%,640px);max-height:min(90vh,820px);overflow:auto;padding:28px;border:1px solid var(--line);border-radius:22px;background:var(--panel);box-shadow:0 24px 80px #0006;animation:modalIn .18s ease-out}.modal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:20px}.modal-head h2{margin:3px 0 0;font-size:21px}.modal-kicker{font-size:10px;letter-spacing:1.6px;font-weight:800;color:var(--accent)}.modal-close{width:36px;height:36px;padding:0;border-radius:11px;font-size:23px;line-height:1}.modal-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:8px}.modal-actions button{min-width:100px}.modal-card input,.modal-card select{min-height:44px}@keyframes modalIn{from{opacity:0;transform:translateY(9px) scale(.985)}to{opacity:1;transform:none}}@media(max-width:560px){.study-log-launch{align-items:flex-start;flex-direction:column}.study-log-launch button{width:100%}.modal-card{padding:18px}.modal-backdrop{padding:10px}}
-
-.routine-time{min-width:54px}.routine-add-card .primary{margin-top:5px}#routineModal .formgrid label{gap:7px}#routineModal input[type=time],#routineModal select{min-height:46px}
-
-/* ===== Unified layout & alignment refinement ===== */
-:root{--bg:#f5f7fc;--panel:#fff;--panel2:#f4f6fb;--text:#202b42;--muted:#748097;--line:#e6eaf2;--accent:#6259d9;--accent2:#38a99e;--shadow:0 8px 26px rgba(31,45,78,.055)}
-html{scroll-behavior:smooth}
-body{min-height:100vh;background:#f5f7fc;color:var(--text);font-family:Inter,"Noto Sans Bengali","Segoe UI",sans-serif;font-size:14px;line-height:1.65}
-.app{width:100%;max-width:1500px;min-height:100vh;margin:0 auto;padding:24px 28px;grid-template-columns:248px minmax(0,1fr);gap:26px;align-items:start}
-.sidebar{position:sticky;top:24px;height:calc(100vh - 48px);min-height:580px;padding:18px 14px 14px;border:1px solid #e8ecf4;border-radius:20px;background:#fff;box-shadow:0 8px 28px rgba(31,45,78,.045)}
-.main{width:100%;max-width:1120px;min-width:0;margin:0 auto;padding:0 0 34px}
-.top{min-height:52px;margin:0 0 22px;padding:3px 1px;align-items:center}
-.date{font-size:12px;font-weight:750;letter-spacing:.15px;color:#748097}
-.top .small{font-size:13px;color:#536078}
-.view{width:100%;min-width:0}
-.view>h1{margin:0 0 5px;font-size:clamp(25px,3vw,32px);line-height:1.25;font-weight:820;letter-spacing:-.65px;color:#202b42}
-.view>h1+p{max-width:780px;margin:0 0 22px;color:#78849a;font-size:13px;line-height:1.7}
-.hero{min-height:190px;margin:0 0 18px;padding:30px 34px;display:flex;flex-direction:column;justify-content:center;border-radius:22px;background:linear-gradient(112deg,#5149c4 0%,#6c65dc 57%,#36a99e 120%);box-shadow:0 12px 28px rgba(86,78,195,.16)}
-.hero h1{max-width:760px;margin:13px 0 8px;font-size:clamp(27px,3.2vw,38px);line-height:1.3;letter-spacing:-.7px}
-.hero p{max-width:740px;font-size:14px;line-height:1.8}
-.grid{grid-template-columns:repeat(12,minmax(0,1fr));gap:16px;align-items:stretch}
-.card{min-width:0;padding:20px 21px;border:1px solid #e8ecf3;border-radius:17px;background:#fff;box-shadow:0 4px 18px rgba(31,45,78,.035);transition:border-color .18s,box-shadow .18s}
-.card:hover{border-color:#dfe3f0;box-shadow:0 7px 22px rgba(31,45,78,.055)}
-.card h2{margin:0 0 14px;font-size:16px;line-height:1.45;font-weight:780;letter-spacing:-.15px;color:#293650}
-.card h3{font-size:13px;font-weight:750;color:#3c4962}
-.row{gap:10px;min-width:0}
-.row.between{justify-content:space-between}
-.row.between h2{margin:0}
-.stat{display:flex;flex-direction:column;justify-content:center;min-height:116px;padding:18px 19px;font-size:12px;line-height:1.45;font-weight:700;color:#77839a}
-.stat strong{margin:7px 0 3px;font-size:28px;line-height:1.15;font-weight:820;letter-spacing:-.7px;color:#26334d}
-.stat .bar{margin-top:10px}
-.bar{height:8px;border-radius:20px;background:#edf0f7}
-.bar i{border-radius:20px;background:linear-gradient(90deg,#665dde,#42b4a8)}
-button{min-height:38px;padding:8px 13px;border:1px solid #e2e7f0;border-radius:10px;background:#f7f8fc;color:#46536b;font-size:12px;font-weight:700;line-height:1.3;box-shadow:none}
-button:hover{transform:translateY(-1px);border-color:#c9c5f5;background:#f2f1ff;color:#5148c8}
-button.primary{border-color:#6259d9;background:#6259d9;color:#fff;box-shadow:0 4px 10px rgba(98,89,217,.15)}
-button.primary:hover{border-color:#5148c8;background:#5148c8;color:#fff}
-button.ghost{background:transparent}
-button.danger{color:#c74d68}
-input,select,textarea{min-width:0;min-height:42px;padding:10px 12px;border:1px solid #dfe5ef;border-radius:10px;background:#fbfcff;color:#29364e;font-size:13px;line-height:1.4}
-textarea{min-height:88px;resize:vertical}
-input:focus,select:focus,textarea:focus{border-color:#8a83e8;box-shadow:0 0 0 3px rgba(98,89,217,.11);outline:0}
-label{min-width:0;gap:6px;color:#64718a;font-size:12px;font-weight:650}
-.formgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-.list{gap:9px}
-.item{min-width:0;gap:12px;padding:12px 13px;border:1px solid #edf0f5;border-radius:12px;background:#fbfcff}
-.item:hover{background:#f8f8ff;border-color:#e2e0fb}
-.item .grow{min-width:0;overflow-wrap:anywhere}
-.itemtitle{font-size:13px;line-height:1.5}
-.itemmeta{margin-top:2px;font-size:11px;line-height:1.5;color:#8792a6}
-.pill{align-items:center;min-height:24px;padding:3px 9px;border:1px solid #e2e0fb;border-radius:20px;background:#f4f3ff;color:#5b53c9;font-size:10px;font-weight:750;letter-spacing:.1px}
-.quote{margin:12px 0;padding:15px 17px;border-left:3px solid #6b63dc;border-radius:0 12px 12px 0;background:#f5f4ff;color:#4d478f;font-size:15px;line-height:1.7}
-.progressrow{grid-template-columns:minmax(105px,1.15fr) minmax(70px,2fr) 42px;gap:12px;margin:15px 0;font-size:12px}
-.progressrow>span{min-width:0;overflow-wrap:anywhere}
-.progressrow b{text-align:right;font-size:12px;color:#4d5870}
-.empty{padding:22px 15px;border:1px dashed #dfe5ef;border-radius:12px;background:#fbfcff;color:#8a95a8;font-size:12px}
-.timer{padding:18px 8px;font-size:clamp(44px,5vw,58px);font-weight:820;letter-spacing:-1.5px;color:#5b53cc}
-.timercontrols{gap:9px}
-.lessonbox{padding:18px;border:1px solid #e9eafa;border-radius:13px;background:#f8f8ff;line-height:1.8}
-.lessonbox b{color:#554dc3}
-.study-log-launch{align-items:center;padding:15px 16px;border:1px solid #e8eaf5;border-radius:13px;background:#f8f9ff}
-.study-log-launch b{font-size:13px;color:#34415b}
-.study-log-launch p{font-size:11px;line-height:1.6}
-.routine-add-card{min-height:210px;align-items:flex-start;justify-content:center;padding:8px}
-.routine-add-card h2{margin:2px 0 0}
-.routine-add-card p{max-width:250px;line-height:1.7}
-.routine-add-icon{width:44px;height:44px;border-radius:13px;background:#f0efff;color:#5d55d1}
-.subject-accordion{margin:9px 0;border:1px solid #e9edf4;border-radius:13px;background:#fff}
-.subject-select{min-height:68px;padding:13px 15px;background:#fff}
-.subject-select-main b{font-size:13px;line-height:1.4;color:#2d3a54}
-.subject-select-main small,.subject-select-progress small{font-size:10px}
-.subject-select-progress b{font-size:13px}
-.subject-chevron{width:26px;height:26px;background:#f2f1ff;color:#5b53cc}
-.subject-content{padding:0 14px 13px}
-.paper-panel{padding:13px 2px 10px}
-.paper-heading>b{font-size:12px}
-.chapter-row{display:flex;align-items:center;gap:10px;min-height:38px;padding:8px 10px;border:1px solid #edf0f5;border-radius:9px;background:#fbfcff;color:#4e5b72;font-size:12px;font-weight:550}
-.chapter-row input{width:16px;height:16px;min-height:16px;flex:0 0 16px;margin:0;accent-color:#6259d9}
-.study-year-control{min-height:48px;border:1px solid #dfe5ef;border-radius:11px;background:#fbfcff;box-shadow:none}
-.study-year-icon{background:#f0efff;color:#6259d9}
-.study-year-control select{color:#29364e;font-size:13px}
-.study-year-arrow{color:#6259d9}
-.modal-card{border-radius:18px;box-shadow:0 22px 70px rgba(22,32,56,.22)}
-hr{border:0;border-top:1px solid #e9edf4}
-.sidefoot{margin-top:auto}
-.toast{z-index:1100}
-.mobilebar{z-index:30;justify-content:flex-start;gap:4px;padding:7px;background:rgba(255,255,255,.94);border:1px solid #e4e8f1;box-shadow:0 8px 30px rgba(27,39,68,.13);backdrop-filter:blur(16px)}
-.mobilebar button{min-height:49px;min-width:66px;padding:6px 8px;border:1px solid transparent;border-radius:11px}
-.mobilebar button.active{background:#efeeff;color:#5148c8;border-color:#e6e3ff}
-.dark{--bg:#101827;--panel:#18243a;--panel2:#22314a;--text:#edf2ff;--muted:#a3b0c6;--line:#2d3b54;--accent:#9b94ff;--accent2:#55c8bb;background:#101827;color:var(--text)}
-.dark body{background:#101827;color:var(--text)}
-.dark .sidebar,.dark .card{background:#18243a;border-color:#2d3b54}
-.dark .view>h1,.dark .card h2,.dark .card h3,.dark .subject-select-main b{color:#edf2ff}
-.dark .view>h1+p,.dark .date,.dark .top .small,.dark label,.dark .muted,.dark .small{color:#a3b0c6}
-.dark .card{box-shadow:0 5px 20px rgba(0,0,0,.12)}
-.dark .stat strong,.dark .progressrow b{color:#edf2ff}
-.dark button{background:#22314a;border-color:#34435e;color:#edf2ff}
-.dark button:hover{background:#2b3a56;border-color:#6259d9}
-.dark button.primary{background:#8178ee;border-color:#8178ee;color:#fff}
-.dark input,.dark select,.dark textarea,.dark .study-year-control{background:#111d30;border-color:#34435e;color:#edf2ff}
-.dark .study-year-control select{background:transparent!important;color:#edf2ff}
-.dark .item,.dark .empty,.dark .chapter-row,.dark .subject-accordion,.dark .subject-select{background:#111d30;border-color:#34435e;color:#edf2ff}
-.dark .subject-content{border-color:#34435e}
-.dark .subject-select:hover{background:#1c2b42}
-.dark .study-log-launch,.dark .lessonbox{background:#111d30;border-color:#34435e}
-.dark .quote{background:#29284a;color:#e2dfff}
-.dark .pill{background:#302e59;border-color:#48447b;color:#d7d3ff}
-.dark .bar{background:#2d3b54}
-.dark .progressrow b{color:#dce5f5}
-.dark .sidefoot,.dark .brand{border-color:#2d3b54}
-.dark .brand b,.dark .sidefoot>b{color:#edf2ff!important}
-.dark .side-local,.dark .sidefoot .small{color:#a3b0c6}
-.dark .mobilebar{background:rgba(24,36,58,.94);border-color:#34435e}
-.dark .mobilebar button{background:transparent;color:#aebbd0}
-.dark .mobilebar button.active{background:#302e59;color:#e2dfff;border-color:#48447b}
-.dark hr{border-color:#2d3b54}
-@media(max-width:1100px){
- .app{grid-template-columns:220px minmax(0,1fr);gap:18px;padding:18px}
- .sidebar{padding:16px 11px}
- .card{padding:18px}
-}
-@media(max-width:900px){
- .app{display:block;min-height:100vh;padding:17px 18px}
- .sidebar{display:none}
- .main{max-width:100%;padding-bottom:88px}
- .top{margin-bottom:18px}
- .hero{min-height:175px;padding:25px 26px}
- .span3,.span4{grid-column:span 6}
- .span5,.span7,.span8{grid-column:span 12}
-}
-@media(max-width:620px){
- .app{padding:13px 12px}
- .top{min-height:44px;margin-bottom:15px}
- .hero{min-height:0;padding:22px 19px;border-radius:17px}
- .hero h1{font-size:26px}
- .hero p{font-size:12px}
- .grid{gap:11px}
- .card{padding:15px;border-radius:14px}
- .card h2{font-size:15px;margin-bottom:12px}
- .span3,.span4,.span5,.span6,.span7,.span8,.span12{grid-column:span 12}
- .stat{min-height:94px}
- .stat strong{font-size:25px}
- .formgrid{grid-template-columns:minmax(0,1fr);gap:12px}
- .formgrid .wide{grid-column:auto}
- .progressrow{grid-template-columns:minmax(88px,1fr) minmax(60px,1.5fr) 36px;gap:8px;font-size:11px}
- .subject-select{gap:8px;padding:12px 11px}
- .subject-select-main b{font-size:12px}
- .subject-select-progress small{font-size:9px}
- .study-log-launch{align-items:flex-start;flex-direction:column}
- .study-log-launch button{width:100%}
- .mobilebar{left:8px;right:8px;bottom:8px;padding:5px;border-radius:15px}
- .mobilebar button{min-width:61px;min-height:47px;font-size:14px}
- .mobilebar button span{font-size:9px}
- .modal-card{padding:17px}
-}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
-
-
-/* Final compact visual pass — layout only; all existing controls/features remain */
-.app{max-width:1440px;padding:17px 20px;grid-template-columns:228px minmax(0,1fr);gap:20px}
-.sidebar{top:17px;height:calc(100vh - 34px);padding:14px 11px;border-radius:18px}
-.brand{padding-bottom:13px;margin-bottom:9px}
-#sideNav .side-link{min-height:39px;padding:7px 9px;font-size:12px}
-#sideNav .side-icon{width:25px;height:25px;flex-basis:25px}
-.side-group{margin-bottom:8px}
-.navlabel{margin:9px 9px 4px}
-.sidefoot{padding-top:10px}
-.top{margin:1px 0 16px}
-.view>h1{font-size:clamp(23px,2.8vw,30px);margin-bottom:5px}
-.view>h1+p{margin-bottom:13px;font-size:13px}
-.hero{min-height:0;padding:22px 25px;margin-bottom:14px;border-radius:20px}
-.hero h1{font-size:clamp(25px,3vw,34px)}
-.grid{gap:13px}
-.card{padding:16px;border-radius:15px}
-.card h2{margin-bottom:10px}
-.stat{min-height:0}
-.stat strong{font-size:26px;margin:3px 0}
-.item{gap:9px;padding:9px 11px}
-.list{gap:7px}
-.formgrid{gap:10px}
-label{gap:5px}
-input,select,textarea{min-height:40px;padding:9px 11px}
-.routine-add-card{min-height:158px;padding:4px}
-.routine-add-icon{width:38px;height:38px}
-.study-log-launch{padding:12px 13px;margin-bottom:12px}
-.subject-accordion{margin:7px 0}
-.subject-select{min-height:58px;padding:10px 12px}
-.subject-content{padding:0 11px 10px}
-.paper-panel{padding:10px 2px 8px}
-.chapter-row{min-height:34px;padding:6px 9px}
-.progressrow{margin:11px 0;gap:9px}
-.empty{padding:16px 12px}
-.quote{margin:9px 0;padding:12px 14px}
-.lessonbox{padding:14px}
-.timer{padding:12px 8px}
-.modal-card{width:min(100%,640px);padding:27px}
-@media(max-width:1100px){
- .app{grid-template-columns:214px minmax(0,1fr);gap:15px;padding:15px}
- .card{padding:15px}
-}
-@media(max-width:900px){
- .app{display:block;padding:14px}
- .main{padding-bottom:82px}
- .hero{padding:21px 22px}
- .grid{gap:12px}
-}
-@media(max-width:620px){
- .app{padding:11px}
- .top{margin-bottom:12px}
- .hero{padding:18px 17px;border-radius:16px}
- .hero h1{font-size:24px}
- .card{padding:13px;border-radius:13px}
- .grid{gap:10px}
- .stat strong{font-size:24px}
- .routine-add-card{min-height:145px}
- .subject-select{min-height:54px;padding:9px 10px}
- .modal-card{width:100%;padding:18px}
- .modal-backdrop{padding:10px}
-}
-.dark .routine-add-icon{background:#302e59;color:#d7d3ff}
-
-\n/* Live Bangladesh clock in the top-right header */\n.top-actions{gap:12px}.live-clock{min-width:142px;padding:7px 13px 8px;border:1px solid #e5e8f3;border-radius:13px;background:linear-gradient(135deg,#fff,#f6f7ff);display:grid;grid-template-columns:1fr auto;align-items:center;column-gap:8px;line-height:1.2;font-variant-numeric:tabular-nums}.clock-caption{grid-column:1/-1;display:flex;align-items:center;gap:6px;color:#8490a5;font-size:9px;font-weight:800;letter-spacing:.35px}.clock-caption i{width:6px;height:6px;border-radius:50%;background:#35b58b;box-shadow:0 0 0 3px #35b58b1c}.live-clock strong{font-size:19px;letter-spacing:.3px;color:#5148c8}.live-clock small{font-size:9px;color:#8490a5;font-weight:700}.dark .live-clock{background:linear-gradient(135deg,#202d46,#19253a);border-color:#34435e}.dark .live-clock strong{color:#c4c0ff}.dark .clock-caption,.dark .live-clock small{color:#a3b0c6}@media(max-width:560px){.top-actions{gap:7px}.live-clock{min-width:116px;padding:6px 9px}.live-clock strong{font-size:16px}.clock-caption{font-size:8px}.top-actions #themeBtn{font-size:11px;padding:7px 9px}}\n
-/* Show full Bangla calendar date inside the live clock */
-.live-clock{grid-template-columns:1fr auto;row-gap:4px}.live-clock #clockDate{grid-column:1/-1;font-size:11px;color:#64748b;font-weight:650;white-space:nowrap}.dark .live-clock #clockDate{color:#b3c0d5}@media(max-width:560px){.live-clock #clockDate{font-size:10px}}
-
-/* Consistent in-app dialog styling */
-.app-dialog-backdrop{position:fixed;inset:0;display:grid;place-items:center;padding:18px;background:#050b16b8;backdrop-filter:blur(7px)}
-.app-dialog-card{width:min(440px,100%);padding:25px!important;border:1px solid var(--line);border-radius:20px;background:var(--panel);box-shadow:0 24px 80px #0008;animation:fade .16s ease}
-.app-dialog-mark{width:38px;height:38px;display:grid;place-items:center;border-radius:12px;background:#8ce0c01c;color:var(--accent);font-size:20px;margin-bottom:12px}
-.app-dialog-title{margin:0 0 8px;font-size:19px}.app-dialog-message{color:var(--muted);margin:0 0 18px;white-space:pre-line}
-.app-dialog-input{margin-bottom:16px}.app-dialog-actions{justify-content:flex-end}.app-dialog-actions button{min-width:96px}
-
-.daily-reflection{margin-top:18px;padding:16px;border:1px solid var(--line);border-radius:15px;background:var(--panel2)}.daily-reflection h3{font-size:15px}.daily-reflection textarea{resize:vertical;min-height:96px}
-.study-log-card{align-self:start}.study-log-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.study-log-heading h2{margin:0 0 3px}.study-log-heading p{margin:0}.study-log-card #studyLogs:empty{display:none}.study-log-card #studyLogs .empty{text-align:center;padding:28px 18px;border:1px dashed var(--line);border-radius:14px;background:var(--panel2);color:var(--muted)}@media(max-width:620px){.study-log-heading{align-items:flex-start}}
-/* Subject preparation: clearer hierarchy and progress summary */
-.subject-section-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:16px}
-.subject-section-head h2{margin:3px 0 2px;font-size:18px;letter-spacing:-.25px}
-.subject-section-head p{margin:0;line-height:1.6}
-.subject-kicker{font-size:9px;font-weight:850;letter-spacing:1.45px;color:var(--accent)}
-.subject-head-icon{flex:0 0 42px;width:42px;height:42px;display:grid;place-items:center;border-radius:13px;background:#635bdb12;color:var(--accent);font-size:22px}
-.subject-overview{padding:14px 15px;margin-bottom:18px;border:1px solid #e5e8f5;border-radius:14px;background:linear-gradient(120deg,#f6f6ff,#f1f7ff)}
-.subject-overview-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.subject-overview-top small{display:block;font-size:11px;color:#78849b;font-weight:600}
-.subject-overview-top strong{display:block;margin-top:2px;font-size:21px;line-height:1.35;color:#2e3b56}
-.subject-overview-top strong i{font-size:12px;font-style:normal;font-weight:600;color:#8994a8}
-.subject-overall-percent{font-size:19px;font-weight:850;color:#5b53cc}
-.subject-overview-bar{height:7px;margin-top:10px;overflow:hidden;border-radius:20px;background:#dfe4f1}
-.subject-overview-bar i{display:block;width:0;height:100%;border-radius:inherit;background:linear-gradient(90deg,#635bdb,#38a99e);transition:width .25s ease}
-.subject-list-label{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 2px 8px}
-.subject-list-label b{font-size:12px;color:var(--text)}
-.subject-list-label span{font-size:10px;color:var(--muted)}
-.subject-accordion{margin:8px 0;border-radius:13px;box-shadow:0 3px 12px #263b6507}
-.subject-select{min-height:66px;padding:13px 14px}
-.subject-select-main b{font-size:13px}
-.subject-select-progress b{font-size:15px}
-.subject-content{padding:2px 14px 12px}
-.paper-panel{padding:13px 2px 10px}
-.chapter-row{display:flex;align-items:center;gap:10px;min-height:39px;padding:8px 11px;font-size:12px;line-height:1.5;cursor:pointer;transition:background .15s,border-color .15s}
-.chapter-row:hover{background:#f2f4ff;border-color:#d9dcf5}
-.chapter-row input{flex:0 0 16px;width:16px!important;height:16px;accent-color:var(--accent)}
-.dark .subject-overview{background:linear-gradient(120deg,#1d2942,#172b3d);border-color:#34435e}
-.dark .subject-overview-top small,.dark .subject-overview-top strong i{color:#a3b0c6}
-.dark .subject-overview-top strong,.dark .subject-list-label b{color:#edf2ff}
-.dark .subject-overview-bar{background:#34435e}
-.dark .chapter-row:hover{background:#1b2a43;border-color:#465778}
-@media(max-width:620px){.subject-section-head h2{font-size:16px}.subject-overview{padding:12px}.subject-list-label span{font-size:9px}}
-
-/* Study planner two-column focus: subjects left, today's log right */
-#study .subject-preparation-card{grid-column:span 7;align-self:start}
-#study .study-log-card{grid-column:span 5;align-self:start;min-height:190px}
-#study .study-session-card{grid-column:span 12}
-#study .study-log-card .item{align-items:flex-start}
-#study .study-log-card .item .grow{min-width:0}
-#study .study-log-card .empty{min-height:130px;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px}
-@media(max-width:900px){#study .subject-preparation-card,#study .study-log-card,#study .study-session-card{grid-column:span 12}}
-.backup-help{margin:8px 0 2px;line-height:1.65}.dark .backup-help{color:#a3b0c6}
-/* Weekly review: side-by-side fields on desktop */
-#progress .weekly-review-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:start}
-#progress .weekly-review-fields label{display:block;margin:0;min-width:0}
-#progress .weekly-review-fields textarea{width:100%;min-height:92px;resize:vertical}
-#progress .weekly-review-actions{display:flex;justify-content:flex-end;margin-top:14px}
-@media(max-width:760px){#progress .weekly-review-fields{grid-template-columns:1fr;gap:10px}#progress .weekly-review-fields textarea{min-height:76px}}
-
-/* Study Planner layout repair */
-#study .subject-preparation-card{grid-column:1/-1;min-width:0}
-#study .study-work-row{grid-column:1/-1;width:100%;min-width:0;display:grid;grid-template-columns:minmax(0,7fr) minmax(260px,3fr);gap:16px;align-items:stretch;margin-top:16px}
-#study .study-work-row>.study-session-card,#study .study-work-row>.study-log-card{grid-column:auto;min-width:0;height:100%}
-#study .study-session-card h2{margin-bottom:13px}
-#study .study-session-card .study-log-launch{min-height:88px}
-#study .study-session-card .timer{margin:8px 0 12px}
-#study .study-session-card .timercontrols{gap:9px}
-#study .study-log-card .study-log-heading{margin-bottom:12px}
-#study .study-log-card #studyLogs{min-width:0}
-#study .study-log-card .item{align-items:flex-start;min-width:0}
-#study .study-log-card .item .grow{min-width:0;overflow-wrap:anywhere}
-#study .study-log-card .empty{min-height:130px;display:flex;align-items:center;justify-content:center;text-align:center;padding:18px}
-.dark #study .study-log-launch{background:#111d30;border-color:#34435e}
-@media(max-width:900px){#study .study-work-row{grid-template-columns:minmax(0,1fr);gap:12px}}
-@media(max-width:620px){#study .study-work-row{margin-top:12px}#study .study-session-card .row>label{min-width:0}#study .study-log-launch{align-items:flex-start;flex-direction:column}#study .study-log-launch button{width:100%}}
-
-/* Daily reflection: numbered reusable default question */
-.daily-reflection .reflection-help{margin:7px 0 12px;line-height:1.65}
-.daily-reflection .reflection-picker-label,.daily-reflection .reflection-custom-label{display:grid;gap:6px}
-.daily-reflection .reflection-custom-label{margin-top:10px}
-.daily-reflection .reflection-current{margin-top:7px;color:var(--accent);line-height:1.5}
-.dark .daily-reflection{background:#111d30;border-color:#34435e}
-
-.learning-calendar-launch{display:flex;justify-content:flex-end;margin:16px 0 10px}
-.learning-calendar-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 18px;border-radius:12px;background:var(--accent);color:#fff;border:1px solid transparent;font-weight:750}
-.learning-calendar-btn:hover{filter:brightness(1.04);color:#fff}
-.learning-calendar-panel{margin:0 0 18px}
-.dark .learning-calendar-btn{background:#8178ee;color:#fff}
-/* Daily Learning date calendar and selected-day overview */
-.learning-date-toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:14px 16px;margin:0 0 14px;border:1px solid var(--line);border-radius:15px;background:var(--panel2)}
-.learning-date-toolbar p{margin:3px 0 0}.learning-calendar-btn{white-space:nowrap;background:var(--accent);color:#082019;border-color:transparent;font-weight:750}.learning-date-input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}.learning-selected-date{width:100%;font-size:12px;color:var(--muted)}
-.learning-day-summary{padding:14px 16px;margin:0 0 18px;border:1px solid var(--line);border-radius:15px;background:var(--panel)}.learning-summary-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}.learning-summary-head span{font-size:12px;color:var(--muted)}.learning-summary-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.learning-summary-grid>div{min-width:0;padding:11px;border-radius:11px;background:var(--panel2)}.learning-summary-grid small,.learning-summary-grid span{display:block;color:var(--muted);font-size:11px}.learning-summary-grid strong{display:block;font-size:18px;margin:3px 0;overflow-wrap:anywhere}
-@media(max-width:650px){.learning-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.learning-summary-head{align-items:flex-start;flex-direction:column}.learning-date-toolbar{align-items:flex-start}.learning-calendar-btn{width:100%}}
-
-/* Full month study calendar */
-.learning-calendar{padding:16px!important;margin:0 0 14px}.learning-calendar-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}.learning-calendar-top h3{margin:0}.learning-calendar-top p{margin:4px 0 0}.learning-calendar-controls{display:flex;align-items:center;gap:7px}.learning-calendar-controls strong{min-width:128px;text-align:center;font-size:14px}.learning-calendar-controls button{min-width:34px;padding:7px 10px}.learning-weekdays,.learning-month-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}.learning-weekdays{margin-bottom:7px}.learning-weekdays span{text-align:center;color:var(--muted);font-size:11px;font-weight:700;padding:5px 0}.learning-day-cell{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-width:0;min-height:54px;padding:6px 2px;border:1px solid var(--line);border-radius:10px;background:var(--panel2);color:var(--text);cursor:pointer}.learning-day-cell:hover{border-color:var(--accent)}.learning-day-cell.outside{opacity:.35}.learning-day-cell.today{box-shadow:inset 0 0 0 1px var(--accent)}.learning-day-cell.selected{background:var(--accent);border-color:var(--accent);color:#092019;font-weight:800}.learning-day-cell .day-number{font-size:13px}.learning-day-cell .day-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);visibility:hidden}.learning-day-cell.has-data .day-dot{visibility:visible}.learning-day-cell.selected .day-dot{background:#092019}.learning-calendar-legend{display:flex;gap:18px;flex-wrap:wrap;margin:12px 0 5px;color:var(--muted);font-size:11px}.learning-calendar-legend span{display:flex;align-items:center;gap:6px}.legend-dot{width:7px;height:7px;border-radius:50%;background:var(--accent)}.selected-dot{background:var(--text)}.learning-selected-date{display:block;width:100%;font-size:12px;color:var(--muted);margin-top:6px}@media(max-width:650px){.learning-calendar-top{align-items:flex-start;flex-direction:column}.learning-calendar-controls{width:100%;justify-content:space-between}.learning-calendar-controls strong{flex:1}.learning-weekdays,.learning-month-grid{gap:4px}.learning-day-cell{min-height:43px;border-radius:8px}.learning-day-cell .day-number{font-size:12px}}
-</style></head>
-<body><div class="app">
-<aside class="sidebar"><div class="brand"><div class="logo">✦</div><div><b>MY LIFE</b><small>STUDENT DASHBOARD</small></div></div><div class="side-caption">WORKSPACE</div><nav id="sideNav"></nav><div class="sidefoot"><div class="side-tip-icon">✧</div><b>একদিনে সব নয়।</b><div class="small">আজকের ছোট পদক্ষেপই আগামী দিনের অগ্রগতি।</div><div class="side-local"><span class="local-dot"></span> ব্যক্তিগত · এই browser-এ সংরক্ষিত</div></div></aside>
-<main class="main"><div class="top"><div><div class="date" id="dateNow"></div><div class="small" id="greeting">স্বাগতম</div></div><div class="row top-actions"><div class="live-clock" aria-label="বাংলাদেশের বর্তমান সময়"><span class="clock-caption"><i></i> ঢাকা · বাংলাদেশ</span><strong id="liveClock">--:--:--</strong><small id="clockPeriod">সময়</small><small id="clockDate"></small></div><button class="ghost" id="themeBtn" title="Theme">☼ Theme</button></div></div>
-<section class="view active" id="home"><div class="hero"><span class="pill">PRESENT · PURPOSE · PROGRESS</span><h1 id="hello">আজ তোমার জীবনের একটি নতুন দিন।</h1><p>তোমার প্রধান লক্ষ্য—জ্ঞান, চরিত্র, ঈমান ও সুস্থতার যত্ন নিয়ে একজন দক্ষ ও মানবিক ডাক্তার হওয়ার পথে এগিয়ে যাওয়া।</p></div>
-<div class="grid"><div class="card span3 stat">আজকের কাজ<strong id="homeTaskStat">0 / 0</strong><div class="bar"><i id="homeTaskBar"></i></div></div><div class="card span3 stat">আজকের পড়া<strong id="homeStudyStat">0 min</strong><span class="small">Study log থেকে</span></div><div class="card span3 stat">আজকের Website time<strong id="homeScreenStat">0 min</strong><span class="small">এই Dashboard-এ</span></div><div class="card span3 stat">সাপ্তাহিক পড়া<strong id="homeWeekStat">0h</strong><span class="small">Logged sessions</span></div>
-<div class="card span7"><div class="row between"><h2>আজকের অগ্রাধিকার</h2><button data-go="tasks">সব কাজ →</button></div><div id="homeTasks" class="list"></div></div><div class="card span5"><div class="row between"><h2>আজকের রুটিন</h2><button data-go="routine">সম্পাদনা →</button></div><div id="homeRoutine" class="list"></div></div><div class="card span12"><h2>আজকের মনে রাখার কথা</h2><div class="quote">ধারাবাহিকতা মানে প্রতিদিন নিখুঁত হওয়া নয়; প্রয়োজন হলে বিশ্রাম নিয়ে আবার নিজের গুরুত্বপূর্ণ কাজে ফিরে আসা।</div><p class="small">আজকের তিনটি অগ্রাধিকার ঠিক করো। সব কাজ শেষ না হলেও সবচেয়ে গুরুত্বপূর্ণ কাজটি এগিয়ে নাও।</p></div></div></section>
-<section class="view" id="routine"><h1>আমার দৈনিক রুটিন</h1><p class="muted">তোমার বাস্তব কলেজ, যাতায়াত, সালাত, ঘুম ও বিশ্রামের সময় অনুযায়ী সাজাও। নমুনা সময় বাধ্যতামূলক নয়।</p><div class="grid"><div class="card span5"><div class="routine-add-card"><div class="routine-add-icon">＋</div><h2>নিজের রুটিন সাজাও</h2><p class="small muted">সময়, কাজ ও বিভাগ দিয়ে দৈনিক পরিকল্পনা তৈরি করো।</p><button type="button" class="primary" data-open-modal="routineModal">＋ রুটিন যোগ করো</button></div></div><div class="card span7"><div class="row between"><h2>তোমার রুটিন</h2><span class="pill" id="routineCount">0 items</span></div><div id="routineList" class="list"></div></div></div></section>
-<section class="view" id="tasks"><h1>Daily Checklist</h1><p class="muted">প্রতিদিন নতুন তালিকা। অসম্পূর্ণ কাজ পরের দিনে নিতে পারো।</p><div class="grid"><div class="card span5"><h2>কাজ যোগ করো</h2><form id="taskForm" class="formgrid"><label class="wide">কাজ<input id="taskTitle" maxlength="120" required placeholder="আজ কী করবে?"></label><label>বিভাগ<select id="taskCat"><option>Study</option><option>Faith</option><option>Health</option><option>College</option><option>Personal</option></select></label><label>Priority<select id="taskPriority"><option>High</option><option selected>Normal</option><option>Low</option></select></label><button class="primary wide">কাজ যোগ করো</button></form><div style="margin-top:20px"><h3>অগ্রগতি</h3><div class="bar"><i id="taskBar"></i></div><p id="taskPercent" class="small muted">0%</p></div></div><div class="card span7"><div class="row between"><h2>আজকের তালিকা</h2><button id="carryBtn">অসম্পূর্ণ কাজ কালকে নাও</button></div><div id="taskList" class="list"></div></div></div></section>
-<section class="view" id="study"><h1>Study Planner</h1><p class="muted">Understand → Recall → Practice → Review. Study log করলেই সময় ও progress report-এ যোগ হবে।</p><div class="grid"><div class="grid study-work-row"><div class="card span7 study-session-card"><h2>Study Session</h2><div class="study-log-launch"><div><b>আজকের পড়াশোনা Log করো</b><p class="small muted">কোন বিষয়, কখন এবং কতক্ষণ পড়েছ—সব হিসাব রাখো।</p></div><button type="button" class="primary" data-open-modal="studyModal">＋ Study Log যোগ</button></div><hr style="border-color:var(--line);margin:18px 0"><div class="row between"><h2>Focus Timer</h2><button type="button" class="ghost" id="openFocusFullscreen">⛶ Fullscreen timer</button></div><div class="timer" id="timerDisplay">25:00</div><div class="timercontrols"><button id="timerStart" class="primary">Start</button><button id="timerPause">Pause</button><button id="timerReset">Reset</button></div><div class="row" style="margin-top:12px"><label style="flex:1">Focus minutes<input id="focusMins" type="number" min="1" max="180" value="25"></label><label style="flex:1">Break minutes<input id="breakMins" type="number" min="1" max="60" value="5"></label></div><p class="small muted" id="timerHint">Timer শেষ হলে নিজের Study Session log করো।</p></div><div class="card span5 study-log-card"><div class="study-log-heading"><div><h2>আজকের Study Log</h2><p class="small muted">আজকের সম্পন্ন Study Session-গুলো এখানে দেখাবে।</p></div></div><div id="studyLogs" class="list"></div></div></div><div class="card span12 subject-preparation-card"><div class="subject-section-head"><div><span class="subject-kicker">HSC SYLLABUS TRACKER</span><h2>বিষয়ভিত্তিক প্রস্তুতি</h2><p class="small muted">বিষয় নির্বাচন করে Chapter অনুযায়ী পড়ার অগ্রগতি আপডেট করো।</p></div><span class="subject-head-icon">▤</span></div><div class="subject-overview"><div class="subject-overview-top"><div><small>মোট Chapter সম্পন্ন</small><strong><span id="subjectChapterDone">0</span><i> / <span id="subjectChapterTotal">0</span></i></strong></div><span class="subject-overall-percent" id="subjectOverallPercent">0%</span></div><div class="subject-overview-bar"><i id="subjectOverallBar"></i></div></div><div class="subject-list-label"><b>তোমার বিষয়সমূহ</b><span>বিস্তারিত দেখতে চাপ দাও</span></div><div id="subjects"></div></div></div></section><section class="view" id="progress"><h1>আমার উন্নতি</h1><p class="muted">নিজেকে গত সপ্তাহের সঙ্গে তুলনা করো, অন্য কারও সঙ্গে নয়। Data শুধু তোমার logged activity থেকে হিসাব হয়।</p><div class="grid"><div class="card span3 stat">সম্পন্ন কাজ<strong id="doneTotal">0</strong></div><div class="card span3 stat">মোট Study Time<strong id="totalMinutes">0h</strong></div><div class="card span3 stat">সক্রিয় দিন<strong id="activeDays">0</strong></div><div class="card span3 stat">সাপ্তাহিক লক্ষ্য<strong id="goalView">25h</strong></div><div class="card span6"><h2>গত ৭ দিনের Study Time</h2><div id="weekBars"></div></div><div class="card span6"><h2>বিষয়ভিত্তিক অগ্রগতি</h2><div id="progressSubjects"></div></div><div class="card span12 weekly-review-card"><h2>সাপ্তাহিক Review</h2><div class="weekly-review-fields"><label>এই সপ্তাহে কী ভালো হয়েছে?<textarea id="reviewGood" rows="3"></textarea></label><label>কী উন্নতি করতে চাই?<textarea id="reviewImprove" rows="3"></textarea></label><label>পরের সপ্তাহের একটি গুরুত্বপূর্ণ লক্ষ্য<textarea id="reviewGoal" rows="3"></textarea></label></div><div class="weekly-review-actions"><button class="primary" id="saveReview">Review সংরক্ষণ</button></div></div></div></section>
-<section class="view" id="screen"><h1>Screen Time</h1><p class="muted">এই Dashboard active ও visible থাকলে সময় মাপে। অন্য Windows app-এর সময় ম্যানুয়ালি যোগ করতে হবে।</p><div class="grid"><div class="card span5"><div class="stat">আজ এই Dashboard-এ<strong id="screenBig">0 min</strong></div><div class="bar"><i id="screenBar"></i></div><label style="margin-top:14px">দৈনিক Dashboard limit (মিনিট)<input id="screenGoal" type="number" min="15" max="1440"></label><button class="primary" id="saveScreenGoal" style="margin-top:10px">লক্ষ্য সংরক্ষণ</button><p class="small muted" id="screenMessage"></p></div><div class="card span7"><h2>অন্য অ্যাপের সময় যোগ</h2><form id="manualForm" class="formgrid"><label>ওয়েবসাইট / অ্যাপ নির্বাচন<select id="appPreset" required><option value="">একটি নির্বাচন করো</option><option>YouTube</option><option>Google</option><option>WhatsApp</option><option>Messenger</option><option>Facebook</option><option>Discord</option><option>Instagram</option><option>TikTok</option><option>Game</option><option>Others</option></select></label><label id="customAppWrap" class="hidden">নতুন Website / App যোগ করো<input id="appName" maxlength="80" placeholder="ওয়েবসাইট বা অ্যাপের নাম লিখো"></label><label>কতক্ষণ ব্যবহার করেছ? (মিনিট)<input id="appMins" type="number" min="1" max="1440" required placeholder="যেমন: ৩০"></label><button class="primary wide">সময় যোগ করো</button></form><div id="manualList" class="list" style="margin-top:14px"></div></div><div class="card span12"><h2>Screen Time-এর স্বাস্থ্যকর ব্যবহার</h2><ul><li>পড়াশোনার সময় অপ্রয়োজনীয় tab ও notification বন্ধ রাখো।</li><li>বিরতিতে সম্ভব হলে স্ক্রিন থেকে দূরে থাকো।</li><li>সব screen time খারাপ নয়—কাজের উদ্দেশ্য ও ভারসাম্য গুরুত্বপূর্ণ।</li></ul></div></div></section>
-<section class="view" id="learn"><h1>আজকের শেখা</h1><p class="muted">একটি ধারণা পড়ো, নিজের ভাষায় বোঝো, তারপর বাস্তবে প্রয়োগ করো।</p><div class="card"><div class="row between"><span class="pill" id="lessonCat">Study Skills</span><span id="lessonCount" class="small muted"></span></div><h2 id="lessonTitle" style="margin-top:12px"></h2><div class="lessonbox"><b id="lessonHead"></b><p id="lessonBody" style="margin:9px 0"></p><b>আজকের প্রয়োগ</b><p id="lessonAction" style="margin:6px 0 0"></p></div><div class="row between" style="margin-top:14px"><button id="prevLesson">← আগের</button><button class="primary" id="nextLesson">পরের →</button></div><div class="learning-calendar-launch"><button type="button" class="learning-calendar-btn" id="toggleLearningCalendar" aria-expanded="false">▦ Study Calendar খুলুন</button></div><div id="learningCalendarPanel" class="learning-calendar-panel hidden"><div class="learning-calendar card"><div class="learning-calendar-top"><div><h3>Study Calendar</h3><p class="small muted">যেকোনো তারিখে ক্লিক করে সেই দিনের পড়াশোনা ও নোট দেখো।</p></div><div class="learning-calendar-controls"><button type="button" id="learningMonthPrev" aria-label="আগের মাস">‹</button><strong id="learningMonthLabel"></strong><button type="button" id="learningMonthNext" aria-label="পরের মাস">›</button><button type="button" id="learningTodayBtn">আজ</button></div></div><div class="learning-weekdays"><span>সোম</span><span>মঙ্গল</span><span>বুধ</span><span>বৃহঃ</span><span>শুক্র</span><span>শনি</span><span>রবি</span></div><div id="learningMonthGrid" class="learning-month-grid"></div><div class="learning-calendar-legend"><span><i class="legend-dot active-dot"></i> তথ্য আছে</span><span><i class="legend-dot selected-dot"></i> নির্বাচিত দিন</span></div><div id="learningSelectedDate" class="learning-selected-date"></div></div><div id="learningDaySummary" class="learning-day-summary"></div></div><div class="daily-reflection"><div class="row between"><h3 style="margin:0">আজকের নিজের কাছে প্রশ্ন</h3><span class="small muted">Daily Check-in</span></div><p class="small muted reflection-help">একবার ডিফল্ট প্রশ্ন সেট করলেই প্রতিদিন সেটিই থাকবে। চাইলে পরে পরিবর্তন করতে পারো।</p><label class="reflection-picker-label">প্রশ্নের তালিকা থেকে বেছে নাও<select id="learningQuestionPreset"><option value="আজ তুমি কী শিখলে?">০১. আজ তুমি কী শিখলে?</option><option value="আজকের সবচেয়ে গুরুত্বপূর্ণ কাজটি কী ছিল?">০২. আজকের সবচেয়ে গুরুত্বপূর্ণ কাজটি কী ছিল?</option><option value="আজ কোন বিষয়টি আরও ভালোভাবে বুঝতে পেরেছ?">০৩. আজ কোন বিষয়টি আরও ভালোভাবে বুঝতে পেরেছ?</option><option value="আজ কোন ভুল থেকে নতুন কিছু শিখলে?">০৪. আজ কোন ভুল থেকে নতুন কিছু শিখলে?</option><option value="আজ নিজের কোন ভালো প্রচেষ্টার জন্য গর্বিত?">০৫. আজ নিজের কোন ভালো প্রচেষ্টার জন্য গর্বিত?</option><option value="আজ তুমি তোমার লক্ষ্যের জন্য কী পদক্ষেপ নিয়েছ?">০৬. আজ তুমি তোমার লক্ষ্যের জন্য কী পদক্ষেপ নিয়েছ?</option><option value="আগামীকাল কোন কাজটি আগে করবে?">০৭. আগামীকাল কোন কাজটি আগে করবে?</option><option value="আজ কৃতজ্ঞ হওয়ার মতো তিনটি বিষয় কী?">০৮. আজ কৃতজ্ঞ হওয়ার মতো তিনটি বিষয় কী?</option><option value="custom">নিজের প্রশ্ন লিখব…</option></select></label><label id="learningQuestionCustomWrap" class="reflection-custom-label">নিজের প্রশ্ন<input id="learningQuestion" maxlength="180" placeholder="তোমার পছন্দের প্রশ্ন লিখে নাও"></label><button id="updateLearningQuestion" class="primary" style="margin-top:9px">ডিফল্ট প্রশ্ন হিসেবে সেট করো</button><div class="reflection-current small" id="learningQuestionStatus">এই প্রশ্নটি প্রতিদিন দেখাবে।</div><label style="margin-top:14px">আজকের উত্তর<textarea id="learningAnswer" rows="4" placeholder="আজকের শেখা, অভিজ্ঞতা বা উপলব্ধি এখানে লেখো..."></textarea></label><button class="primary" id="saveLearningAnswer" style="margin-top:8px">আজকের উত্তর সংরক্ষণ</button></div><label style="margin-top:16px">নিজের নোট<textarea id="lessonNote" rows="3" placeholder="আজকের lesson থেকে অতিরিক্ত নোট..."></textarea></label><button id="saveLesson" style="margin-top:8px">নোট সংরক্ষণ</button></div></section>
-<section class="view" id="guide"><h1>Life Guide — Daily Revision</h1><p class="muted">প্রতিদিন সকালে বা রাতে কয়েক মিনিট পড়ো। জীবনকে একদিনে সমাধান করতে হবে না।</p><div class="quote">আমার কাজ হলো পরের সঠিক পদক্ষেপটি নেওয়া—পুরো জীবন একদিনে সমাধান করা নয়।</div><div class="grid"><div class="card span6"><h2>দৈনিক জীবন পরিচালনা</h2><ol><li>ঘুম থেকে উঠে সালাত ও দিনের প্রস্তুতি নাও।</li><li>আজকের ৩টি গুরুত্বপূর্ণ কাজ লিখে রাখো।</li><li>সতেজ সময়ে কঠিন পড়া শুরু করো।</li><li>বুঝো → বই বন্ধ করে মনে করো → অনুশীলন → revise করো।</li><li>College, খাবার, পানি, বিশ্রাম ও হাঁটার সময় রাখো।</li><li>পরিবার ও মানুষের সঙ্গে সম্মান রেখে কথা বলো; নিজের সময়ের সীমাও জানাও।</li><li>রাতে দিনের হিসাব করে আগামীকালের প্রস্তুতি নাও।</li></ol></div><div class="card span6"><h2>সমস্যা সমাধানের ৫ ধাপ</h2><ol><li><b>STOP:</b> একটু থামো, ধীরে শ্বাস নাও।</li><li><b>DEFINE:</b> সমস্যাটি এক বাক্যে লেখো।</li><li><b>SORT:</b> নিয়ন্ত্রণে থাকা ও না থাকা অংশ আলাদা করো।</li><li><b>ACT:</b> সবচেয়ে ছোট বাস্তব পদক্ষেপ নাও।</li><li><b>SUPPORT:</b> প্রয়োজন হলে বিশ্বস্ত মানুষ বা পেশাজীবীর সাহায্য নাও।</li></ol><div class="quote">বিশ্রাম ব্যর্থতা নয়। সাহায্য চাওয়া দুর্বলতা নয়।</div></div><div class="card span6"><h2>নিজের যত্ন</h2><ul><li>নিয়মিত ঘুম, পুষ্টিকর খাবার ও শরীরচর্চা।</li><li>ভুল হলে কারণ বোঝো; নিজেকে অপমান কোরো না।</li><li>কাজকে ছোট ধাপে শুরু করো—১০ মিনিটও শুরু হতে পারে।</li><li>অতিরিক্ত চাপ হলে বিরতি নাও এবং সাহায্য চাও।</li><li>নিজের মূল্য শুধু নম্বর বা উৎপাদনশীলতা দিয়ে বিচার কোরো না।</li></ul></div><div class="card span6"><h2>ঈমান ও উদ্দেশ্য</h2><ul><li>সালাতকে দৈনন্দিন জীবনের ভিত্তি করো।</li><li>প্রতিদিন অল্প হলেও কুরআন পড়ো/বোঝার চেষ্টা করো।</li><li>দোয়া, তওবা ও আল্লাহর রহমতের আশা ধরে রাখো।</li><li>জ্ঞান অর্জন, মানুষের উপকার ও ভালো চরিত্রকে লক্ষ্য রাখো।</li><li>ধর্মীয় প্রশ্নে বিশ্বস্ত জ্ঞানী আলেমের পরামর্শ নাও।</li></ul></div></div></section>
-<section class="view" id="settings"><h1>Settings & Backup</h1><div class="grid"><div class="card span6"><h2>নিজের Dashboard</h2><form id="settingsForm" class="formgrid"><label class="wide">নাম / Greeting<input id="displayName" maxlength="50" placeholder="যে নামে স্বাগতম জানাবে"></label><label class="wide">সাপ্তাহিক Study Goal (ঘণ্টা)<input id="weeklyGoal" type="number" min="1" max="80" value="25"></label><label class="wide study-year-field"><span class="study-year-label">HSC Syllabus</span><span class="study-year-control"><span class="study-year-icon">▤</span><select id="studyYear" aria-label="পত্র নির্বাচন"><option value="all">সব পত্র — ১ম ও ২য় পত্র</option><option value="first">শুধু ১ম পত্র</option><option value="second">শুধু ২য় পত্র</option></select><span class="study-year-arrow">⌄</span></span><small class="study-year-help">Study section-এ কোন পত্রের অধ্যায় দেখাবে তা বেছে নাও।</small></label><button class="primary wide">Settings সংরক্ষণ</button></form></div><div class="card span6"><h2>Backup & Restore</h2><p class="small muted">এই browser-এর Local Storage-এ তথ্য থাকে। Browser data clear বা device change করার আগে backup রাখবে।</p><button class="primary" id="backupData">↓ সুন্দর TXT Backup Download</button><p class="small muted backup-help">তোমার পড়াশোনা, রুটিন, অগ্রগতি ও অন্যান্য তথ্য সুন্দরভাবে সাজানো বাংলা Text File হিসেবে ডাউনলোড হবে।</p><label style="margin-top:14px">আগের JSON Backup Restore (ঐচ্ছিক)<input type="file" id="restoreFile" accept="application/json"></label><p class="small muted backup-help">TXT রিপোর্ট পড়ার জন্য। পুরোনো JSON Backup থাকলে সেটি Restore করা যাবে।</p><button class="danger" id="resetData" style="margin-top:14px">সব local data reset</button></div><div class="card span12"><h2>গুরুত্বপূর্ণ সীমাবদ্ধতা</h2><ul><li>এই সংস্করণে account/login বা cloud sync নেই; একই browser-এ data থাকে।</li><li>Screen time কেবল এই site-এর active time automatic track করে; Windows-এর সব app নয়।</li><li>Routine ও progress তোমার নিজের দেওয়া তথ্যের ওপর নির্ভর করে।</li></ul></div></div></section>
-</main></div><div class="mobilebar" id="mobileNav"></div><div class="modal-backdrop hidden" id="routineModal" role="dialog" aria-modal="true" aria-labelledby="routineModalTitle"><div class="modal-card"><div class="modal-head"><div><span class="modal-kicker">DAILY PLANNER</span><h2 id="routineModalTitle">রুটিনে নতুন কাজ</h2></div><button type="button" class="modal-close" data-close-modal="routineModal" aria-label="Close">×</button></div><form id="routineForm" class="formgrid"><label>From — শুরু<input type="time" id="rFrom" required></label><label>To — শেষ<input type="time" id="rTo" required></label><label>বিভাগ<select id="rCategory"><option>Study</option><option>Faith</option><option>College</option><option>Health</option><option>Personal</option><option>Rest</option></select></label><label class="wide">কাজের নাম<input id="rTitle" required maxlength="90" placeholder="যেমন: Biology revision"></label><label class="wide">বিরতি রাখবে?<select id="rBreakEnabled"><option value="yes">হ্যাঁ, বিরতি যোগ করব</option><option value="no">না</option></select></label><label>কতক্ষণ পর বিরতি?<select id="rBreakAfter"><option value="25">২৫ মিনিট</option><option value="40">৪০ মিনিট</option><option value="50" selected>৫০ মিনিট</option><option value="60">৬০ মিনিট</option><option value="90">৯০ মিনিট</option></select></label><label>বিরতির দৈর্ঘ্য<select id="rBreakMins"><option value="5">৫ মিনিট</option><option value="10" selected>১০ মিনিট</option><option value="15">১৫ মিনিট</option><option value="20">২০ মিনিট</option></select></label><label class="wide">বিস্তারিত<input id="rDetail" maxlength="140" placeholder="ঐচ্ছিক"></label><div class="modal-actions wide"><button type="button" class="ghost" data-close-modal="routineModal">বাতিল</button><button class="primary" id="routineSubmit">রুটিন সংরক্ষণ</button></div></form></div></div><div class="modal-backdrop hidden" id="studyModal" role="dialog" aria-modal="true" aria-labelledby="studyModalTitle"><div class="modal-card"><div class="modal-head"><div><span class="modal-kicker">STUDY TRACKER</span><h2 id="studyModalTitle">পড়াশোনার হিসাব যোগ করো</h2></div><button type="button" class="modal-close" data-close-modal="studyModal" aria-label="Close">×</button></div><form id="studyForm" class="formgrid"><label class="wide">বিষয় / Paper<select id="subject"></select></label><label>যেদিন পড়েছ<input type="date" id="studyDate" required></label><label>শুরুর সময়<input type="time" id="studyStart" required></label><label class="wide">কতক্ষণ পড়েছ (মিনিট)<input type="number" id="minutes" min="1" max="600" required placeholder="যেমন ৫০"></label><label class="wide">Chapter / Topic<input id="studyNote" maxlength="140" placeholder="কোন Chapter বা Topic পড়েছ?"></label><div class="modal-actions wide"><button type="button" class="ghost" data-close-modal="studyModal">বাতিল</button><button class="primary">Study Log সংরক্ষণ</button></div></form></div></div><div class="toast" id="toast"></div><div id="focusFullscreen" class="focus-fullscreen hidden" role="dialog" aria-modal="true" aria-label="Fullscreen Focus Timer"><div class="focus-shell"><div class="focus-top"><div class="focus-mode" id="focusFullMode">FOCUS</div><button type="button" class="focus-close" id="closeFocusFullscreen" aria-label="Close fullscreen timer">✕</button></div><div class="focus-center"><div class="focus-ring"><div class="focus-time" id="focusFullDisplay">25:00</div></div><div class="focus-full-controls"><button type="button" class="focus-main-btn" id="focusFullStart">▶ Start</button><button type="button" class="focus-secondary-btn" id="focusFullPause">Ⅱ Pause</button><button type="button" class="focus-secondary-btn" id="focusFullReset">↺ Reset</button></div><div class="focus-full-note" id="focusFullHint">Stay focused.</div></div></div></div>
+:root{--bg:#f5f7f8;--surface:#fff;--ink:#1f2933;--muted:#687581;--line:#e4e9ed;--accent:#287d69;--accent-soft:#e8f3ef;--danger:#b54747;--shadow:0 8px 28px #1f29330a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.65 system-ui,-apple-system,"Noto Sans Bengali","Segoe UI",sans-serif}
+button,input{font:inherit}
+button{border:1px solid var(--line);border-radius:10px;padding:9px 13px;background:#fff;color:var(--ink);cursor:pointer}
+button:hover{border-color:#9bbcaf}
+button.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:650}
+button.danger{color:var(--danger)}
+button:focus-visible,input:focus-visible{outline:3px solid #287d6930;outline-offset:2px}
+.app{width:min(820px,100%);margin:0 auto;padding:28px 18px 60px}
+header{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:24px}
+.brand{font-size:18px;font-weight:800;letter-spacing:-.3px}
+.date{font-size:13px;color:var(--muted)}
+.tabs{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 20px}
+.tabs button{font-size:13px;background:transparent}
+.tabs button.active{background:var(--accent-soft);border-color:#c9e0d6;color:var(--accent);font-weight:700}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:var(--shadow)}
+h1{font-size:25px;line-height:1.3;margin:0 0 5px;letter-spacing:-.5px}
+h2{font-size:17px;margin:0 0 14px}
+.sub{color:var(--muted);font-size:13px;margin:0 0 20px}
+.summary{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:11px;margin-bottom:15px;font-size:13px}
+.summary strong{font-size:15px}
+.task-list{display:grid;gap:8px}
+.task{display:grid;grid-template-columns:22px minmax(0,1fr) auto;align-items:center;gap:11px;padding:11px 12px;border:1px solid var(--line);border-radius:11px;background:#fff}
+.task input{width:18px;height:18px;margin:0;accent-color:var(--accent);cursor:pointer}
+.task-name{font-weight:620;overflow-wrap:anywhere}
+.task.done .task-name{text-decoration:line-through;color:var(--muted);font-weight:450}
+.task-time{font-size:12px;color:var(--muted);white-space:nowrap}
+.task-extra{font-size:10px;color:var(--accent);margin-left:6px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.field{display:grid;gap:6px;font-size:13px;color:var(--muted)}
+.field input{width:100%;min-width:0;border:1px solid var(--line);border-radius:9px;padding:9px 10px;background:#fff;color:var(--ink)}
+.formrow{display:grid;grid-template-columns:minmax(0,1fr) 125px 40px;gap:8px;align-items:end}
+.editor-list{display:grid;gap:9px}
+.editor-item{display:grid;grid-template-columns:minmax(0,1fr) 125px 40px;gap:8px;align-items:end;padding:10px;border:1px solid var(--line);border-radius:11px}
+.icon-btn{width:40px;height:40px;padding:0;font-size:18px}
+.hint{font-size:12px;color:var(--muted);margin:12px 0 0}
+.warning{margin-top:12px;padding:10px 12px;border-radius:9px;background:#fff5e8;color:#82551d;font-size:12px}
+.empty{padding:22px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:11px}
+.history-day{padding:12px 0;border-bottom:1px solid var(--line)}
+.history-day:last-child{border-bottom:0}
+.history-head{display:flex;justify-content:space-between;gap:10px;font-weight:650}
+.history-detail{font-size:12px;color:var(--muted);margin-top:3px}
+.backup-box{padding:14px;border:1px solid var(--line);border-radius:11px;margin-top:12px}
+.backup-box p{font-size:13px;color:var(--muted);margin:4px 0 12px}
+.hidden{display:none!important}
+footer{text-align:center;color:var(--muted);font-size:11px;margin-top:18px}
+@media(max-width:560px){.app{padding:20px 12px 40px}.panel{padding:15px}header{align-items:flex-start}.task{grid-template-columns:22px minmax(0,1fr);gap:9px}.task-time{grid-column:2}.formrow,.editor-item{grid-template-columns:minmax(0,1fr) 105px 38px}.icon-btn{width:38px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div><div class="brand">আমার রুটিন</div><div class="date" id="todayDate"></div></div>
+  <div class="date">ব্যক্তিগত checklist</div>
+</header>
+<nav class="tabs" aria-label="প্রধান মেনু">
+  <button class="active" data-tab="today">আজকের তালিকা</button>
+  <button data-tab="edit">রুটিন সম্পাদনা</button>
+  <button data-tab="history">আগের দিন</button>
+  <button data-tab="backup">ব্যাকআপ</button>
+</nav>
+<main>
+<section id="todayView" class="panel">
+  <h1>আজকের কাজ</h1>
+  <p class="sub">কাজ শেষ হলে শুধু টিক দাও। কোনো streak, points বা চাপ নেই।</p>
+  <div class="summary"><span>সম্পন্ন কাজ</span><strong id="todayCount">০ / ০</strong></div>
+  <div class="task-list" id="todayTasks"></div>
+  <div class="actions"><button class="primary" id="addTodayBtn">+ আজকের জন্য কাজ যোগ</button></div>
+  <div id="addTodayForm" class="backup-box hidden">
+    <div class="formrow">
+      <label class="field">কাজের নাম<input id="extraName" maxlength="90" placeholder="যেমন: বাজার করা"></label>
+      <label class="field">সময় (ঐচ্ছিক)<input id="extraTime" type="time"></label>
+      <button class="primary" id="saveExtraBtn">যোগ</button>
+    </div>
+    <p class="hint">এই কাজটি শুধু আজকের তালিকায় থাকবে।</p>
+  </div>
+</section>
+<section id="editView" class="panel hidden">
+  <h1>রুটিন সম্পাদনা</h1>
+  <p class="sub">নিয়মিত কাজের নাম বা সময় বদলাও। পরিবর্তন আজকের তালিকাতেও থাকবে।</p>
+  <div class="editor-list" id="routineEditor"></div>
+  <div class="actions"><button class="primary" id="addRoutineBtn">+ নিয়মিত কাজ যোগ</button><button id="saveRoutineBtn">পরিবর্তন সংরক্ষণ</button></div>
+  <div id="overlapWarning" class="warning hidden"></div>
+  <p class="hint">সময় না দিলেও চলবে। সময় দেওয়া কাজগুলোতে overlap থাকলে সতর্ক করা হবে, তবে তুমি চাইলে একই সময়ের কাজ রাখতে পারবে।</p>
+</section>
+<section id="historyView" class="panel hidden">
+  <h1>আগের দিনের তালিকা</h1>
+  <p class="sub">আগের দিনের checklist ও completion দেখা যাবে।</p>
+  <div id="historyList"></div>
+</section>
+<section id="backupView" class="panel hidden">
+  <h1>ডেটা ব্যাকআপ</h1>
+  <p class="sub">সব তথ্য এই browser-এর LocalStorage-এ থাকে। মাঝে মাঝে backup রাখলে browser data মুছে গেলেও ফিরিয়ে আনতে পারবে।</p>
+  <div class="backup-box">
+    <strong>Backup download</strong>
+    <p>রুটিন, আজকের checklist এবং আগের দিনের history একটি JSON file-এ সংরক্ষণ করো।</p>
+    <button class="primary" id="exportBtn">Backup download</button>
+  </div>
+  <div class="backup-box">
+    <strong>Backup restore</strong>
+    <p>আগে download করা JSON backup বেছে নাও। Restore করলে বর্তমান LocalStorage data backup-এর data দিয়ে replace হবে।</p>
+    <label class="field">Backup file<input type="file" id="importFile" accept="application/json,.json"></label>
+    <div class="actions"><button id="importBtn">Restore backup</button></div>
+  </div>
+  <p class="hint">এই data অন্য device-এ নিজে থেকে sync হবে না।</p>
+</section>
+</main>
+<footer>সহজ রাখো। কাজ শেষ হলে বন্ধ করো।</footer>
+</div>
 <script>
-(()=>{'use strict';
-const KEY='my-life-dashboard-v3',today=()=>{const d=new Date();return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')},$=id=>document.getElementById(id),uid=()=>Math.random().toString(36).slice(2)+Date.now().toString(36);
-const nav=[['home','⌂','Overview'],['routine','◷','My Routine'],['tasks','✓','Checklist'],['study','▤','Study Planner'],['progress','↗','Progress'],['screen','▣','Screen Time'],['learn','✦','Daily Learning'],['guide','☼','Life Guide'],['settings','⚙','Settings']];
-const chapterSet=(paper,names)=>({name:paper,progress:0,chapters:names.map((title,i)=>({id:paper.toLowerCase().replace(/[^a-z0-9]+/g,'-')+'-'+(i+1),title,done:false}))});
-const syllabusSubjects=()=>[
-chapterSet('Physics 1st Paper',['ভৌতজগৎ ও পরিমাপ','ভেক্টর','গতিবিদ্যা','নিউটনিয়ান বলবিদ্যা','কাজ, শক্তি ও ক্ষমতা','মহাকর্ষ ও অভিকর্ষ','পদার্থের গাঠনিক ধর্ম','পর্যাবৃত্ত গতি','তরঙ্গ','আদর্শ গ্যাস ও গ্যাসের গতিতত্ত্ব']),
-chapterSet('Physics 2nd Paper',['তাপগতিবিদ্যা','স্থির তড়িৎ','চল তড়িৎ','তড়িৎ প্রবাহের চৌম্বক ক্রিয়া ও চুম্বকত্ব','তড়িৎচৌম্বকীয় আবেশ ও পরিবর্তী প্রবাহ','জ্যামিতিক আলোকবিজ্ঞান','ভৌত আলোকবিজ্ঞান','আধুনিক পদার্থবিজ্ঞানের সূচনা','পরমাণুর মডেল ও নিউক্লীয় পদার্থবিজ্ঞান','সেমিকন্ডাক্টর ও ইলেকট্রনিক্স','জ্যোতির্বিজ্ঞান']),
-chapterSet('Chemistry 1st Paper',['ল্যাবরেটরির নিরাপদ ব্যবহার','গুণগত রসায়ন','মৌলের পর্যায়বৃত্ত ধর্ম ও রাসায়নিক বন্ধন','রাসায়নিক পরিবর্তন','কর্মমুখী রসায়ন']),
-chapterSet('Chemistry 2nd Paper',['পরিবেশ রসায়ন','জৈব রসায়ন','পরিমাণগত রসায়ন','তড়িৎ রসায়ন','অর্থনৈতিক রসায়ন']),
-chapterSet('Biology 1st Paper',['কোষ ও এর গঠন','কোষ বিভাজন','কোষ রসায়ন','অণুজীব','শৈবাল ও ছত্রাক','ব্রায়োফাইটা ও টেরিডোফাইটা','নগ্নবীজী ও আবৃতবীজী উদ্ভিদ','টিস্যু ও টিস্যুতন্ত্র','উদ্ভিদ শারীরতত্ত্ব','উদ্ভিদ প্রজনন','জীবপ্রযুক্তি','জীবের পরিবেশ, বিস্তার ও সংরক্ষণ']),
-chapterSet('Biology 2nd Paper',['প্রাণীর বিভিন্নতা ও শ্রেণিবিন্যাস','প্রাণীর পরিচিতি','পরিপাক ও শোষণ','রক্ত ও সঞ্চালন','শ্বাসক্রিয়া ও শ্বসন','বর্জ্য ও নিষ্কাশন','চলন ও অঙ্গচালনা','সমন্বয় ও নিয়ন্ত্রণ','মানব জীবনের ধারাবাহিকতা','মানবদেহের প্রতিরক্ষা','জিনতত্ত্ব ও বিবর্তন','প্রাণীর আচরণ']),
-chapterSet('Higher Math 1st Paper',['ম্যাট্রিক্স ও নির্ণায়ক','ভেক্টর','সরলরেখা','বৃত্ত','বিন্যাস ও সমাবেশ','ত্রিকোণমিতিক অনুপাত','সংযুক্ত কোণের ত্রিকোণমিতিক অনুপাত','ফাংশন ও ফাংশনের লেখচিত্র','অন্তরীকরণ','যোগজীকরণ']),
-chapterSet('Higher Math 2nd Paper',['বাস্তব সংখ্যা ও অসমতা','যোগাশ্রয়ী প্রোগ্রাম','জটিল সংখ্যা','বহুপদী ও বহুপদী সমীকরণ','দ্বিপদী বিস্তৃতি','কণিক','বিপরীত ত্রিকোণমিতিক ফাংশন ও ত্রিকোণমিতিক সমীকরণ','স্থিতিবিদ্যা','সমতলে বস্তুকণার গতি','বিস্তার পরিমাপ ও সম্ভাবনা']),
-chapterSet('ICT',['তথ্য ও যোগাযোগ প্রযুক্তি: বিশ্ব ও বাংলাদেশ প্রেক্ষিত','কমিউনিকেশন সিস্টেমস ও নেটওয়ার্কিং','সংখ্যা পদ্ধতি ও ডিজিটাল ডিভাইস','ওয়েব ডিজাইন পরিচিতি এবং HTML','প্রোগ্রামিং ভাষা','ডেটাবেজ ম্যানেজমেন্ট সিস্টেম']),
-chapterSet('Bangla 1st Paper',['গদ্য: বাঙ্গালার নব্য লেখকদিগের প্রতি নিবেদন','গদ্য: অপরিচিতা','গদ্য: সাহিত্যে খেলা','গদ্য: বিলাসী','গদ্য: অর্ধাঙ্গী','গদ্য: যৌবনের গান','গদ্য: জীবন ও বৃক্ষ','গদ্য: গন্তব্য কাবুল','গদ্য: মাসি-পিসি','গদ্য: কপিলদাস মুর্মুর শেষ কাজ','গদ্য: নেকলেস','গদ্য: রেইনকোট','পদ্য: ঋতু বর্ণন','পদ্য: বিভীষণের প্রতি মেঘনাদ','পদ্য: সোনার তরী','পদ্য: বিদ্রোহী','পদ্য: সুচেতনা','পদ্য: প্রতিদান','পদ্য: তাহারেই পড়ে মনে','পদ্য: আঠারো বছর বয়স','পদ্য: পদ্মা','পদ্য: ফেব্রুয়ারি ১৯৬৯','পদ্য: আমি কিংবদন্তির কথা বলছি','পদ্য: প্রত্যাবর্তনের লজ্জা','উপন্যাস: লালসালু','নাটক: সিরাজ-উদ-দৌলা']),
-chapterSet('Bangla 2nd Paper',['বাংলা উচ্চারণের নিয়ম','বাংলা বানানের নিয়ম','বাংলা ভাষার ব্যাকরণিক শব্দশ্রেণি','শব্দ গঠন: উপসর্গ, প্রত্যয় ও সমাস','বাক্যতত্ত্ব','বাংলা ভাষার অপপ্রয়োগ ও শুদ্ধ প্রয়োগ','পারিভাষিক শব্দ','অনুবাদ: ইংরেজি থেকে বাংলা','দিনলিপি লিখন','অভিজ্ঞতা বর্ণনা','ভাষণ ও প্রতিবেদন রচনা','বৈদ্যুতিন চিঠি (ই-মেইল) ও খুদে বার্তা','পত্রলিখন ও আবেদনপত্র','সারাংশ, সারমর্ম ও সারসংক্ষেপ','ভাব-সম্প্রসারণ','সংলাপ লিখন','খুদে গল্প লিখন','প্রবন্ধ-নিবন্ধ রচনা']),
-chapterSet('English 1st Paper',['Reading: Seen Comprehension','Reading: Unseen Comprehension','Information Transfer','Summary Writing','Cloze Test','Rearranging','Paragraph Writing','Completing a Story','Graph / Chart Description','Informal Letter / Email']),
-chapterSet('English 2nd Paper',['Grammar: Articles','Grammar: Prepositions','Grammar: Right Form of Verbs','Grammar: Changing Sentences','Grammar: Narration','Grammar: Modifiers','Grammar: Connectors','Grammar: Synonyms and Antonyms','Grammar: Punctuation','Composition: Paragraph','Composition: Completing a Story','Composition: Email / Letter','Composition: Report','Composition: Graph / Chart','Composition: Essay'])
+(function(){
+"use strict";
+var STORAGE_KEY="my-life-routine-manager-v1";
+var todayKey=localDateKey(new Date());
+var defaultRoutine=[
+{id:"wake",title:"ঘুম থেকে ওঠা, fresh হওয়া ও হালকা খাবার",time:"06:00"},
+{id:"study1",title:"Self-study — সকাল",time:"06:35"},
+{id:"breakfast",title:"নাশতা",time:"08:00"},
+{id:"class1",title:"Online class ১",time:"08:30"},
+{id:"study2",title:"Self-study — দুপুরের আগে",time:"11:30"},
+{id:"lunch",title:"Lunch",time:"12:30"},
+{id:"zuhr",title:"Zuhr জামাত",time:"13:00"},
+{id:"study3",title:"Self-study — দুপুর",time:"13:30"},
+{id:"class2",title:"Online class ২ (Asr ও Maghrib-এর বিরতিসহ)",time:"14:00"},
+{id:"study4",title:"Self-study — সন্ধ্যা",time:"17:50"},
+{id:"exercise",title:"হালকা exercise",time:"18:25"},
+{id:"quran",title:"Quran / religious activities",time:"18:40"},
+{id:"dinner",title:"Dinner",time:"19:30"},
+{id:"social",title:"Friends / social time",time:"20:00"},
+{id:"isha",title:"Isha জামাত",time:"20:20"},
+{id:"study5",title:"Self-study — রাত",time:"21:00"},
+{id:"reflection",title:"নিজের সঙ্গে reflection / personal growth",time:"22:40"},
+{id:"sleep",title:"ঘুম",time:"23:00"}
 ];
-const defaults=()=>({tasks:{},routine:[['05:30','Fajr ও সকালের প্রস্তুতি','Faith'],['07:00','গুরুত্বপূর্ণ Study Block','Study'],['09:00','College / Class','College'],['14:30','খাবার ও বিশ্রাম','Rest'],['16:00','MCQ ও Practice','Study'],['17:30','হাঁটা / শরীরচর্চা','Health'],['20:00','Revision ও আগামীকালের পরিকল্পনা','Personal']].map(x=>({id:uid(),time:x[0],title:x[1],category:x[2],detail:''})),logs:[],subjects:[...syllabusSubjects(),{name:'English',progress:0,chapters:[]}],screen:{},manual:[],notes:{},learningQuestion:'আজ তুমি কী শিখলে?',learningAnswers:{},reviews:{},settings:{goal:25,screenGoal:20,name:''},theme:'light'});
-let data;try{data={...defaults(),...JSON.parse(localStorage.getItem(KEY)||'{}')};data.settings={...defaults().settings,...data.settings};data.settings.studyPaper=data.settings.studyPaper||data.settings.studyYear||'all';data.tasks=data.tasks||{};data.routine=data.routine||[];data.logs=data.logs||[];data.subjects=data.subjects||defaults().subjects;data.screen=data.screen||{};data.manual=data.manual||[];data.notes=data.notes||{};data.learningQuestion=data.learningQuestion||'আজ তুমি কী শিখলে?';data.learningAnswers=data.learningAnswers||{};data.reviews=data.reviews||{}}catch{data=defaults()}
-const legacySubjects=data.subjects||[];
-const legacyNames=['Biology','Chemistry','Physics','Higher Math','English','ICT'];
-const paperAliases={'Biology 1st Paper':'Biology','Chemistry 1st Paper':'Chemistry','Physics 1st Paper':'Physics','Higher Math 1st Paper':'Higher Math','English 1st Paper':'English'};
-const seeded=syllabusSubjects().map(seed=>{const previous=legacySubjects.find(x=>x.name===seed.name)||(paperAliases[seed.name]?legacySubjects.find(x=>x.name===paperAliases[seed.name]):null);return {...seed,chapters:previous&&Array.isArray(previous.chapters)&&previous.chapters.length?previous.chapters:seed.chapters}});
-const preserved=legacySubjects.filter(x=>!legacyNames.includes(x.name)&&!seeded.some(s=>s.name===x.name));
-data.subjects=[...seeded,...preserved];
+var store=loadStore();
+ensureToday();
+render();
 
-if(!localStorage.getItem('myLifeVisualRefreshV1')){data.theme='light';localStorage.setItem(KEY,JSON.stringify(data));localStorage.setItem('myLifeVisualRefreshV1','1')}
-const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(data));render()}catch(e){toast('Storage পূর্ণ—Backup নিয়ে কিছু পুরোনো log মুছুন।')}},toast=t=>{const el=$('toast');el.textContent=t;el.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>el.style.display='none',2200)},esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])),tasks=()=>data.tasks[today()]||(data.tasks[today()]=[]),fmt=n=>Math.round(n)+' min',sumLogs=arr=>arr.reduce((a,x)=>a+(+x.mins||0),0);
-function go(id){const target=document.getElementById(id);if(!target||!target.classList.contains('view')){toast('এই Section পাওয়া যায়নি।');return}document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v===target));document.querySelectorAll('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===id));try{if(id==='progress')renderProgress();else if(id==='screen')renderScreen();else if(id==='study')renderStudy();else if(id==='routine')renderRoutine();else if(id==='tasks')renderTasks();else if(id==='learn')renderLesson()}catch(err){console.error('Section render error:',id,err);toast('Section খুলেছে, কিন্তু কিছু তথ্য দেখাতে সমস্যা হয়েছে। Refresh করে দেখো।')}window.scrollTo({top:0,behavior:'smooth'})}
-function initNav(){const groups=[{title:'DASHBOARD',ids:['home']},{title:'STUDY SPACE',ids:['routine','tasks','study','progress']},{title:'PERSONAL GROWTH',ids:['screen','learn','guide']},{title:'PREFERENCES',ids:['settings']}];const item=([id,ic,label])=>'<button type="button" class="side-link" data-view="'+id+'"><span class="side-icon">'+ic+'</span><span class="side-link-label">'+label+'</span><span class="side-arrow">›</span></button>';const byId=id=>nav.find(x=>x[0]===id);$('sideNav').innerHTML=groups.map(g=>'<div class="side-group"><div class="navlabel">'+g.title+'</div>'+g.ids.map(id=>item(byId(id))).join('')+'</div>').join('');$('mobileNav').innerHTML=nav.map(([id,ic,label])=>'<button type="button" data-view="'+id+'">'+ic+'<span>'+label+'</span></button>').join('');document.addEventListener('click',e=>{const b=e.target.closest('[data-view],[data-go]');if(!b)return;e.preventDefault();const id=b.dataset.view||b.dataset.go;if(id)go(id)},true)}
-function renderTasks(){const a=tasks(),done=a.filter(x=>x.done).length,p=a.length?done/a.length*100:0;$('homeTaskStat').textContent=done+' / '+a.length;$('homeTaskBar').style.width=p+'%';$('taskBar').style.width=p+'%';$('taskPercent').textContent=Math.round(p)+'% সম্পন্ন';const row=x=>'<div class="item '+(x.done?'done':'')+'"><input class="check" type="checkbox" '+(x.done?'checked':'')+' data-taskcheck="'+x.id+'"><div class="grow"><div class="itemtitle">'+esc(x.title)+'</div><div class="itemmeta">'+esc(x.cat)+' · '+esc(x.priority||'Normal')+'</div></div><div class="actions"><button data-edit-task="'+x.id+'">Edit</button><button class="danger" data-del-task="'+x.id+'">×</button></div></div>';$('taskList').innerHTML=a.length?a.map(row).join(''):'<div class="empty">আজকের কাজ যোগ করে শুরু করো।</div>';$('homeTasks').innerHTML=a.slice(0,4).map(row).join('')||'<div class="empty">আজকের জন্য এখনো কাজ যোগ করোনি।</div>'}
-function renderRoutine(){const a=[...data.routine].sort((x,y)=>(x.from||x.time||'').localeCompare(y.from||y.time||''));const row=x=>{const from=x.from||x.time||'সময় নেই',to=x.to||'',duration=to?' · '+from+'–'+to:'',breakAt=x.breakEnabled&&to?(()=>{const [h,m]=from.split(':').map(Number),start=h*60+m+(+x.breakAfter||50);const [eh,em]=to.split(':').map(Number);if(start+(+x.breakMins||10)>eh*60+em)return '';const fmt=n=>String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0');return ' · ☕ Break '+fmt(start)+'–'+fmt(start+(+x.breakMins||10))})():'';return '<div class="item"><b class="routine-time">'+esc(from)+'</b><div class="grow"><div class="itemtitle">'+esc(x.title)+'</div><div class="itemmeta">'+esc(x.category)+duration+breakAt+(x.detail?' · '+esc(x.detail):'')+'</div></div><div class="actions"><button data-edit-r="'+x.id+'">Edit</button><button class="danger" data-del-r="'+x.id+'">×</button></div></div>'};$('routineList').innerHTML=a.length?a.map(row).join(''):'<div class="empty">তোমার সময় অনুযায়ী প্রথম routine item যোগ করো।</div>';$('homeRoutine').innerHTML=a.slice(0,5).map(row).join('')||'<div class="empty">রুটিন সেট করো।</div>';$('routineCount').textContent=a.length+' items'}
-function subjectPercent(s){const c=s.chapters||[];return c.length?Math.round(c.filter(x=>x.done).length/c.length*100):0}
-let activeSubjectKey=null;
-function renderStudy(){
- const definitions=[['Bangla','বাংলা'],['English','ইংরেজি'],['Physics','পদার্থবিজ্ঞান'],['Chemistry','রসায়ন'],['Biology','জীববিজ্ঞান'],['Higher Math','উচ্চতর গণিত'],['ICT','তথ্য ও যোগাযোগ প্রযুক্তি']];
- const selectedPaper=data.settings.studyPaper||'all';
- const inSelectedPaper=x=>selectedPaper==='all'||x.name==='ICT'||x.name.includes(selectedPaper==='first'?'1st Paper':'2nd Paper');
- const groups=definitions.map(([key,title])=>({key,title,items:data.subjects.filter(x=>(x.name===key||x.name.startsWith(key+' '))&&inSelectedPaper(x))})).filter(g=>g.items.length);
- const known=new Set(groups.flatMap(g=>g.items));
- data.subjects.filter(x=>!known.has(x)).forEach(x=>groups.push({key:x.name,title:x.name,items:[x]}));
- const visibleSubjects=groups.flatMap(g=>g.items),chapterTotal=visibleSubjects.reduce((n,x)=>n+(x.chapters||[]).length,0),chapterDone=visibleSubjects.reduce((n,x)=>n+(x.chapters||[]).filter(c=>c.done).length,0),overallPct=chapterTotal?Math.round(chapterDone/chapterTotal*100):0;$('subjectChapterDone').textContent=chapterDone;$('subjectChapterTotal').textContent=chapterTotal;$('subjectOverallPercent').textContent=overallPct+'%';$('subjectOverallBar').style.width=overallPct+'%';
- const paperHTML=s=>{s.chapters=s.chapters||[];const pct=subjectPercent(s),done=s.chapters.filter(x=>x.done).length;return '<section class="paper-panel"><div class="row between paper-heading"><b>'+esc(s.name)+'</b><span class="small">'+done+'/'+s.chapters.length+' · '+pct+'%</span></div><div class="bar paper-bar"><i style="width:'+pct+'%"></i></div><div class="list">'+(s.chapters.map(c=>'<label class="chapter-row"><input type="checkbox" data-chapter-check="'+esc(s.name)+'" data-chapter-id="'+c.id+'" '+(c.done?'checked':'')+' style="width:auto"><span style="'+(c.done?'text-decoration:line-through;opacity:.65':'')+'">'+esc(c.title)+'</span></label>').join('')||'<div class="small muted">কোনো Chapter পাওয়া যায়নি।</div>')+'</div></section>'};
- $('subjects').innerHTML=groups.map(g=>{const total=g.items.reduce((n,x)=>n+(x.chapters||[]).length,0),done=g.items.reduce((n,x)=>n+(x.chapters||[]).filter(c=>c.done).length,0),pct=total?Math.round(done/total*100):0,open=activeSubjectKey===g.key;return '<div class="subject-accordion '+(open?'open':'')+'"><button type="button" class="subject-select" data-subject-toggle="'+esc(g.key)+'" aria-expanded="'+open+'"><span class="subject-select-main"><b>'+esc(g.title)+'</b><small>'+g.items.map(x=>x.name.replace(g.key,'').trim()).filter(Boolean).join(' · ')+'</small></span><span class="subject-select-progress"><b>'+pct+'%</b><small>'+done+'/'+total+' chapters</small></span><span class="subject-chevron">'+(open?'−':'+')+'</span></button>'+(open?'<div class="subject-content">'+g.items.map(paperHTML).join('')+'</div>':'')+'</div>'}).join('');
- const selectedSubject=$('subject').value;$('subject').innerHTML=data.subjects.map(x=>'<option value="'+esc(x.name)+'">'+esc(x.name)+'</option>').join('');if(data.subjects.some(x=>x.name===selectedSubject))$('subject').value=selectedSubject;$('studyLogs').innerHTML=data.logs.filter(x=>x.date===today()).slice().reverse().map(x=>'<div class="item"><div class="grow"><b>'+esc(x.subject)+'</b><div class="itemmeta">'+esc(x.time||'সময় উল্লেখ নেই')+(x.note?' · '+esc(x.note):'')+'</div></div><b>'+x.mins+'m</b><button class="danger" data-del-log="'+x.id+'">×</button></div>').join('')||'<div class="empty">আজকের Study Session এখনো log হয়নি।</div>';
+function localDateKey(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function makeId(){return "t"+Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function clone(v){return JSON.parse(JSON.stringify(v))}
+function loadStore(){
+ try{
+  var raw=localStorage.getItem(STORAGE_KEY);
+  if(raw){var parsed=JSON.parse(raw);if(parsed&&parsed.version===1&&Array.isArray(parsed.routine)&&parsed.days&&typeof parsed.days==="object")return parsed}
+ }catch(e){}
+ return {version:1,routine:clone(defaultRoutine),days:{}};
 }
-function renderProgress(){let all=Object.values(data.tasks).flat(),done=all.filter(x=>x.done).length;$('doneTotal').textContent=done;$('totalMinutes').textContent=(sumLogs(data.logs)/60).toFixed(1)+'h';$('activeDays').textContent=new Set(data.logs.map(x=>x.date).concat(Object.keys(data.tasks).filter(d=>data.tasks[d].some(x=>x.done)))).size;$('goalView').textContent=data.settings.goal+'h';$('progressSubjects').innerHTML=data.subjects.map(s=>{const p=subjectPercent(s),n=(s.chapters||[]).length,d=(s.chapters||[]).filter(c=>c.done).length,mins=sumLogs(data.logs.filter(x=>x.subject===s.name));return '<div class="progressrow"><span>'+esc(s.name)+' <small class="muted">('+d+'/'+n+' chapters · '+(mins>=60?(mins/60).toFixed(1)+'h':mins+'m')+' studied)</small></span><div class="bar"><i style="width:'+p+'%"></i></div><b>'+p+'%</b></div>'}).join('');let days=Array.from({length:7},(_,i)=>{let d=new Date();d.setDate(d.getDate()-6+i);return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')});let vals=days.map(d=>sumLogs(data.logs.filter(x=>x.date===d))),max=Math.max(30,...vals);$('weekBars').innerHTML=days.map((d,i)=>'<div class="progressrow"><span>'+new Date(d+'T12:00:00').toLocaleDateString('bn-BD',{weekday:'short'})+'</span><div class="bar"><i style="width:'+vals[i]/max*100+'%"></i></div><b>'+vals[i]+'m</b></div>').join('');const rv=data.reviews[weekKey() ]||{};$('reviewGood').value=rv.good||'';$('reviewImprove').value=rv.improve||'';$('reviewGoal').value=rv.goal||''}
-function weekKey(){const d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()-((d.getDay()+6)%7));return d.toISOString().slice(0,10)}
-function renderScreen(){let m=data.screen[today()]||0,g=data.settings.screenGoal||120;$('screenBig').textContent=fmt(m);$('homeScreenStat').textContent=fmt(m);$('screenGoal').value=g;$('screenBar').style.width=Math.min(100,m/g*100)+'%';$('screenMessage').textContent=m>=g?'তোমার নির্ধারিত সময় পূর্ণ হয়েছে। বিরতি নাও।':'Dashboard active থাকলে সময় যোগ হবে।';$('manualList').innerHTML=data.manual.filter(x=>x.date===today()).map(x=>'<div class="item"><div class="grow">'+esc(x.name)+'</div><b>'+x.mins+'m</b><button class="danger" data-del-manual="'+x.id+'">×</button></div>').join('')||'<div class="empty">অন্য app-এর সময় যোগ করা হয়নি।</div>'}
-const lessons=[['Study Skills','Active Recall','বই বন্ধ করে মনে করার চেষ্টা করো।','একটি topic পড়ার পর বই বন্ধ করে নিজের ভাষায় ব্যাখ্যা করো বা ৫টি প্রশ্নের উত্তর দাও।'],['Study Skills','Spaced Revision','বিরতি দিয়ে একই বিষয় আবার দেখলে দীর্ঘমেয়াদি মনে রাখা সহজ হয়।','আজকের topic আগামীকাল, কয়েক দিন পর এবং সপ্তাহ শেষে revise করার তারিখ রাখো।'],['Discipline','১০ মিনিটের শুরু','Motivation-এর অপেক্ষা না করে কাজটিকে ছোট করে শুরু করো।','আজকের কঠিন কাজটি শুধু ১০ মিনিটের জন্য শুরু করো।'],['Planning','If–Then Plan','নির্দিষ্ট পরিস্থিতির সঙ্গে কাজ জুড়ে দিলে সিদ্ধান্ত নেওয়া সহজ হয়।','যদি রাত ৮টা হয়, তাহলে ২৫ মিনিট Chemistry revise করব—এমন পরিকল্পনা লেখো।'],['Environment','পরিবেশ গুছানো','ভালো কাজটি সহজ এবং distraction কঠিন করে তোলো।','Study block-এর আগে desk, বই ও browser tab গুছিয়ে নাও।'],['Learning','ভুল বিশ্লেষণ','ভুলের কারণ বোঝা শেখার অংশ; নিজেকে দোষ দেওয়া সমাধান নয়।','একটি MCQ ভুলের কারণ concept, calculation, careless নাকি question-reading—লিখে রাখো।'],['Health','ঘুম ও বিশ্রাম','বিশ্রামও পরিকল্পনার অংশ।','আজ ঘুমের আগে screen কমাও এবং নিয়মিত ঘুমের সময় রাখো।'],,['Problem Solving','সমস্যা ছোট করা','সমস্যাকে নির্দিষ্ট করলে পরবর্তী পদক্ষেপ পরিষ্কার হয়।','একটি সমস্যা এক বাক্যে লেখো; নিয়ন্ত্রণে থাকা অংশ চিহ্নিত করো।'],['Support','সহায়তা চাওয়া','বিশ্বস্ত মানুষের সাহায্য নেওয়া দায়িত্বশীল সিদ্ধান্ত।','প্রয়োজনে বিশ্বস্ত শিক্ষক, আত্মীয় বা পেশাজীবীর সঙ্গে কথা বলো।'],['Faith','ধারাবাহিক ইবাদত','ছোট কিন্তু নিয়মিত আমল অভ্যাস গড়তে সাহায্য করে।','নিজের সামর্থ্য অনুযায়ী সালাত, কুরআন ও দোয়ার জন্য নির্দিষ্ট সময় রাখো।'],['Self-respect','নিজের মূল্য','তোমার মূল্য শুধু নম্বর, কাজের পরিমাণ বা অন্যের মতামত দিয়ে নির্ধারিত নয়।','আজ নিজের একটি ভালো প্রচেষ্টা লিখে রাখো।']];
-let selectedLearningDate=today(),learningCalendarMonth=new Date(today()+'T12:00:00');learningCalendarMonth.setDate(1);function lessonIndexForDate(date){const [y,m,d]=date.split('-').map(Number);return Math.floor(Date.UTC(y,m-1,d)/86400000)%lessons.length}let lessonIndex=lessonIndexForDate(selectedLearningDate);
-function renderLearningCalendar(){const y=learningCalendarMonth.getFullYear(),m=learningCalendarMonth.getMonth(),first=new Date(y,m,1),startOffset=(first.getDay()+6)%7,days=new Date(y,m+1,0).getDate(),total=Math.ceil((startOffset+days)/7)*7;const label=first.toLocaleDateString('bn-BD',{month:'long',year:'numeric'});$('learningMonthLabel').textContent=label;const todayDate=today();let html='';for(let i=0;i<total;i++){const day=i-startOffset+1,dateObj=new Date(y,m,day,12),date=[dateObj.getFullYear(),String(dateObj.getMonth()+1).padStart(2,'0'),String(dateObj.getDate()).padStart(2,'0')].join('-'),inMonth=dateObj.getMonth()===m,hasData=(data.logs||[]).some(x=>x.date===date)||(data.tasks&&Array.isArray(data.tasks[date])&&data.tasks[date].length>0)||+(data.screen&&data.screen[date]||0)>0||(data.manual||[]).some(x=>x.date===date)||!!(data.learningAnswers&&data.learningAnswers[date]);html+='<button type="button" class="learning-day-cell'+(inMonth?'':' outside')+(date===todayDate?' today':'')+(date===selectedLearningDate?' selected':'')+(hasData?' has-data':'')+'" data-learning-date="'+date+'" aria-label="'+dateObj.toLocaleDateString('bn-BD',{day:'numeric',month:'long',year:'numeric'})+'"><span class="day-number">'+dateObj.getDate().toLocaleString('bn-BD')+'</span><i class="day-dot"></i></button>'}$('learningMonthGrid').innerHTML=html}function renderLearningDaySummary(date){const logs=data.logs.filter(x=>x.date===date),tasksForDay=data.tasks[date]||[],done=tasksForDay.filter(x=>x.done).length,studyMins=sumLogs(logs),screenMins=+(data.screen[date]||0),manualMins=(data.manual||[]).filter(x=>x.date===date).reduce((n,x)=>n+(+x.mins||0),0);const dateLabel=new Date(date+'T12:00:00').toLocaleDateString('bn-BD',{weekday:'long',day:'numeric',month:'long',year:'numeric'});$('learningSelectedDate').textContent=dateLabel;$('learningDaySummary').innerHTML='<div class="learning-summary-head"><b>নির্বাচিত দিনের সারাংশ</b><span>'+dateLabel+'</span></div><div class="learning-summary-grid"><div><small>Study Session</small><strong>'+logs.length+'টি</strong><span>'+Math.floor(studyMins/60)+' ঘণ্টা '+(studyMins%60)+' মিনিট</span></div><div><small>দৈনিক কাজ</small><strong>'+done+' / '+tasksForDay.length+'</strong><span>সম্পন্ন</span></div><div><small>Dashboard Time</small><strong>'+fmt(screenMins)+'</strong><span>সক্রিয় সময়</span></div><div><small>অন্যান্য App</small><strong>'+fmt(manualMins)+'</strong><span>ম্যানুয়ালি যোগ করা</span></div></div>'}function renderLesson(){let l=lessons[lessonIndex];$('lessonCat').textContent=l[0];$('lessonTitle').textContent=l[1];$('lessonHead').textContent=l[1];$('lessonBody').textContent=l[2];$('lessonAction').textContent=l[3];$('lessonCount').textContent=(lessonIndex+1)+' / '+lessons.length;$('lessonNote').value=data.notes[l[1]]||'';const defaultQuestion=data.learningQuestion||'আজ তুমি কী শিখলে?';$('learningQuestion').value=defaultQuestion;const preset=$('learningQuestionPreset');const matched=[...preset.options].find(o=>o.value===defaultQuestion);preset.value=matched?defaultQuestion:'custom';$('learningQuestionCustomWrap').classList.toggle('hidden',preset.value!=='custom');$('learningQuestionStatus').textContent='ডিফল্ট প্রশ্ন: '+defaultQuestion+' · প্রতিদিন স্বয়ংক্রিয়ভাবে থাকবে';$('learningAnswer').value=data.learningAnswers[selectedLearningDate]||'';renderLearningCalendar();renderLearningDaySummary(selectedLearningDate)}
-function render(){renderTasks();renderRoutine();renderStudy();renderProgress();renderScreen();$('displayName').value=data.settings.name||'';$('weeklyGoal').value=data.settings.goal;$('studyYear').value=data.settings.studyPaper||'all';$('homeWeekStat').textContent=(sumLogs(data.logs.filter(x=>{let d=new Date(x.date+'T12:00:00'),now=new Date();let start=new Date(now);start.setDate(now.getDate()-6);return d>=new Date(start.toDateString())}))/60).toFixed(1)+'h';$('greeting').textContent=data.settings.name?'স্বাগতম, '+data.settings.name:'নিজের গতিতে এগিয়ে চলো';$('hello').textContent=(data.settings.name?'শুভ দিন, '+data.settings.name+'।':'আজ তোমার জীবনের একটি নতুন দিন।')}
-function download(name,content,type){let u=URL.createObjectURL(new Blob([content],{type})),a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
-function backup(){
- const lines=[],bar='━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━';
- const add=(title,items)=>{lines.push('',bar,title,bar,...(items.length?items:['কোনো তথ্য যোগ করা হয়নি।']))};
- const dateText=d=>{if(!d)return 'তারিখ উল্লেখ নেই';const x=new Date(d+'T12:00:00');return isNaN(x)?d:x.toLocaleDateString('bn-BD',{day:'numeric',month:'long',year:'numeric',weekday:'long'})};
- const clean=v=>String(v??'').trim();
- const taskDates=Object.keys(data.tasks||{}).sort();
- const logs=[...(data.logs||[])].sort((a,b)=>(a.date||'').localeCompare(b.date||'')||(a.time||'').localeCompare(b.time||''));
- const totalMins=sumLogs(logs);
- lines.push('MY LIFE DASHBOARD','ব্যক্তিগত পড়াশোনা ও জীবন ব্যবস্থাপনা রিপোর্ট',bar,'ডাউনলোডের তারিখ: '+dateText(today()),'নাম: '+(clean(data.settings.name)||'নাম দেওয়া হয়নি'),'');
- add('১. DASHBOARD SETTINGS',[
- 'সাপ্তাহিক Study Goal: '+(data.settings.goal||25)+' ঘণ্টা',
- 'দৈনিক Dashboard Time Limit: '+(data.settings.screenGoal||20)+' মিনিট',
- 'HSC পত্র নির্বাচন: '+({all:'১ম ও ২য় পত্র',first:'শুধু ১ম পত্র',second:'শুধু ২য় পত্র'}[data.settings.studyPaper]||'সব পত্র')
- ]);
- add('২. দৈনিক কাজ (TASKS)',taskDates.flatMap(d=>['',dateText(d),...(data.tasks[d]||[]).map((t,i)=>(i+1)+'. ['+(t.done?'সম্পন্ন':'বাকি')+'] '+clean(t.title)+' — '+clean(t.cat||'সাধারণ')+' / Priority: '+clean(t.priority||'Normal'))]));
- add('৩. দৈনিক রুটিন',(data.routine||[]).map((r,i)=>(i+1)+'. '+(r.from||r.time||'সময় নেই')+(r.to?' – '+r.to:'')+' | '+clean(r.title)+' | '+clean(r.category)+(r.detail?'\n   '+clean(r.detail):'')+(r.breakEnabled?'\n   বিরতি: প্রতি '+(r.breakAfter||50)+' মিনিটে '+(r.breakMins||10)+' মিনিট':'')));
- add('৪. STUDY LOG',[
- 'মোট Study Session: '+logs.length,
- 'মোট পড়ার সময়: '+Math.floor(totalMins/60)+' ঘণ্টা '+(totalMins%60)+' মিনিট',
- ...logs.map((x,i)=>(i+1)+'. '+dateText(x.date)+' | '+(x.time||'সময় নেই')+' | '+clean(x.subject)+' | '+x.mins+' মিনিট'+(x.note?'\n   Topic/Note: '+clean(x.note):''))
- ]);
- add('৫. বিষয়ভিত্তিক প্রস্তুতি',(data.subjects||[]).map(sub=>{const ch=sub.chapters||[],done=ch.filter(c=>c.done).length,pct=ch.length?Math.round(done/ch.length*100):0;return clean(sub.name)+' — '+done+'/'+ch.length+' Chapter ('+pct+'%)'+(ch.length?'\n'+ch.map((c,i)=>(i+1)+'. ['+(c.done?'সম্পন্ন':'বাকি')+'] '+clean(c.title)).join('\n'):'')}));
- const screenDates=Object.keys(data.screen||{}).sort();
- add('৬. DASHBOARD SCREEN TIME',screenDates.map(d=>dateText(d)+' — '+(data.screen[d]||0)+' মিনিট'));
- add('৭. অন্যান্য APP / WEBSITE TIME',(data.manual||[]).slice().sort((a,b)=>(a.date||'').localeCompare(b.date||'')).map(x=>dateText(x.date)+' | '+clean(x.name)+' — '+x.mins+' মিনিট'));
- add('৮. DAILY LEARNING',[
- 'আজকের প্রশ্ন: '+clean(data.learningQuestion||'আজ তুমি কী শিখলে?'),
- ...Object.keys(data.learningAnswers||{}).sort().map(d=>dateText(d)+'\nপ্রশ্ন: '+clean(data.learningQuestion)+'\nউত্তর: '+clean(data.learningAnswers[d])),
- ...Object.entries(data.notes||{}).map(([title,note])=>'Lesson: '+clean(title)+'\nনোট: '+clean(note))
- ]);
- add('৯. WEEKLY REVIEWS',Object.keys(data.reviews||{}).sort().map(w=>{const r=data.reviews[w]||{};return 'সপ্তাহ: '+dateText(w)+'\nযা ভালো হয়েছে: '+clean(r.good||'—')+'\nযা উন্নতি করতে চাই: '+clean(r.improve||'—')+'\nপরের সপ্তাহের লক্ষ্য: '+clean(r.goal||'—')}));
- lines.push('','',bar,'এই রিপোর্টটি My Life Dashboard থেকে তৈরি।','এটি পড়ার উপযোগী TXT ফাইল; Dashboard-এ Restore করার জন্য আগের JSON Backup প্রয়োজন।',bar);
- download('My-Life-Dashboard-'+today()+'.txt','\uFEFF'+lines.join('\n'),'text/plain;charset=utf-8');
+function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(store))}
+function ensureToday(){
+ if(!store.days[todayKey])store.days[todayKey]={tasks:store.routine.map(function(t){return {id:t.id,title:t.title,time:t.time||"",done:false,extra:false}}),createdAt:new Date().toISOString()};
 }
-let editingRoutineId=null;function openModal(id){$(id).classList.remove('hidden');document.body.style.overflow='hidden'}function closeModal(id){$(id).classList.add('hidden');if(!document.querySelector('.modal-backdrop:not(.hidden)'))document.body.style.overflow=''}function openRoutineModal(item){editingRoutineId=item?.id||null;$('routineModalTitle').textContent=item?'রুটিন পরিবর্তন':'রুটিনে নতুন কাজ';$('routineSubmit').textContent=item?'পরিবর্তন সংরক্ষণ':'রুটিন সংরক্ষণ';$('rFrom').value=item?.from||item?.time||'';$('rTo').value=item?.to||'';$('rCategory').value=item?.category||'Study';$('rTitle').value=item?.title||'';$('rBreakEnabled').value=item?.breakEnabled===false?'no':'yes';$('rBreakAfter').value=String(item?.breakAfter||50);$('rBreakMins').value=String(item?.breakMins||10);$('rCategory').onchange=()=>{if($('rCategory').value!=='Study')$('rBreakEnabled').value='no'};$('rDetail').value=item?.detail||'';openModal('routineModal')}$('routineForm').onsubmit=e=>{e.preventDefault();const from=$('rFrom').value,to=$('rTo').value;if(!from||!to||to<=from){toast('একই দিনের জন্য সঠিক From ও To সময় দাও');return}const breakEnabled=$('rBreakEnabled').value==='yes'&&$('rCategory').value==='Study';const item={time:from,from,to,title:$('rTitle').value.trim(),category:$('rCategory').value,breakEnabled,breakAfter:+$('rBreakAfter').value,breakMins:+$('rBreakMins').value,detail:$('rDetail').value.trim()};if(!item.title)return;if(editingRoutineId){const old=data.routine.find(x=>x.id===editingRoutineId);if(old)Object.assign(old,item)}else data.routine.push({id:uid(),...item});e.target.reset();editingRoutineId=null;save();closeModal('routineModal');toast('রুটিন সংরক্ষণ হয়েছে')};
-$('taskForm').onsubmit=e=>{e.preventDefault();tasks().push({id:uid(),title:$('taskTitle').value.trim(),cat:$('taskCat').value,priority:$('taskPriority').value,done:false});e.target.reset();save();toast('কাজ যোগ হয়েছে')};
-$('studyForm').onsubmit=e=>{e.preventDefault();const mins=+$('minutes').value;if(!mins||mins<1||mins>600||!$('studyDate').value||!$('studyStart').value){toast('তারিখ, শুরুর সময় ও সঠিক duration দাও');return}data.logs.push({id:uid(),date:$('studyDate').value,time:$('studyStart').value,subject:$('subject').value,mins,note:$('studyNote').value.trim()});e.target.reset();$('studyDate').value=today();$('studyStart').value=new Date().toTimeString().slice(0,5);save();closeModal('studyModal');toast('Study Log সংরক্ষিত হয়েছে')};
-$('appPreset').onchange=()=>{const custom=$('appPreset').value==='Others';$('customAppWrap').classList.toggle('hidden',!custom);$('appName').required=custom;if(!custom)$('appName').value=''};$('manualForm').onsubmit=e=>{e.preventDefault();const preset=$('appPreset').value,custom=preset==='Others',name=custom?$('appName').value.trim():preset,mins=+$('appMins').value;if(!name||!mins||mins<1||mins>1440){toast('অ্যাপ/ওয়েবসাইট ও সঠিক সময় নির্বাচন করো');return}data.manual.push({id:uid(),name,mins,date:today()});e.target.reset();$('customAppWrap').classList.add('hidden');$('appName').required=false;save();toast('সময় যোগ হয়েছে')};
-$('saveScreenGoal').onclick=()=>{data.settings.screenGoal=Math.max(15,Math.min(1440,+$('screenGoal').value||120));save();toast('লক্ষ্য সংরক্ষিত')};
-$('settingsForm').onsubmit=e=>{e.preventDefault();data.settings.name=$('displayName').value.trim();data.settings.goal=Math.max(1,Math.min(80,+$('weeklyGoal').value||25));data.settings.studyPaper=$('studyYear').value;activeSubjectKey=null;save();toast('Settings সংরক্ষিত')};
-$('studyYear').onchange=()=>{data.settings.studyPaper=$('studyYear').value;activeSubjectKey=null;save();toast('পত্রের তালিকা পরিবর্তন হয়েছে')};
-$('saveReview').onclick=()=>{data.reviews[weekKey()]={good:$('reviewGood').value,improve:$('reviewImprove').value,goal:$('reviewGoal').value};save();toast('Weekly review সংরক্ষিত')};
-
-// Branded in-app confirmation and text-entry dialogs (no browser-native popups)
-function appDialog({title='নিশ্চিতকরণ',message='',kind='confirm',value='',ok='নিশ্চিত',cancel='বাতিল'}={}){
- return new Promise(resolve=>{
-  const wrap=document.createElement('div');wrap.className='modal-backdrop app-dialog-backdrop';wrap.style.zIndex='9999';
-  wrap.innerHTML='<div class="modal-card app-dialog-card" role="dialog" aria-modal="true"><div class="app-dialog-mark">✦</div><h2 class="app-dialog-title"></h2><p class="app-dialog-message"></p>'+(kind==='prompt'?'<input class="app-dialog-input" type="text" maxlength="120">':'')+'<div class="row app-dialog-actions"><button type="button" class="app-dialog-cancel"></button><button type="button" class="primary app-dialog-ok"></button></div></div>';
-  wrap.querySelector('.app-dialog-title').textContent=title;wrap.querySelector('.app-dialog-message').textContent=message;
-  wrap.querySelector('.app-dialog-cancel').textContent=cancel;wrap.querySelector('.app-dialog-ok').textContent=ok;
-  const input=wrap.querySelector('.app-dialog-input');if(input){input.value=value;input.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();finish(input.value)} })}
-  function finish(result){document.removeEventListener('keydown',onKey);wrap.remove();resolve(result)}
-  function onKey(e){if(e.key==='Escape')finish(kind==='prompt'?null:false)}
-  wrap.querySelector('.app-dialog-cancel').onclick=()=>finish(kind==='prompt'?null:false);
-  wrap.querySelector('.app-dialog-ok').onclick=()=>finish(kind==='prompt'?input.value:true);
-  wrap.addEventListener('click',e=>{if(e.target===wrap)finish(kind==='prompt'?null:false)});
-  document.addEventListener('keydown',onKey);document.body.appendChild(wrap);
-  if(input){input.focus();input.select()}else wrap.querySelector('.app-dialog-ok').focus();
+function bn(n){return new Intl.NumberFormat("bn-BD").format(n)}
+function displayDate(key){var d=new Date(key+"T12:00:00");return new Intl.DateTimeFormat("bn-BD",{weekday:"long",day:"numeric",month:"long",year:"numeric"}).format(d)}
+function timeLabel(value){if(!value)return "সময় নির্ধারিত নয়";var p=value.split(":");var h=Number(p[0]),m=p[1];var suffix=h<12?"AM":"PM";var hh=h%12||12;return bn(hh)+":"+bn(m)+" "+suffix}
+function sortTasks(list){return list.slice().sort(function(a,b){if(!a.time)return b.time?1:0;if(!b.time)return -1;return a.time.localeCompare(b.time)})}
+function render(){
+ document.getElementById("todayDate").textContent=displayDate(todayKey);
+ renderToday();renderEditor();renderHistory();
+}
+function renderToday(){
+ var day=store.days[todayKey];var root=document.getElementById("todayTasks");root.innerHTML="";
+ var tasks=sortTasks(day.tasks);var done=tasks.filter(function(t){return t.done}).length;
+ document.getElementById("todayCount").textContent=bn(done)+" / "+bn(tasks.length);
+ if(!tasks.length){root.innerHTML='<div class="empty">আজকের জন্য কোনো কাজ নেই।</div>';return}
+ tasks.forEach(function(task){
+  var row=document.createElement("label");row.className="task"+(task.done?" done":"");
+  var check=document.createElement("input");check.type="checkbox";check.checked=!!task.done;check.setAttribute("aria-label",task.title);
+  check.addEventListener("change",function(){task.done=check.checked;save();renderToday()});
+  var name=document.createElement("span");name.className="task-name";name.textContent=task.title;
+  if(task.extra){var tag=document.createElement("small");tag.className="task-extra";tag.textContent="আজকের অতিরিক্ত";name.appendChild(tag)}
+  var time=document.createElement("span");time.className="task-time";time.textContent=timeLabel(task.time);
+  row.appendChild(check);row.appendChild(name);row.appendChild(time);root.appendChild(row);
  });
 }
-const appConfirm=(message,title='নিশ্চিত করবে?')=>appDialog({title,message,ok:'হ্যাঁ, এগিয়ে যাও'});
-const appPrompt=(message,value='')=>appDialog({title:'কাজ পরিবর্তন',message,kind:'prompt',value,ok:'সংরক্ষণ'});
-
-$('backupData').onclick=backup;
-$('restoreFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const x=JSON.parse(await f.text());if(!x||typeof x!=='object'||!x.settings)throw Error();if(!await appConfirm('বর্তমান data backup দিয়ে replace হবে। চালিয়ে যাবে?','Backup Restore'))return;data={...defaults(),...x};save();toast('Backup restore হয়েছে')}catch{toast('সঠিক My Life JSON backup নির্বাচন করো')}e.target.value=''};
-$('resetData').onclick=async()=>{if(await appConfirm('এই browser-এর সব My Life data মুছে নতুনভাবে শুরু হবে। আগে backup রেখেছ তো?','সব Data Reset')){data=defaults();save();toast('নতুনভাবে শুরু হয়েছে')}};
-document.addEventListener('change',e=>{let id=e.target.dataset.taskcheck;if(id){let x=tasks().find(t=>t.id===id);if(x){x.done=e.target.checked;save()}}});
-document.addEventListener('click',async e=>{const open=e.target.closest('[data-open-modal]');if(open){if(open.dataset.openModal==='routineModal')openRoutineModal();if(open.dataset.openModal==='studyModal'){$('studyDate').value=today();$('studyStart').value=new Date().toTimeString().slice(0,5);openModal('studyModal')}return}const close=e.target.closest('[data-close-modal]');if(close){closeModal(close.dataset.closeModal);return}if(e.target.classList.contains('modal-backdrop')){closeModal(e.target.id);return}let t=e.target.closest('[data-edit-task],[data-del-task],[data-edit-r],[data-del-r],[data-del-log],[data-del-manual]');if(!t)return;let d=t.dataset;if(d.editTask){let x=tasks().find(x=>x.id===d.editTask),v=await appPrompt('কাজের নতুন নাম লিখো',x.title);if(v?.trim()){x.title=v.trim();save()}}if(d.delTask&&await appConfirm('এই কাজটি তালিকা থেকে মুছে যাবে।','কাজ মুছবে?')){data.tasks[today()]=tasks().filter(x=>x.id!==d.delTask);save()}if(d.editR){const x=data.routine.find(x=>x.id===d.editR);if(x)openRoutineModal(x)}if(d.delR&&await appConfirm('এই রুটিনটি মুছে যাবে।','রুটিন মুছবে?')){data.routine=data.routine.filter(x=>x.id!==d.delR);save()}if(d.delLog&&await appConfirm('এই Study Log মুছে যাবে।','Study Log মুছবে?')){data.logs=data.logs.filter(x=>x.id!==d.delLog);save()}if(d.delManual){data.manual=data.manual.filter(x=>x.id!==d.delManual);save()}});document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal-backdrop:not(.hidden)').forEach(m=>closeModal(m.id))});
-$('carryBtn').onclick=()=>{const pending=tasks().filter(x=>!x.done);if(!pending.length){toast('নেওয়ার মতো অসম্পূর্ণ কাজ নেই');return}const tomorrow=new Date();tomorrow.setDate(tomorrow.getDate()+1);const k=[tomorrow.getFullYear(),String(tomorrow.getMonth()+1).padStart(2,'0'),String(tomorrow.getDate()).padStart(2,'0')].join('-');data.tasks[k]=data.tasks[k]||[];pending.forEach(x=>data.tasks[k].push({...x,id:uid(),done:false}));save();toast('অসম্পূর্ণ কাজ কালকের তালিকায় যোগ হয়েছে')};
-$('subjects').addEventListener('change',e=>{const n=e.target.dataset.chapterCheck;if(!n)return;const s=data.subjects.find(x=>x.name===n),c=s?.chapters?.find(x=>x.id===e.target.dataset.chapterId);if(c){c.done=e.target.checked;save();toast(c.done?'Chapter সম্পন্ন হয়েছে':'Chapter আবার অসম্পন্ন করা হয়েছে')}});
-$('subjects').addEventListener('click',e=>{const toggle=e.target.closest('[data-subject-toggle]');if(toggle){activeSubjectKey=activeSubjectKey===toggle.dataset.subjectToggle?null:toggle.dataset.subjectToggle;renderStudy()}});
-const syncQuestionPreset=()=>{$('learningQuestionCustomWrap').classList.toggle('hidden',$('learningQuestionPreset').value!=='custom')};$('learningQuestionPreset').onchange=()=>{const v=$('learningQuestionPreset').value;if(v==='custom'){$('learningQuestionCustomWrap').classList.remove('hidden');$('learningQuestion').focus()}else{$('learningQuestionCustomWrap').classList.add('hidden');$('learningQuestion').value=v}};$('updateLearningQuestion').onclick=()=>{const q=$('learningQuestion').value.trim();if(!q){toast('প্রশ্নটি লিখে নাও');return}data.learningQuestion=q;save();toast('ডিফল্ট প্রশ্ন সংরক্ষিত হয়েছে—প্রতিদিন এটিই থাকবে')};$('saveLearningAnswer').onclick=()=>{data.learningAnswers[selectedLearningDate]=$('learningAnswer').value;save();renderLearningCalendar();renderLearningDaySummary(selectedLearningDate);toast('নির্বাচিত দিনের উত্তর সংরক্ষিত হয়েছে')};
-$('toggleLearningCalendar').onclick=()=>{const panel=$('learningCalendarPanel'),open=panel.classList.toggle('hidden');$('toggleLearningCalendar').setAttribute('aria-expanded',String(!open));$('toggleLearningCalendar').textContent=open?'▦ Study Calendar খুলুন':'✕ Calendar বন্ধ করো'};$('learningMonthPrev').onclick=()=>{learningCalendarMonth.setMonth(learningCalendarMonth.getMonth()-1);renderLearningCalendar()};$('learningMonthNext').onclick=()=>{learningCalendarMonth.setMonth(learningCalendarMonth.getMonth()+1);renderLearningCalendar()};$('learningTodayBtn').onclick=()=>{selectedLearningDate=today();learningCalendarMonth=new Date(selectedLearningDate+'T12:00:00');learningCalendarMonth.setDate(1);lessonIndex=lessonIndexForDate(selectedLearningDate);renderLesson()};$('learningMonthGrid').addEventListener('click',e=>{const b=e.target.closest('[data-learning-date]');if(!b)return;selectedLearningDate=b.dataset.learningDate;learningCalendarMonth=new Date(selectedLearningDate+'T12:00:00');learningCalendarMonth.setDate(1);lessonIndex=lessonIndexForDate(selectedLearningDate);renderLesson()});$('prevLesson').onclick=()=>{lessonIndex=(lessonIndex+lessons.length-1)%lessons.length;renderLesson()};$('nextLesson').onclick=()=>{lessonIndex=(lessonIndex+1)%lessons.length;renderLesson()};$('saveLesson').onclick=()=>{data.notes[lessons[lessonIndex][1]]=$('lessonNote').value;save();toast('Learning note সংরক্ষিত')};
-$('themeBtn').onclick=()=>{data.theme=data.theme==='light'?'dark':'light';document.body.classList.toggle('dark',data.theme==='dark');localStorage.setItem(KEY,JSON.stringify(data));$('themeBtn').textContent=data.theme==='light'?'☾ Dark mode':'☼ Light mode'};
-let timer=null,remaining=25*60,mode='focus';function syncFullTimer(){const d=$('timerDisplay').textContent;$('focusFullDisplay').textContent=d;$('focusFullMode').textContent=mode==='focus'?'FOCUS':'BREAK';$('focusFullHint').textContent=mode==='focus'?'Stay focused.':'Take a short break.';$('focusFullStart').textContent=timer?'Running':'▶ Start'}function showTimer(){$('timerDisplay').textContent=String(Math.floor(remaining/60)).padStart(2,'0')+':'+String(remaining%60).padStart(2,'0');$('timerHint').textContent=mode==='focus'?'Focus session চলছে/প্রস্তুত। শেষ হলে Study log যোগ করো।':'Break time—চোখ ও শরীরকে বিশ্রাম দাও।';if($('focusFullDisplay'))syncFullTimer()}function resetTimer(){clearInterval(timer);timer=null;mode='focus';remaining=(Math.max(1,Math.min(180,+$('focusMins').value||25))*60);showTimer()}function openFocusScreen(){const el=$('focusFullscreen');el.classList.remove('hidden');document.body.style.overflow='hidden';syncFullTimer();if(el.requestFullscreen&&!document.fullscreenElement)el.requestFullscreen().catch(()=>{})}$('timerStart').onclick=()=>{if(!$('focusFullscreen').classList.contains('hidden')===false)openFocusScreen();if(timer)return;timer=setInterval(()=>{remaining--;showTimer();if(remaining<=0){clearInterval(timer);timer=null;if(mode==='focus'){mode='break';remaining=(Math.max(1,Math.min(60,+$('breakMins').value||5))*60);toast('Focus শেষ—এবার ছোট বিরতি নাও।')}else{mode='focus';remaining=(Math.max(1,Math.min(180,+$('focusMins').value||25))*60);toast('বিরতি শেষ—প্রস্তুত হলে শুরু করো।')}showTimer()}},1000)};$('timerPause').onclick=()=>{clearInterval(timer);timer=null;showTimer();toast('Timer pause হয়েছে')};$('timerReset').onclick=resetTimer;$('openFocusFullscreen').onclick=openFocusScreen;$('closeFocusFullscreen').onclick=()=>{ $('focusFullscreen').classList.add('hidden');document.body.style.overflow='';if(document.fullscreenElement)document.exitFullscreen().catch(()=>{})};$('focusFullStart').onclick=()=>$('timerStart').click();$('focusFullPause').onclick=()=>$('timerPause').click();$('focusFullReset').onclick=()=>$('timerReset').click();document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('focusFullscreen').classList.contains('hidden')){$('focusFullscreen').classList.add('hidden');document.body.style.overflow=''}});document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement&&!$('focusFullscreen').classList.contains('hidden')){$('focusFullscreen').classList.add('hidden');document.body.style.overflow=''}});$('focusMins').onchange=resetTimer;$('breakMins').onchange=()=>{if(mode==='break')remaining=(+$('breakMins').value||5)*60;showTimer()};
-initNav();$('dateNow').textContent=new Date().toLocaleDateString('bn-BD',{weekday:'long',day:'numeric',month:'long',year:'numeric'});function updateLiveClock(){const now=new Date();$('liveClock').textContent=now.toLocaleTimeString('bn-BD',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true});$('clockPeriod').textContent=now.toLocaleTimeString('bn-BD',{hour:'numeric',hour12:true}).replace(/[০-৯০-৯:]/g,'').trim()||'বাংলাদেশ সময়';$('clockDate').textContent=now.toLocaleDateString('bn-BD',{weekday:'short',day:'numeric',month:'long',year:'numeric'})}updateLiveClock();setInterval(updateLiveClock,1000);document.body.classList.toggle('dark',data.theme==='dark');$('themeBtn').textContent=data.theme==='light'?'☾ Theme':'☼ Theme';render();renderLesson();resetTimer();
-let last=Date.now();setInterval(()=>{const now=Date.now(),delta=Math.min(1,(now-last)/60000);last=now;if(document.visibilityState==='visible'&&document.hasFocus()){data.screen[today()]=(data.screen[today()]||0)+delta;localStorage.setItem(KEY,JSON.stringify(data));$('screenBig').textContent=fmt(data.screen[today()]);$('homeScreenStat').textContent=fmt(data.screen[today()]);$('screenBar').style.width=Math.min(100,data.screen[today()]/(data.settings.screenGoal||120)*100)+'%'}},15000);document.addEventListener('visibilitychange',()=>last=Date.now());window.addEventListener('focus',()=>last=Date.now());window.addEventListener('blur',()=>last=Date.now());
+function renderEditor(){
+ var root=document.getElementById("routineEditor");root.innerHTML="";
+ sortTasks(store.routine).forEach(function(task){
+  var row=document.createElement("div");row.className="editor-item";row.dataset.id=task.id;
+  var name=document.createElement("label");name.className="field";name.textContent="কাজের নাম";
+  var nameInput=document.createElement("input");nameInput.maxLength=90;nameInput.value=task.title;nameInput.className="edit-title";name.appendChild(nameInput);
+  var time=document.createElement("label");time.className="field";time.textContent="সময়";
+  var timeInput=document.createElement("input");timeInput.type="time";timeInput.value=task.time||"";timeInput.className="edit-time";time.appendChild(timeInput);
+  var del=document.createElement("button");del.className="icon-btn danger";del.type="button";del.textContent="×";del.title="কাজ বাদ দাও";
+  del.addEventListener("click",function(){if(!confirm("এই নিয়মিত কাজটি বাদ দিতে চাও?"))return;store.routine=store.routine.filter(function(t){return t.id!==task.id});syncTodayFromRoutine();save();render()});
+  row.appendChild(name);row.appendChild(time);row.appendChild(del);root.appendChild(row);
+ });
+}
+function syncTodayFromRoutine(){
+ var day=store.days[todayKey];var old={};day.tasks.forEach(function(t){old[t.id]=t});
+ var extras=day.tasks.filter(function(t){return t.extra});
+ var updated=store.routine.map(function(t){var prev=old[t.id];return {id:t.id,title:t.title,time:t.time||"",done:prev?!!prev.done:false,extra:false}});
+ day.tasks=updated.concat(extras);
+}
+function parseMinutes(t){if(!t)return null;var p=t.split(":");return Number(p[0])*60+Number(p[1])}
+function findOverlaps(list){
+ var sorted=list.filter(function(t){return t.time}).map(function(t){return {title:t.title,time:t.time,minutes:parseMinutes(t.time)}}).sort(function(a,b){return a.minutes-b.minutes});
+ var found=[];for(var i=1;i<sorted.length;i++){if(sorted[i].minutes===sorted[i-1].minutes)found.push(sorted[i-1].title+" ও "+sorted[i].title+" একই সময়ে সেট করা");}
+ return found;
+}
+function switchTab(tab){
+ document.querySelectorAll(".tabs button").forEach(function(b){b.classList.toggle("active",b.dataset.tab===tab)});
+ ["today","edit","history","backup"].forEach(function(v){document.getElementById(v+"View").classList.toggle("hidden",v!==tab)});
+ if(tab==="edit")renderEditor();if(tab==="history")renderHistory();
+}
+document.querySelectorAll(".tabs button").forEach(function(b){b.addEventListener("click",function(){switchTab(b.dataset.tab)})});
+document.getElementById("addTodayBtn").addEventListener("click",function(){document.getElementById("addTodayForm").classList.toggle("hidden");document.getElementById("extraName").focus()});
+document.getElementById("saveExtraBtn").addEventListener("click",function(){
+ var name=document.getElementById("extraName").value.trim();if(!name){document.getElementById("extraName").focus();return}
+ store.days[todayKey].tasks.push({id:makeId(),title:name,time:document.getElementById("extraTime").value,done:false,extra:true});
+ document.getElementById("extraName").value="";document.getElementById("extraTime").value="";document.getElementById("addTodayForm").classList.add("hidden");save();renderToday();
+});
+document.getElementById("addRoutineBtn").addEventListener("click",function(){
+ store.routine.push({id:makeId(),title:"নতুন কাজ",time:""});renderEditor();
+ var inputs=document.querySelectorAll(".editor-item");if(inputs.length)inputs[inputs.length-1].querySelector(".edit-title").select();
+});
+document.getElementById("saveRoutineBtn").addEventListener("click",function(){
+ var rows=Array.from(document.querySelectorAll(".editor-item"));var updated=[];
+ for(var i=0;i<rows.length;i++){
+  var title=rows[i].querySelector(".edit-title").value.trim();var time=rows[i].querySelector(".edit-time").value;
+  if(!title){alert("কাজের নাম খালি রাখা যাবে না।");return}
+  updated.push({id:rows[i].dataset.id,title:title,time:time});
+ }
+ store.routine=updated;syncTodayFromRoutine();save();render();var overlaps=findOverlaps(updated);
+ var warning=document.getElementById("overlapWarning");
+ if(overlaps.length){warning.textContent="সময় overlap / একই সময়: "+overlaps.join("। ");warning.classList.remove("hidden")}
+ else{warning.classList.add("hidden")}
+ switchTab("edit");
+});
+function renderHistory(){
+ var root=document.getElementById("historyList");root.innerHTML="";
+ var keys=Object.keys(store.days).filter(function(k){return k<todayKey}).sort().reverse().slice(0,30);
+ if(!keys.length){root.innerHTML='<div class="empty">আগের দিনের কোনো checklist এখনো নেই।</div>';return}
+ keys.forEach(function(key){
+  var day=store.days[key],total=day.tasks.length,done=day.tasks.filter(function(t){return t.done}).length;
+  var wrap=document.createElement("div");wrap.className="history-day";
+  var head=document.createElement("div");head.className="history-head";
+  var date=document.createElement("span");date.textContent=displayDate(key);
+  var count=document.createElement("span");count.textContent=bn(done)+" / "+bn(total)+" সম্পন্ন";
+  head.appendChild(date);head.appendChild(count);wrap.appendChild(head);
+  var detail=document.createElement("div");detail.className="history-detail";
+  detail.textContent=day.tasks.filter(function(t){return t.done}).map(function(t){return t.title}).join(" · ")||"কোনো কাজ complete করা হয়নি";
+  wrap.appendChild(detail);root.appendChild(wrap);
+ });
+}
+document.getElementById("exportBtn").addEventListener("click",function(){
+ var blob=new Blob([JSON.stringify(store,null,2)],{type:"application/json"});var url=URL.createObjectURL(blob);var a=document.createElement("a");a.href=url;a.download="my-routine-backup-"+todayKey+".json";a.click();URL.revokeObjectURL(url);
+});
+document.getElementById("importBtn").addEventListener("click",function(){
+ var file=document.getElementById("importFile").files[0];if(!file){alert("আগে backup file বেছে নাও।");return}
+ var reader=new FileReader();reader.onload=function(){
+  try{var data=JSON.parse(reader.result);if(data.version!==1||!Array.isArray(data.routine)||!data.days||typeof data.days!=="object")throw new Error("invalid");
+   if(!confirm("Restore করলে বর্তমান data replace হবে। চালিয়ে যাবে?"))return;
+   store=data;ensureToday();save();render();switchTab("today");alert("Backup restore হয়েছে।");
+  }catch(e){alert("এই backup file সঠিক নয় বা পড়া যাচ্ছে না।")}
+ };reader.readAsText(file);
+});
 })();
-</script></body></html>
+</script>
+</body>
+</html>
