@@ -374,6 +374,50 @@ button:active{transform:none}
 @keyframes saveDot{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
 @media(prefers-reduced-motion:reduce){.save-spinner,.save-dots i{animation:none!important}.save-status{transition:none}}
 @media(max-width:420px){.save-status{bottom:max(14px,env(safe-area-inset-bottom));font-size:12px;padding:9px 13px}}
+/* Purpose-built drag and drop: visible preview, real drop slot, smooth reflow */
+.drag-instruction{margin:3px 0 12px!important;padding:8px 11px;border:1px solid #e4ede7;border-radius:10px;background:#f7faf8;color:#718078;font-size:11px!important;line-height:1.55}
+.drag-handle{display:inline-flex!important;align-items:center;justify-content:center;width:38px;min-width:38px;height:42px;min-height:42px;box-sizing:border-box;border:1px solid #e1ebe4!important;border-radius:10px!important;background:#f4f8f5!important;color:#567866!important;font-size:19px!important;cursor:grab!important;touch-action:none!important;user-select:none;-webkit-user-select:none;transition:background .18s,border-color .18s,color .18s,transform .18s!important}
+.drag-handle:hover{background:#e8f3ec!important;border-color:#b9d6c4!important;color:#236349!important;transform:scale(1.04)}
+.drag-handle:active{cursor:grabbing!important}
+.drag-ready{outline:2px solid #b9d8c4!important;outline-offset:2px}
+.drag-source{opacity:.12!important;border:1px dashed #8db69b!important;background:#f7fbf8!important}
+.drag-placeholder{grid-column:1 / -1;display:flex;align-items:center;justify-content:center;box-sizing:border-box;width:100%;min-height:52px;padding:10px;border:2px dashed #7fae90;border-radius:13px;background:linear-gradient(120deg,#f1f8f3,#f8fbf9);color:#397456;font-size:12px;font-weight:750;letter-spacing:.1px;animation:dropSlotPulse 1.25s ease-in-out infinite}
+.drag-placeholder::before{content:"↓  এখানে ছেড়ে দাও"}
+.drag-ghost{position:fixed!important;z-index:99999!important;display:grid;box-sizing:border-box;margin:0!important;pointer-events:none!important;opacity:.98!important;overflow:visible!important;border:1px solid #85b398!important;border-radius:14px!important;background:#fff!important;box-shadow:0 18px 42px rgba(28,73,49,.23),0 4px 12px rgba(28,73,49,.1)!important;transform-origin:center center;will-change:transform;transition:none!important}
+.drag-ghost.task{grid-template-columns:38px 22px minmax(0,1fr) auto!important;align-items:center}
+.drag-ghost.editor-item{grid-template-columns:38px minmax(0,1fr) 112px 112px 40px!important;align-items:end}
+.drag-ghost .drag-handle{cursor:grabbing!important}
+.drag-over-before{border-top:3px solid #3b8b63!important}
+.drag-over-after{border-bottom:3px solid #3b8b63!important}
+.drag-shifting{transition:transform 230ms cubic-bezier(.2,.85,.25,1)!important;will-change:transform}
+.drag-landed{animation:dragLand .34s cubic-bezier(.18,.85,.25,1)}
+.drag-status{position:fixed;left:50%;bottom:20px;z-index:1000;padding:10px 15px;border:1px solid #d8e9de;border-radius:999px;background:#f3faf5;color:#286247;box-shadow:0 8px 24px rgba(31,66,46,.13);font-size:12px;font-weight:750;opacity:0;visibility:hidden;transform:translate(-50%,10px);transition:opacity .2s ease,transform .2s ease,visibility .2s ease;pointer-events:none;white-space:nowrap}
+.drag-status.show{opacity:1;visibility:visible;transform:translate(-50%,0)}
+@keyframes dropSlotPulse{0%,100%{border-color:#94bea1;background:#f5faf6}50%{border-color:#4f966b;background:#edf7f0}}
+@keyframes dragLand{0%{transform:scale(1.025)}65%{transform:scale(.985)}100%{transform:scale(1)}}
+@media(max-width:640px){
+ #todayTasks .task{grid-template-columns:38px 22px minmax(0,1fr)!important;grid-template-rows:auto auto;column-gap:8px!important}
+ #todayTasks .drag-handle{grid-column:1;grid-row:1 / span 2}
+ #todayTasks .task input{grid-column:2;grid-row:1 / span 2}
+ #todayTasks .task-name{grid-column:3;grid-row:1}
+ #todayTasks .task-meta{grid-column:3;grid-row:2;justify-self:start;justify-content:flex-start;min-width:0}
+ .editor-item{grid-template-columns:38px minmax(0,1fr) minmax(0,1fr) 36px!important;grid-template-rows:auto auto;gap:6px!important}
+ .editor-item>.drag-handle{grid-column:1;grid-row:1 / span 2}
+ .editor-item>.field:nth-child(2){grid-column:2 / 4;grid-row:1}
+ .editor-item>.field:nth-child(3){grid-column:2;grid-row:2;min-width:0}
+ .editor-item>.field:nth-child(4){grid-column:3;grid-row:2;min-width:0}
+ .editor-item>.icon-btn{grid-column:4;grid-row:1}
+ .drag-ghost.task{grid-template-columns:38px 22px minmax(0,1fr)!important;grid-template-rows:auto auto!important}
+ .drag-ghost .task-name{grid-column:3;grid-row:1}
+ .drag-ghost .task-meta{grid-column:3;grid-row:2;justify-self:start}
+ .drag-ghost.editor-item{grid-template-columns:38px minmax(0,1fr) minmax(0,1fr) 36px!important;grid-template-rows:auto auto!important}
+ .drag-status{bottom:max(14px,env(safe-area-inset-bottom))}
+}
+@media(max-width:380px){
+ .editor-item{grid-template-columns:36px minmax(0,1fr) minmax(0,1fr) 32px!important;gap:4px!important}
+ .drag-ghost.editor-item{grid-template-columns:36px minmax(0,1fr) minmax(0,1fr) 32px!important}
+}
+@media(prefers-reduced-motion:reduce){.drag-placeholder,.drag-landed,.drag-status{animation:none!important;transition:none!important}.drag-shifting{transition:none!important}}
 </style>
 </head>
 <body>
@@ -398,6 +442,7 @@ button:active{transform:none}
     <div class="progress-top"><div><span class="progress-caption">আজ পর্যন্ত সম্পন্ন</span><strong id="todayCount">০ / ০</strong></div><strong class="progress-percent" id="todayPercent">০%</strong></div>
     <div class="today-progress" role="progressbar" aria-label="আজকের কাজের অগ্রগতি" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="todayProgress"><div class="today-progress-fill" id="todayProgressFill"></div></div>
   </div>
+  <p class="drag-instruction">⠿ চিহ্নটি চেপে ধরে কাজটি যেখানে রাখতে চাও, সেখানে ছেড়ে দাও।</p>
   <div class="task-list" id="todayTasks"></div>
   <div class="actions"><button class="primary" id="addTodayBtn">+ আজকের জন্য কাজ যোগ</button></div>
   <div id="addTodayForm" class="backup-box hidden">
@@ -413,6 +458,7 @@ button:active{transform:none}
   <h1>রুটিন সম্পাদনা</h1>
   <p class="sub" id="editModeLabel"></p>
   <p class="sub">প্রতিটি কাজের শুরুর ও শেষের সময় সেট করো। যেমন: ফজর — সকাল ৫:০০ থেকে ৫:৩০।</p>
+  <p class="drag-instruction">⠿ চিহ্নটি ধরে টেনে কাজগুলো নিজের পছন্দমতো সাজাও। দুই কাজের মাঝখানে ছেড়ে দিলেই সেখানে বসে যাবে।</p>
   <div class="editor-list" id="routineEditor"></div>
   <div id="overlapWarning" class="warning hidden" aria-live="polite"></div>
   <div class="actions"><button class="primary" id="addRoutineBtn">+ নিয়মিত কাজ যোগ</button><button id="saveRoutineBtn">পরিবর্তন সংরক্ষণ</button></div>
@@ -741,28 +787,63 @@ function enableDrag(container,selector,onOrder){
  var state=null;
  function items(){return Array.from(container.querySelectorAll(selector))}
  function clearMarkers(){container.querySelectorAll(".drag-over-before,.drag-over-after").forEach(function(el){el.classList.remove("drag-over-before","drag-over-after")})}
- function animateMove(change,active){
-  var before=new Map();items().forEach(function(el){before.set(el,el.getBoundingClientRect())});
+ function flip(change){
+  var before=new Map();
+  Array.from(container.children).forEach(function(el){before.set(el,el.getBoundingClientRect())});
   change();
-  items().forEach(function(el){
-   if(el===active)return;
-   var a=before.get(el),b=el.getBoundingClientRect();if(!a)return;
-   var dx=a.left-b.left,dy=a.top-b.top;
+  Array.from(container.children).forEach(function(el){
+   var old=before.get(el);if(!old)return;
+   var next=el.getBoundingClientRect(),dx=old.left-next.left,dy=old.top-next.top;
    if(Math.abs(dx)+Math.abs(dy)<1)return;
-   el.style.transition="none";el.style.transform="translate3d("+dx+"px,"+dy+"px,0)";
+   el.classList.add("drag-shifting");
+   el.style.transform="translate3d("+dx+"px,"+dy+"px,0)";
    el.getBoundingClientRect();
-   requestAnimationFrame(function(){el.style.transition="transform 220ms ease";el.style.transform=""});
+   requestAnimationFrame(function(){
+    el.style.transform="";
+    setTimeout(function(){el.classList.remove("drag-shifting")},250);
+   });
   });
  }
- function finish(pointerId){
+ function placePlaceholder(clientY){
+  if(!state||!state.placeholder)return;
+  var candidates=items(),target=null;
+  for(var i=0;i<candidates.length;i++){
+   var rect=candidates[i].getBoundingClientRect();
+   if(clientY<rect.top+rect.height/2){target=candidates[i];break}
+  }
+  var placeholder=state.placeholder;
+  var needsMove=target?placeholder.nextElementSibling!==target:container.lastElementChild!==placeholder;
+  if(!needsMove)return;
+  clearMarkers();
+  if(target)target.classList.add("drag-over-before");
+  else if(candidates.length)candidates[candidates.length-1].classList.add("drag-over-after");
+  flip(function(){
+   if(target)container.insertBefore(placeholder,target);
+   else container.appendChild(placeholder);
+  });
+ }
+ function cleanup(current){
+  if(current.ghost&&current.ghost.parentNode)current.ghost.parentNode.removeChild(current.ghost);
+  if(current.placeholder&&current.placeholder.parentNode)current.placeholder.parentNode.removeChild(current.placeholder);
+  current.item.classList.remove("drag-ready","drag-source");
+  current.item.removeAttribute("aria-grabbed");
+  clearMarkers();
+ }
+ function finish(pointerId,commit){
   if(!state||(pointerId!==undefined&&pointerId!==state.pointerId))return;
   var current=state;state=null;
-  current.item.classList.remove("dragging","drag-ready");
-  current.item.style.pointerEvents="";current.item.style.transform="";current.item.style.transition="";
-  clearMarkers();
-  if(current.started){
+  if(!current.started){current.item.classList.remove("drag-ready");return}
+  if(commit){
+   container.insertBefore(current.item,current.placeholder);
+   current.placeholder.parentNode.removeChild(current.placeholder);
+   current.item.classList.add("drag-landed");
+   setTimeout(function(){current.item.classList.remove("drag-landed")},420);
    var ids=items().map(function(el){return el.dataset.id});
-   if(ids.join("|")!==current.initialOrder.join("|"))onOrder(ids);
+   cleanup(current);
+   if(ids.join("|")!==current.initialIds.join("|")){onOrder(ids);showDragStatus()}
+  }else{
+   current.initialItems.forEach(function(el){container.appendChild(el)});
+   cleanup(current);
   }
  }
  container.addEventListener("pointerdown",function(e){
@@ -770,7 +851,8 @@ function enableDrag(container,selector,onOrder){
   if(!handle||state||e.isPrimary===false||(e.pointerType==="mouse"&&e.button!==0))return;
   var item=handle.closest(selector);if(!item||!container.contains(item))return;
   e.preventDefault();
-  state={item:item,pointerId:e.pointerId,startX:e.clientX,startY:e.clientY,started:false,initialOrder:items().map(function(el){return el.dataset.id})};
+  state={item:item,pointerId:e.pointerId,startX:e.clientX,startY:e.clientY,started:false,
+   initialItems:items(),initialIds:items().map(function(el){return el.dataset.id})};
   item.classList.add("drag-ready");
  });
  document.addEventListener("pointermove",function(e){
@@ -778,32 +860,45 @@ function enableDrag(container,selector,onOrder){
   var dx=e.clientX-state.startX,dy=e.clientY-state.startY;
   if(!state.started&&Math.hypot(dx,dy)<5)return;
   if(!state.started){
-   state.started=true;state.item.classList.remove("drag-ready");state.item.classList.add("dragging");
-   state.item.style.pointerEvents="none";
+   state.started=true;var item=state.item,rect=item.getBoundingClientRect();
+   var placeholder=document.createElement("div");placeholder.className="drag-placeholder";
+   placeholder.style.height=Math.max(52,rect.height)+"px";placeholder.setAttribute("aria-hidden","true");
+   item.parentNode.insertBefore(placeholder,item);item.parentNode.removeChild(item);
+   var ghost=item.cloneNode(true);ghost.classList.remove("drag-ready","drag-source","drag-landed");ghost.classList.add("drag-ghost");
+   ghost.style.width=rect.width+"px";ghost.style.height=rect.height+"px";
+   ghost.style.left=rect.left+"px";ghost.style.top=rect.top+"px";
+   document.body.appendChild(ghost);
+   state.placeholder=placeholder;state.ghost=ghost;item.classList.add("drag-source");item.setAttribute("aria-grabbed","true");
   }
   e.preventDefault();
-  var edge=72;
-  if(e.clientY<edge)window.scrollBy(0,-Math.max(2,(edge-e.clientY)*.16));
-  else if(e.clientY>window.innerHeight-edge)window.scrollBy(0,Math.max(2,(e.clientY-(window.innerHeight-edge))*.16));
-  var rest=items().filter(function(el){return el!==state.item}),target=null;
-  for(var i=0;i<rest.length;i++){
-   var rect=rest[i].getBoundingClientRect();
-   if(e.clientY<rect.top+rect.height/2){target=rest[i];break}
-  }
-  clearMarkers();
-  if(target)target.classList.add("drag-over-before");
-  else if(rest.length)rest[rest.length-1].classList.add("drag-over-after");
-  if(target!==state.item.nextElementSibling)animateMove(function(){container.insertBefore(state.item,target)},state.item);
+  var edge=76;
+  if(e.clientY<edge)window.scrollBy(0,-Math.max(2,(edge-e.clientY)*.18));
+  else if(e.clientY>window.innerHeight-edge)window.scrollBy(0,Math.max(2,(e.clientY-(window.innerHeight-edge))*.18));
+  state.ghost.style.transform="translate3d("+dx+"px,"+dy+"px,0) rotate(.35deg) scale(1.015)";
+  placePlaceholder(e.clientY);
  },{passive:false});
- document.addEventListener("pointerup",function(e){finish(e.pointerId)});
- document.addEventListener("pointercancel",function(e){finish(e.pointerId)});
- window.addEventListener("blur",function(){finish()});
+ document.addEventListener("pointerup",function(e){finish(e.pointerId,true)});
+ document.addEventListener("pointercancel",function(e){finish(e.pointerId,false)});
+ window.addEventListener("blur",function(){finish(undefined,false)});
 }
-enableDrag(document.getElementById("todayTasks"),".task",function(ids){var day=store.days[todayKey],map={};day.tasks.forEach(function(t){map[t.id]=t});day.tasks=ids.map(function(id){return map[id]}).filter(Boolean);save();});
+function showDragStatus(){
+ var status=document.getElementById("dragStatus");if(!status)return;
+ status.textContent="তালিকা নতুনভাবে সাজানো হয়েছে";
+ status.classList.remove("show");void status.offsetWidth;status.classList.add("show");
+ clearTimeout(status._hideTimer);status._hideTimer=setTimeout(function(){status.classList.remove("show")},1700);
+}
+enableDrag(document.getElementById("todayTasks"),".task",function(ids){
+ var day=store.days[todayKey],dayMap={};day.tasks.forEach(function(t){dayMap[t.id]=t});
+ day.tasks=ids.map(function(id){return dayMap[id]}).filter(Boolean);
+ var routineMap={};store.routine.forEach(function(t){routineMap[t.id]=t});
+ var ordered=day.tasks.filter(function(t){return !t.extra&&routineMap[t.id]}).map(function(t){return routineMap[t.id]});
+ store.routine=ordered.concat(store.routine.filter(function(t){return !ordered.some(function(item){return item.id===t.id})}));
+ save();
+});
 enableDrag(document.getElementById("routineEditor"),".editor-item",function(ids){
  var live=readRoutineEditor().updated,map={};live.forEach(function(t){map[t.id]=t});
  store.routine=ids.map(function(id){return map[id]}).filter(Boolean);
- syncTodayFromRoutine();save();validateRoutineTimes();
+ syncTodayFromRoutine();save();renderToday();validateRoutineTimes();
 });
 function renderHistory(){
  var root=document.getElementById("historyList");root.innerHTML="";
@@ -840,5 +935,6 @@ document.getElementById("importBtn").addEventListener("click",function(){
 });
 })();
 </script>
+<div id="dragStatus" class="drag-status" role="status" aria-live="polite"></div>
 </body>
 </html>
