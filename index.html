@@ -1148,7 +1148,7 @@ document.getElementById("importBtn").addEventListener("click",function(){
  var reader=new FileReader();reader.onload=function(){
   try{var data=JSON.parse(reader.result);if(data.version!==1||!Array.isArray(data.routine)||!data.days||typeof data.days!=="object")throw new Error("invalid");
    if(!confirm("Restore করলে বর্তমান data replace হবে। চালিয়ে যাবে?"))return;
-   store=data;ensureToday();save(this);render();switchTab("today");alert("Backup restore হয়েছে।");
+   store=data;ensureToday();save(document.getElementById("importBtn"));render();switchTab("today");alert("Backup restore হয়েছে।");
   }catch(e){alert("এই backup file সঠিক নয় বা পড়া যাচ্ছে না।")}
  };reader.readAsText(file);
 });
