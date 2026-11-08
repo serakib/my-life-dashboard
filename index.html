@@ -421,6 +421,63 @@ button:active{transform:none}
 /* Keep drag and save confirmations from covering one another */
 .save-status{bottom:max(70px,calc(env(safe-area-inset-bottom) + 56px))!important}
 @media(max-width:420px){.save-status{bottom:max(66px,calc(env(safe-area-inset-bottom) + 52px))!important}}
+/* Exam countdown — a clear red focal point for the next study milestone */
+.exam-countdown-card{position:relative;isolation:isolate;overflow:hidden;margin:0 0 18px;padding:20px 21px 15px;border:1px solid #8f3540;border-radius:17px;background:linear-gradient(122deg,#641f2a 0%,#8d2938 48%,#ad3b48 100%);color:#fff;box-shadow:0 12px 28px rgba(112,31,45,.16)}
+.exam-countdown-card:before{content:"";position:absolute;z-index:-1;width:220px;height:220px;right:-65px;top:-120px;border:1px solid rgba(255,255,255,.13);border-radius:50%;box-shadow:0 0 0 22px rgba(255,255,255,.035),0 0 0 48px rgba(255,255,255,.025)}
+.exam-countdown-card:after{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,#ffd4c9,#fff0d8,#eaa2a0);opacity:.9}
+.exam-card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:17px}
+.exam-card-identity{display:flex;align-items:center;gap:12px;min-width:0}
+.exam-emblem{display:grid;place-items:center;width:46px;height:46px;flex:0 0 46px;border:1px solid rgba(255,255,255,.2);border-radius:14px;background:rgba(255,255,255,.11);font-size:24px;box-shadow:inset 0 1px 0 rgba(255,255,255,.08);animation:examEmblemFloat 3.2s ease-in-out infinite}
+.exam-card-heading{min-width:0}
+.exam-kicker{display:block;color:#f1c6c5;font-size:9px;line-height:1.4;font-weight:850;letter-spacing:1.8px}
+.exam-card-heading h2{margin:3px 0 3px;color:#fff;font-size:19px;line-height:1.35;font-weight:800;letter-spacing:-.35px;overflow-wrap:anywhere}
+.exam-card-heading p{margin:0;color:rgba(255,255,255,.72);font-size:11px;line-height:1.5}
+.exam-edit-button{flex:0 0 auto;border:1px solid rgba(255,255,255,.28);border-radius:9px;background:rgba(255,255,255,.1);color:#fff;padding:7px 11px;font-size:11px;font-weight:750}
+.exam-edit-button:hover{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.48)}
+.exam-countdown-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.exam-unit{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0;min-height:78px;padding:10px 4px 8px;border:1px solid rgba(255,255,255,.18);border-radius:11px;background:rgba(255,255,255,.105);box-shadow:inset 0 1px 0 rgba(255,255,255,.07);backdrop-filter:blur(4px)}
+.exam-unit strong{font-size:clamp(22px,3.6vw,32px);line-height:1.12;color:#fff;font-weight:850;letter-spacing:-1px;font-variant-numeric:tabular-nums}
+.exam-unit span{margin-top:5px;color:#f6d5d3;font-size:10px;font-weight:700}
+.exam-unit-seconds{background:rgba(255,225,218,.18);border-color:rgba(255,222,213,.34)}
+.exam-unit-seconds strong{color:#ffe1d7}
+.exam-empty{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:14px 15px;border:1px dashed rgba(255,255,255,.3);border-radius:12px;background:rgba(255,255,255,.07)}
+.exam-empty-title{font-size:14px;font-weight:800;color:#fff}
+.exam-empty-copy{font-size:11px;line-height:1.6;color:rgba(255,255,255,.73)}
+.exam-set-button{margin-top:5px;display:inline-flex;align-items:center;gap:12px;padding:9px 13px;border:1px solid rgba(255,255,255,.25);border-radius:9px;background:#fff;color:#8e2937;font-size:11px;font-weight:800;transition:transform .18s,box-shadow .18s}
+.exam-set-button:hover{transform:translateY(-1px);box-shadow:0 6px 14px rgba(38,8,14,.16)}
+.exam-motivation{margin:13px 2px 0;color:rgba(255,255,255,.78);font-size:11px;line-height:1.55}
+.exam-started{padding:14px;border:1px solid rgba(255,255,255,.24);border-radius:11px;background:rgba(255,255,255,.1);color:#fff;font-weight:800;font-size:14px}
+.exam-settings{margin-top:15px;padding:14px;border:1px solid rgba(255,255,255,.23);border-radius:12px;background:rgba(39,7,14,.2)}
+.exam-settings-title{margin-bottom:10px;color:#fff;font-size:13px;font-weight:800}
+.exam-field{display:grid;gap:5px;margin:9px 0;color:#f5d9d7;font-size:11px;font-weight:700}
+.exam-field input{width:100%;min-width:0;min-height:42px;padding:9px 11px;border:1px solid rgba(255,255,255,.26);border-radius:9px;background:#fff;color:#38242a;font:inherit;font-size:13px;color-scheme:light}
+.exam-field input:focus{outline:3px solid rgba(255,255,255,.18);border-color:#fff}
+.exam-form-error{min-height:0;margin:6px 0;color:#ffe2ce;font-size:11px;font-weight:700}
+.exam-form-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px}
+.exam-save-button,.exam-cancel-button,.exam-clear-button{min-height:36px;padding:8px 12px;border-radius:8px;font-size:11px;font-weight:800}
+.exam-save-button{border:1px solid #fff;background:#fff;color:#862735}
+.exam-cancel-button{border:1px solid rgba(255,255,255,.3);background:transparent;color:#fff}
+.exam-clear-button{border:1px solid rgba(255,255,255,.22);background:rgba(43,5,12,.22);color:#ffd9d3}
+.exam-local-note{margin:8px 0 0;color:rgba(255,255,255,.58);font-size:10px}
+@keyframes examEmblemFloat{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-3px) rotate(2deg)}}
+@media(max-width:560px){
+ .exam-countdown-card{padding:16px 13px 13px;margin-bottom:15px;border-radius:15px}
+ .exam-card-head{margin-bottom:13px}
+ .exam-emblem{width:40px;height:40px;flex-basis:40px;border-radius:12px;font-size:21px}
+ .exam-card-heading h2{font-size:16px}
+ .exam-card-heading p{font-size:10px}
+ .exam-countdown-grid{gap:5px}
+ .exam-unit{min-height:69px;padding:9px 2px 7px;border-radius:9px}
+ .exam-unit strong{font-size:clamp(18px,5.4vw,25px);letter-spacing:-.7px}
+ .exam-unit span{font-size:9px;margin-top:4px}
+ .exam-motivation{font-size:10px;margin-top:10px}
+ .exam-edit-button{padding:7px 8px;font-size:10px}
+}
+@media(max-width:360px){
+ .exam-countdown-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .exam-unit-seconds{grid-column:3}
+}
+@media(prefers-reduced-motion:reduce){.exam-emblem-float,.exam-emblem{animation:none!important}.exam-set-button{transition:none!important}}
 </style>
 </head>
 <body>
@@ -445,6 +502,45 @@ button:active{transform:none}
     <div class="progress-top"><div><span class="progress-caption">আজ পর্যন্ত সম্পন্ন</span><strong id="todayCount">০ / ০</strong></div><strong class="progress-percent" id="todayPercent">০%</strong></div>
     <div class="today-progress" role="progressbar" aria-label="আজকের কাজের অগ্রগতি" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="todayProgress"><div class="today-progress-fill" id="todayProgressFill"></div></div>
   </div>
+  <section class="exam-countdown-card" id="examCountdownCard" aria-label="পরীক্ষার কাউন্টডাউন">
+    <div class="exam-card-head">
+      <div class="exam-card-identity">
+        <div class="exam-emblem" aria-hidden="true">📚</div>
+        <div class="exam-card-heading">
+          <span class="exam-kicker">NEXT MILESTONE</span>
+          <h2 id="examDisplayTitle">তোমার পরবর্তী পরীক্ষা</h2>
+          <p id="examDisplayMeta">পরীক্ষার তারিখ এখনো সেট করা হয়নি</p>
+        </div>
+      </div>
+      <button type="button" id="editExamBtn" class="exam-edit-button hidden">পরিবর্তন</button>
+    </div>
+    <div class="exam-countdown-grid hidden" id="examCountdownUnits" aria-live="off">
+      <div class="exam-unit"><strong id="examMonths">০</strong><span>মাস</span></div>
+      <div class="exam-unit"><strong id="examDays">০</strong><span>দিন</span></div>
+      <div class="exam-unit"><strong id="examHours">০</strong><span>ঘণ্টা</span></div>
+      <div class="exam-unit"><strong id="examMinutes">০</strong><span>মিনিট</span></div>
+      <div class="exam-unit exam-unit-seconds"><strong id="examSeconds">০</strong><span>সেকেন্ড</span></div>
+    </div>
+    <div class="exam-empty" id="examEmpty">
+      <span class="exam-empty-title">পরীক্ষার লক্ষ্য ঠিক করো</span>
+      <span class="exam-empty-copy">তারিখ সেট করলেই প্রতিদিন কত সময় বাকি, এখানে দেখতে পাবে।</span>
+      <button type="button" class="exam-set-button" id="showExamFormBtn">পরীক্ষার সময় সেট করো <span aria-hidden="true">→</span></button>
+    </div>
+    <div class="exam-started hidden" id="examStarted">সময় এসে গেছে — তোমার পরীক্ষার সময় শুরু হয়েছে।</div>
+    <p class="exam-motivation" id="examMotivation">আজকের প্রস্তুতিই তোমাকে পরীক্ষার দিনের আরও কাছে নিয়ে যাবে।</p>
+    <div class="exam-settings hidden" id="examSettings">
+      <div class="exam-settings-title">পরীক্ষার তথ্য</div>
+      <label class="exam-field">পরীক্ষার নাম<input id="examTitleInput" type="text" maxlength="60" placeholder="যেমন: HSC Physics পরীক্ষা"></label>
+      <label class="exam-field">পরীক্ষার তারিখ ও সময়<input id="examDateTimeInput" type="datetime-local" step="60"></label>
+      <p class="exam-form-error" id="examFormError" role="alert"></p>
+      <div class="exam-form-actions">
+        <button type="button" class="exam-save-button" id="saveExamBtn">কাউন্টডাউন চালু করো</button>
+        <button type="button" class="exam-cancel-button" id="cancelExamBtn">বাতিল</button>
+        <button type="button" class="exam-clear-button hidden" id="clearExamBtn">মুছে ফেলো</button>
+      </div>
+      <p class="exam-local-note">সময় তোমার device-এর স্থানীয় সময় অনুযায়ী ধরা হবে।</p>
+    </div>
+  </section>
   <p class="drag-instruction">⠿ চিহ্নটি চেপে ধরে কাজটি যেখানে রাখতে চাও, সেখানে ছেড়ে দাও।</p>
   <div class="task-list" id="todayTasks"></div>
   <div class="actions"><button class="primary" id="addTodayBtn">+ আজকের জন্য কাজ যোগ</button></div>
@@ -561,6 +657,7 @@ function loadStore(){
     if(!parsed.profiles[key])parsed.profiles[key]=clone(parsed.routine);
     else if(JSON.stringify(parsed.profiles[key])===JSON.stringify(legacyDefaultRoutine))parsed.profiles[key]=clone(defaults[key]);
    });
+   parsed.exam=parsed.exam&&isFinite(Number(parsed.exam.timestamp))?{title:String(parsed.exam.title||"পরবর্তী পরীক্ষা"),timestamp:Number(parsed.exam.timestamp)}:null;
    if(!parsed.activeProfile||!parsed.profiles[parsed.activeProfile])parsed.activeProfile="college";
    parsed.routine=parsed.profiles[parsed.activeProfile];
    var today=localDateKey(new Date()),day=parsed.days[today];
@@ -571,7 +668,7 @@ function loadStore(){
    return parsed;
   }}
  }catch(e){}
- var profiles=defaults;return {version:1,routine:clone(profiles.college),profiles:profiles,activeProfile:"college",days:{}};
+ var profiles=defaults;return {version:1,routine:clone(profiles.college),profiles:profiles,activeProfile:"college",days:{},exam:null};
 }
 var saveStatusToken=0,saveStatusTimer=null,saveStatusHideTimer=null;
 function paintSaveStatus(state){
@@ -592,6 +689,7 @@ function paintSaveStatus(state){
 }
 function save(){
  store.profiles=store.profiles||{};store.profiles[store.activeProfile]=store.routine;
+ if(typeof store.exam==="undefined")store.exam=null;
  var token=++saveStatusToken;
  if(saveStatusTimer)clearTimeout(saveStatusTimer);
  if(saveStatusHideTimer)clearTimeout(saveStatusHideTimer);
@@ -636,7 +734,7 @@ function updateClock(){var now=new Date();var el=document.getElementById("curren
 function render(){
  document.getElementById("todayDate").textContent=displayDate(todayKey);
  updateClock();
- renderToday();renderEditor();renderHistory();
+ renderToday();renderEditor();renderHistory();updateExamCountdown();
 }
 function renderToday(){
  var day=store.days[todayKey];var root=document.getElementById("todayTasks");root.innerHTML="";
@@ -699,6 +797,99 @@ function switchTab(tab){
 document.querySelectorAll(".tabs button").forEach(function(b){b.addEventListener("click",function(){switchTab(b.dataset.tab)})});
 document.getElementById("dayMode").value=store.activeProfile;
 document.getElementById("dayMode").addEventListener("change",function(){setProfile(this.value)});
+function addCalendarMonths(date,amount){
+ var result=new Date(date.getTime()),day=result.getDate();
+ result.setDate(1);result.setMonth(result.getMonth()+amount);
+ var lastDay=new Date(result.getFullYear(),result.getMonth()+1,0).getDate();
+ result.setDate(Math.min(day,lastDay));
+ result.setHours(date.getHours(),date.getMinutes(),date.getSeconds(),date.getMilliseconds());
+ return result;
+}
+function examCountdownParts(target,now){
+ var months=(target.getFullYear()-now.getFullYear())*12+(target.getMonth()-now.getMonth());
+ var cursor=addCalendarMonths(now,months);
+ if(cursor.getTime()>target.getTime()){months--;cursor=addCalendarMonths(now,months)}
+ var remaining=Math.max(0,target.getTime()-cursor.getTime());
+ var days=Math.floor(remaining/86400000);remaining-=days*86400000;
+ var hours=Math.floor(remaining/3600000);remaining-=hours*3600000;
+ var minutes=Math.floor(remaining/60000);remaining-=minutes*60000;
+ var seconds=Math.floor(remaining/1000);
+ return {months:Math.max(0,months),days:days,hours:hours,minutes:minutes,seconds:seconds};
+}
+function examDateLabel(date){
+ return new Intl.DateTimeFormat("bn-BD",{weekday:"long",day:"numeric",month:"long",year:"numeric",hour:"numeric",minute:"2-digit",hour12:true}).format(date);
+}
+function dateTimeLocalValue(date){
+ function pad(n){return String(n).padStart(2,"0")}
+ return date.getFullYear()+"-"+pad(date.getMonth()+1)+"-"+pad(date.getDate())+"T"+pad(date.getHours())+":"+pad(date.getMinutes());
+}
+function updateExamCountdown(){
+ var exam=store.exam,empty=document.getElementById("examEmpty"),units=document.getElementById("examCountdownUnits");
+ var started=document.getElementById("examStarted"),edit=document.getElementById("editExamBtn");
+ if(!exam||!isFinite(Number(exam.timestamp))){
+  document.getElementById("examDisplayTitle").textContent="তোমার পরবর্তী পরীক্ষা";
+  document.getElementById("examDisplayMeta").textContent="পরীক্ষার তারিখ এখনো সেট করা হয়নি";
+  empty.classList.remove("hidden");units.classList.add("hidden");started.classList.add("hidden");edit.classList.add("hidden");
+  document.getElementById("examMotivation").textContent="আজকের প্রস্তুতিই তোমাকে পরীক্ষার দিনের আরও কাছে নিয়ে যাবে।";
+  return;
+ }
+ var target=new Date(Number(exam.timestamp)),now=new Date(),finished=target.getTime()<=now.getTime();
+ document.getElementById("examDisplayTitle").textContent=exam.title||"পরবর্তী পরীক্ষা";
+ document.getElementById("examDisplayMeta").textContent=examDateLabel(target);
+ empty.classList.add("hidden");edit.classList.remove("hidden");
+ if(finished){
+  units.classList.add("hidden");started.classList.remove("hidden");
+  document.getElementById("examMotivation").textContent="পরীক্ষার সময় শুরু হয়েছে। নিজের সেরাটা দাও।";
+  return;
+ }
+ started.classList.add("hidden");units.classList.remove("hidden");
+ var parts=examCountdownParts(target,now);
+ document.getElementById("examMonths").textContent=bn(parts.months);
+ document.getElementById("examDays").textContent=bn(parts.days);
+ document.getElementById("examHours").textContent=bn(parts.hours);
+ document.getElementById("examMinutes").textContent=bn(parts.minutes);
+ document.getElementById("examSeconds").textContent=bn(parts.seconds);
+ document.getElementById("examMotivation").textContent=parts.months===0&&parts.days<7?"সময় দ্রুত এগোচ্ছে—আজকের পড়াটা আজই শেষ করো।":"প্রতিদিনের ছোট প্রস্তুতিই পরীক্ষার দিনের আত্মবিশ্বাস তৈরি করে।";
+}
+function openExamSettings(){
+ var form=document.getElementById("examSettings"),title=document.getElementById("examTitleInput"),date=document.getElementById("examDateTimeInput");
+ title.value=store.exam?store.exam.title||"":"";
+ date.value=store.exam?dateTimeLocalValue(new Date(Number(store.exam.timestamp))):"";
+ document.getElementById("examFormError").textContent="";
+ document.getElementById("clearExamBtn").classList.toggle("hidden",!store.exam);
+ form.classList.remove("hidden");
+ if(!date.value){
+  var soon=new Date(Date.now()+86400000);
+  date.min=dateTimeLocalValue(new Date());
+ }else{date.min=dateTimeLocalValue(new Date())}
+ date.focus();
+}
+document.getElementById("showExamFormBtn").addEventListener("click",openExamSettings);
+document.getElementById("editExamBtn").addEventListener("click",openExamSettings);
+document.getElementById("cancelExamBtn").addEventListener("click",function(){
+ document.getElementById("examSettings").classList.add("hidden");
+ document.getElementById("examFormError").textContent="";
+});
+document.getElementById("saveExamBtn").addEventListener("click",function(){
+ var title=document.getElementById("examTitleInput").value.trim()||"পরবর্তী পরীক্ষা";
+ var value=document.getElementById("examDateTimeInput").value;
+ var error=document.getElementById("examFormError");
+ if(!value){error.textContent="পরীক্ষার তারিখ ও সময় নির্বাচন করো।";return}
+ var timestamp=new Date(value).getTime();
+ if(!isFinite(timestamp)){error.textContent="তারিখ ও সময়টি ঠিকভাবে নির্বাচন করো।";return}
+ if(timestamp<=Date.now()){error.textContent="ভবিষ্যতের একটি তারিখ ও সময় নির্বাচন করো।";return}
+ store.exam={title:title,timestamp:timestamp};
+ if(!save()){error.textContent="ডেটা সংরক্ষণ হয়নি। Browser storage পরীক্ষা করে আবার চেষ্টা করো।";return}
+ document.getElementById("examSettings").classList.add("hidden");
+ updateExamCountdown();
+});
+document.getElementById("clearExamBtn").addEventListener("click",function(){
+ store.exam=null;
+ if(!save()){document.getElementById("examFormError").textContent="কাউন্টডাউন মুছে ফেলা যায়নি। আবার চেষ্টা করো।";return}
+ document.getElementById("examSettings").classList.add("hidden");
+ updateExamCountdown();
+});
+
 document.getElementById("addTodayBtn").addEventListener("click",function(){document.getElementById("addTodayForm").classList.toggle("hidden");document.getElementById("extraName").focus()});
 document.getElementById("saveExtraBtn").addEventListener("click",function(){
  var name=document.getElementById("extraName").value.trim();if(!name){document.getElementById("extraName").focus();return}
@@ -923,7 +1114,7 @@ function renderHistory(){
   root.appendChild(wrap);
  });
 }
-updateClock();setInterval(updateClock,1000);
+updateClock();setInterval(updateClock,1000);updateExamCountdown();setInterval(updateExamCountdown,1000);
 document.getElementById("exportBtn").addEventListener("click",function(){
  var blob=new Blob([JSON.stringify(store,null,2)],{type:"application/json"});var url=URL.createObjectURL(blob);var a=document.createElement("a");a.href=url;a.download="my-routine-backup-"+todayKey+".json";a.click();URL.revokeObjectURL(url);
 });
