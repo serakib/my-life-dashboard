@@ -545,6 +545,16 @@ button.primary:hover{background:linear-gradient(135deg,#226d58,#185a48)}
  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
  #todayView:not(.hidden),#editView:not(.hidden),#historyView:not(.hidden),#backupView:not(.hidden){animation:none}
 }
+
+/* Keep the pointer unmistakably visible while a routine card is being dragged */
+body.routine-dragging,body.routine-dragging *{
+ cursor:grabbing!important;
+ user-select:none!important;
+ -webkit-user-select:none!important;
+}
+body.routine-dragging{touch-action:none}
+body.routine-dragging .drag-ghost{cursor:grabbing!important}
+@media(prefers-reduced-motion:reduce){body.routine-dragging *{transition:none!important}}
 </style>
 </head>
 <body>
@@ -1120,12 +1130,14 @@ function enableDrag(container,selector,onOrder){
    }
   }else{
    d.item.classList.remove("drag-ready");
+   document.body.classList.remove("routine-dragging");
   }
  }
  function clear(d){
   if(d.ghost)d.ghost.remove();
   if(d.placeholder)d.placeholder.remove();
   d.item.classList.remove("drag-ready","drag-source");
+  document.body.classList.remove("routine-dragging");
   d.item.removeAttribute("aria-grabbed");
   markers();
   try{if(d.handle.hasPointerCapture(d.pointerId))d.handle.releasePointerCapture(d.pointerId)}catch(_){}
@@ -1152,6 +1164,7 @@ function enableDrag(container,selector,onOrder){
   if(!drag.started){
    e.preventDefault();
    drag.started=true;
+   document.body.classList.add("routine-dragging");
    var rect=drag.item.getBoundingClientRect(),p=document.createElement("div");
    p.className="drag-placeholder";p.style.height=Math.max(54,rect.height)+"px";p.setAttribute("aria-hidden","true");
    container.insertBefore(p,drag.item);
