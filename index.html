@@ -482,17 +482,6 @@ button:active{transform:none}
 </head>
 <body>
 <div class="app">
-<header class="app-header">
-  <div class="header-title"><div class="brand">আমার রুটিন</div><div class="date" id="todayDate"></div></div>
-  <div class="clock-card" aria-label="বর্তমান সময়"><span class="clock-caption">এখন</span><time id="currentTime">--:--</time></div>
-</header>
-<nav class="tabs" aria-label="প্রধান মেনু">
-  <button class="active" data-tab="today">আজকের তালিকা</button>
-  <button data-tab="edit">রুটিন সম্পাদনা</button>
-  <button data-tab="history">আগের দিন</button>
-  <button data-tab="backup">ব্যাকআপ</button>
-</nav>
-<main>
 <section class="exam-countdown-card" id="examCountdownCard" aria-label="পরীক্ষার কাউন্টডাউন">
   <div class="exam-card-head">
     <div class="exam-card-identity">
@@ -532,6 +521,18 @@ button:active{transform:none}
     <p class="exam-local-note">সময় তোমার device-এর স্থানীয় সময় অনুযায়ী ধরা হবে।</p>
   </div>
 </section>
+<header class="app-header">
+  <div class="header-title"><div class="brand">আমার রুটিন</div><div class="date" id="todayDate"></div></div>
+  <div class="clock-card" aria-label="বর্তমান সময়"><span class="clock-caption">এখন</span><time id="currentTime">--:--</time></div>
+</header>
+<nav class="tabs" aria-label="প্রধান মেনু">
+  <button class="active" data-tab="today">আজকের তালিকা</button>
+  <button data-tab="edit">রুটিন সম্পাদনা</button>
+  <button data-tab="history">আগের দিন</button>
+  <button data-tab="backup">ব্যাকআপ</button>
+</nav>
+<main>
+
 <section id="todayView" class="panel today-panel">
   <div class="today-top">
     <div class="today-title-wrap"><span class="eyebrow">TODAY'S ROUTINE</span><h1>আজকের কাজ</h1><p class="sub">একটা একটা করে শেষ করো। নিজের গতিতে এগিয়ে যাও।</p></div>
