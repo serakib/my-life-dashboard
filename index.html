@@ -573,7 +573,7 @@ button:active{transform:none}
   <p class="sub">সব তথ্য এই browser-এর LocalStorage-এ থাকে। মাঝে মাঝে backup রাখলে browser data মুছে গেলেও ফিরিয়ে আনতে পারবে।</p>
   <div class="backup-box">
     <strong>Backup download</strong>
-    <p>রুটিন, আজকের checklist এবং আগের দিনের history একটি JSON file-এ সংরক্ষণ করো।</p>
+    <p>রুটিন, পরীক্ষার কাউন্টডাউন, আজকের checklist এবং আগের দিনের history একটি JSON file-এ সংরক্ষণ করো।</p>
     <button class="primary" id="exportBtn">Backup download</button>
   </div>
   <div class="backup-box">
@@ -859,7 +859,6 @@ function openExamSettings(){
  document.getElementById("clearExamBtn").classList.toggle("hidden",!store.exam);
  form.classList.remove("hidden");
  if(!date.value){
-  var soon=new Date(Date.now()+86400000);
   date.min=dateTimeLocalValue(new Date());
  }else{date.min=dateTimeLocalValue(new Date())}
  date.focus();
@@ -878,14 +877,15 @@ document.getElementById("saveExamBtn").addEventListener("click",function(){
  var timestamp=new Date(value).getTime();
  if(!isFinite(timestamp)){error.textContent="তারিখ ও সময়টি ঠিকভাবে নির্বাচন করো।";return}
  if(timestamp<=Date.now()){error.textContent="ভবিষ্যতের একটি তারিখ ও সময় নির্বাচন করো।";return}
+ var previousExam=store.exam;
  store.exam={title:title,timestamp:timestamp};
- if(!save()){error.textContent="ডেটা সংরক্ষণ হয়নি। Browser storage পরীক্ষা করে আবার চেষ্টা করো।";return}
+ if(!save()){store.exam=previousExam;updateExamCountdown();error.textContent="ডেটা সংরক্ষণ হয়নি। Browser storage পরীক্ষা করে আবার চেষ্টা করো।";return}
  document.getElementById("examSettings").classList.add("hidden");
  updateExamCountdown();
 });
 document.getElementById("clearExamBtn").addEventListener("click",function(){
- store.exam=null;
- if(!save()){document.getElementById("examFormError").textContent="কাউন্টডাউন মুছে ফেলা যায়নি। আবার চেষ্টা করো।";return}
+ var previousExam=store.exam;store.exam=null;
+ if(!save()){store.exam=previousExam;updateExamCountdown();document.getElementById("examFormError").textContent="কাউন্টডাউন মুছে ফেলা যায়নি। আবার চেষ্টা করো।";return}
  document.getElementById("examSettings").classList.add("hidden");
  updateExamCountdown();
 });
