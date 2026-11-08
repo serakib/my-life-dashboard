@@ -493,6 +493,45 @@ button:active{transform:none}
   <button data-tab="backup">ব্যাকআপ</button>
 </nav>
 <main>
+<section class="exam-countdown-card" id="examCountdownCard" aria-label="পরীক্ষার কাউন্টডাউন">
+  <div class="exam-card-head">
+    <div class="exam-card-identity">
+      <div class="exam-emblem" aria-hidden="true">📚</div>
+      <div class="exam-card-heading">
+        <span class="exam-kicker">NEXT MILESTONE</span>
+        <h2 id="examDisplayTitle">তোমার পরবর্তী পরীক্ষা</h2>
+        <p id="examDisplayMeta">পরীক্ষার তারিখ এখনো সেট করা হয়নি</p>
+      </div>
+    </div>
+    <button type="button" id="editExamBtn" class="exam-edit-button hidden">নাম ও সময় বদলাও</button>
+  </div>
+  <div class="exam-countdown-grid hidden" id="examCountdownUnits" aria-live="off">
+    <div class="exam-unit"><strong id="examMonths">০</strong><span>মাস</span></div>
+    <div class="exam-unit"><strong id="examDays">০</strong><span>দিন</span></div>
+    <div class="exam-unit"><strong id="examHours">০</strong><span>ঘণ্টা</span></div>
+    <div class="exam-unit"><strong id="examMinutes">০</strong><span>মিনিট</span></div>
+    <div class="exam-unit exam-unit-seconds"><strong id="examSeconds">০</strong><span>সেকেন্ড</span></div>
+  </div>
+  <div class="exam-empty" id="examEmpty">
+    <span class="exam-empty-title">পরীক্ষার লক্ষ্য ঠিক করো</span>
+    <span class="exam-empty-copy">তারিখ সেট করলেই প্রতিদিন কত সময় বাকি, এখানে দেখতে পাবে।</span>
+    <button type="button" class="exam-set-button" id="showExamFormBtn">পরীক্ষার সময় সেট করো <span aria-hidden="true">→</span></button>
+  </div>
+  <div class="exam-started hidden" id="examStarted">সময় এসে গেছে — তোমার পরীক্ষার সময় শুরু হয়েছে।</div>
+  <p class="exam-motivation" id="examMotivation">আজকের প্রস্তুতিই তোমাকে পরীক্ষার দিনের আরও কাছে নিয়ে যাবে।</p>
+  <div class="exam-settings hidden" id="examSettings">
+    <div class="exam-settings-title">পরীক্ষার নাম, তারিখ ও সময়</div>
+    <label class="exam-field">পরীক্ষার নাম<input id="examTitleInput" type="text" maxlength="60" placeholder="যেমন: HSC Physics পরীক্ষা"></label>
+    <label class="exam-field">পরীক্ষার তারিখ ও সময়<input id="examDateTimeInput" type="datetime-local" step="60"></label>
+    <p class="exam-form-error" id="examFormError" role="alert"></p>
+    <div class="exam-form-actions">
+      <button type="button" class="exam-save-button" id="saveExamBtn">কাউন্টডাউন চালু করো</button>
+      <button type="button" class="exam-cancel-button" id="cancelExamBtn">বাতিল</button>
+      <button type="button" class="exam-clear-button hidden" id="clearExamBtn">মুছে ফেলো</button>
+    </div>
+    <p class="exam-local-note">সময় তোমার device-এর স্থানীয় সময় অনুযায়ী ধরা হবে।</p>
+  </div>
+</section>
 <section id="todayView" class="panel today-panel">
   <div class="today-top">
     <div class="today-title-wrap"><span class="eyebrow">TODAY'S ROUTINE</span><h1>আজকের কাজ</h1><p class="sub">একটা একটা করে শেষ করো। নিজের গতিতে এগিয়ে যাও।</p></div>
@@ -502,45 +541,7 @@ button:active{transform:none}
     <div class="progress-top"><div><span class="progress-caption">আজ পর্যন্ত সম্পন্ন</span><strong id="todayCount">০ / ০</strong></div><strong class="progress-percent" id="todayPercent">০%</strong></div>
     <div class="today-progress" role="progressbar" aria-label="আজকের কাজের অগ্রগতি" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="todayProgress"><div class="today-progress-fill" id="todayProgressFill"></div></div>
   </div>
-  <section class="exam-countdown-card" id="examCountdownCard" aria-label="পরীক্ষার কাউন্টডাউন">
-    <div class="exam-card-head">
-      <div class="exam-card-identity">
-        <div class="exam-emblem" aria-hidden="true">📚</div>
-        <div class="exam-card-heading">
-          <span class="exam-kicker">NEXT MILESTONE</span>
-          <h2 id="examDisplayTitle">তোমার পরবর্তী পরীক্ষা</h2>
-          <p id="examDisplayMeta">পরীক্ষার তারিখ এখনো সেট করা হয়নি</p>
-        </div>
-      </div>
-      <button type="button" id="editExamBtn" class="exam-edit-button hidden">পরিবর্তন</button>
-    </div>
-    <div class="exam-countdown-grid hidden" id="examCountdownUnits" aria-live="off">
-      <div class="exam-unit"><strong id="examMonths">০</strong><span>মাস</span></div>
-      <div class="exam-unit"><strong id="examDays">০</strong><span>দিন</span></div>
-      <div class="exam-unit"><strong id="examHours">০</strong><span>ঘণ্টা</span></div>
-      <div class="exam-unit"><strong id="examMinutes">০</strong><span>মিনিট</span></div>
-      <div class="exam-unit exam-unit-seconds"><strong id="examSeconds">০</strong><span>সেকেন্ড</span></div>
-    </div>
-    <div class="exam-empty" id="examEmpty">
-      <span class="exam-empty-title">পরীক্ষার লক্ষ্য ঠিক করো</span>
-      <span class="exam-empty-copy">তারিখ সেট করলেই প্রতিদিন কত সময় বাকি, এখানে দেখতে পাবে।</span>
-      <button type="button" class="exam-set-button" id="showExamFormBtn">পরীক্ষার সময় সেট করো <span aria-hidden="true">→</span></button>
-    </div>
-    <div class="exam-started hidden" id="examStarted">সময় এসে গেছে — তোমার পরীক্ষার সময় শুরু হয়েছে।</div>
-    <p class="exam-motivation" id="examMotivation">আজকের প্রস্তুতিই তোমাকে পরীক্ষার দিনের আরও কাছে নিয়ে যাবে।</p>
-    <div class="exam-settings hidden" id="examSettings">
-      <div class="exam-settings-title">পরীক্ষার তথ্য</div>
-      <label class="exam-field">পরীক্ষার নাম<input id="examTitleInput" type="text" maxlength="60" placeholder="যেমন: HSC Physics পরীক্ষা"></label>
-      <label class="exam-field">পরীক্ষার তারিখ ও সময়<input id="examDateTimeInput" type="datetime-local" step="60"></label>
-      <p class="exam-form-error" id="examFormError" role="alert"></p>
-      <div class="exam-form-actions">
-        <button type="button" class="exam-save-button" id="saveExamBtn">কাউন্টডাউন চালু করো</button>
-        <button type="button" class="exam-cancel-button" id="cancelExamBtn">বাতিল</button>
-        <button type="button" class="exam-clear-button hidden" id="clearExamBtn">মুছে ফেলো</button>
-      </div>
-      <p class="exam-local-note">সময় তোমার device-এর স্থানীয় সময় অনুযায়ী ধরা হবে।</p>
-    </div>
-  </section>
+
   <p class="drag-instruction">⠿ চিহ্নটি চেপে ধরে কাজটি যেখানে রাখতে চাও, সেখানে ছেড়ে দাও।</p>
   <div class="task-list" id="todayTasks"></div>
   <div class="actions"><button class="primary" id="addTodayBtn">+ আজকের জন্য কাজ যোগ</button></div>
@@ -857,6 +858,7 @@ function openExamSettings(){
  date.value=store.exam?dateTimeLocalValue(new Date(Number(store.exam.timestamp))):"";
  document.getElementById("examFormError").textContent="";
  document.getElementById("clearExamBtn").classList.toggle("hidden",!store.exam);
+ document.getElementById("saveExamBtn").textContent=store.exam?"পরিবর্তন সংরক্ষণ":"কাউন্টডাউন চালু করো";
  form.classList.remove("hidden");
  if(!date.value){
   date.min=dateTimeLocalValue(new Date());
