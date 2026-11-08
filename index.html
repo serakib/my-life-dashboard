@@ -598,7 +598,7 @@ function readRoutineEditor(){
   updated.push({id:row.dataset.id,title:title,time:time,endTime:endTime});
  });
  var scheduled=updated.filter(function(t){return !!t.time}).map(function(t){
-  return {title:t.title,start:parseMinutes(t.time),end:t.endTime&&parseMinutes(t.endTime)>parseMinutes(t.time)?parseMinutes(t.endTime):null};
+  return {id:t.id,title:t.title,start:parseMinutes(t.time),end:t.endTime&&parseMinutes(t.endTime)>parseMinutes(t.time)?parseMinutes(t.endTime):null};
  });
  var overlaps=[];
  for(var i=0;i<scheduled.length;i++)for(var j=i+1;j<scheduled.length;j++){
@@ -607,7 +607,7 @@ function readRoutineEditor(){
   else if(a.end!==null)conflict=b.start>=a.start&&b.start<a.end;
   else if(b.end!==null)conflict=a.start>=b.start&&a.start<b.end;
   else conflict=a.start===b.start;
-  if(conflict)overlaps.push({a:a.title,b:b.title,aId:updated.find(function(t){return t.title===a.title&&parseMinutes(t.time)===a.start}).id,bId:updated.find(function(t){return t.title===b.title&&parseMinutes(t.time)===b.start}).id});
+  if(conflict)overlaps.push({a:a.title,b:b.title,aId:a.id,bId:b.id});
  }
  if(overlaps.length)issues.push("সময় overlap হচ্ছে।");
  return {updated:updated,issues:Array.from(new Set(issues)),overlaps:overlaps};
