@@ -98,7 +98,7 @@ footer{text-align:center;color:var(--muted);font-size:11px;margin-top:18px}
   <p class="hint">সময় না দিলেও চলবে। সময় দেওয়া কাজগুলোতে overlap থাকলে সতর্ক করা হবে, তবে তুমি চাইলে একই সময়ের কাজ রাখতে পারবে।</p>
 </section>
 <section id="historyView" class="panel hidden">
-  <h1>আগের দিনের তালিকা</h1>
+  <h1>আগের দিনের progress</h1>
   <p class="sub">গত দিনগুলোতে তোমার routine কতটা maintain করতে পেরেছ, শুধু সেই progress দেখাবে।</p>
   <div id="historyList"></div>
 </section>
@@ -247,7 +247,7 @@ document.getElementById("saveRoutineBtn").addEventListener("click",function(){
 });
 function renderHistory(){
  var root=document.getElementById("historyList");root.innerHTML="";
- var keys=Object.keys(store.days).filter(function(k){return k<todayKey}).sort().reverse().slice(0,30);
+ var keys=Object.keys(store.days).filter(function(k){return k<todayKey}).sort().reverse();
  if(!keys.length){root.innerHTML='<div class="empty">আগের দিনের progress এখানে দেখা যাবে।</div>';return}
  keys.forEach(function(key){
   var day=store.days[key],total=day.tasks.length,done=day.tasks.filter(function(t){return t.done}).length;
@@ -255,14 +255,13 @@ function renderHistory(){
   var wrap=document.createElement("div");wrap.className="history-day";
   var head=document.createElement("div");head.className="history-head";
   var date=document.createElement("span");date.textContent=displayDate(key);
-  var count=document.createElement("span");count.textContent=bn(done)+" / "+bn(total);
+  var count=document.createElement("span");count.className="history-percent";count.textContent=bn(percent)+"%";
   head.appendChild(date);head.appendChild(count);wrap.appendChild(head);
   var progress=document.createElement("div");progress.className="history-progress";
   var track=document.createElement("div");track.className="history-track";
   var fill=document.createElement("div");fill.className="history-fill";fill.style.width=percent+"%";
   track.appendChild(fill);
-  var label=document.createElement("span");label.className="history-percent";label.textContent=bn(percent)+"%";
-  progress.appendChild(track);progress.appendChild(label);wrap.appendChild(progress);
+  progress.appendChild(track);wrap.appendChild(progress);
   root.appendChild(wrap);
  });
 }
