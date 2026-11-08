@@ -555,6 +555,22 @@ body.routine-dragging,body.routine-dragging *{
 body.routine-dragging{touch-action:none}
 body.routine-dragging .drag-ghost{cursor:grabbing!important}
 @media(prefers-reduced-motion:reduce){body.routine-dragging *{transition:none!important}}
+
+/* High-contrast cursor: black pointer with a fine white edge stays visible on white surfaces */
+:root{
+ --cursor-arrow:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath d='M5 2.5 5.5 21l5-4.7 3.3 7.2 3.1-1.5-3.5-7 7-.2Z' fill='%230b1511' stroke='%23fff' stroke-width='2' stroke-linejoin='round'/%3E%3Cpath d='M5 2.5 5.5 21l5-4.7 3.3 7.2 3.1-1.5-3.5-7 7-.2Z' fill='%230b1511'/%3E%3C/svg%3E") 5 3,auto;
+}
+html,body,body *{cursor:var(--cursor-arrow)!important}
+button,a,[role="button"],input[type="checkbox"],input[type="radio"],select,
+.drag-handle,.drag-grip,.drag-button{
+ cursor:pointer!important;
+}
+input:not([type="checkbox"]):not([type="radio"]),textarea,[contenteditable="true"]{
+ cursor:text!important;
+}
+body.routine-dragging,body.routine-dragging *{
+ cursor:grabbing!important;
+}
 </style>
 </head>
 <body>
