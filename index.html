@@ -96,6 +96,101 @@ footer{text-align:center;color:var(--muted);font-size:11px;margin-top:18px}
  #todayTasks .task-time{font-size:10px;width:max-content}
 }
 
+
+/* Consistent interface polish */
+:root{--bg:#f3f6f5;--surface:#fff;--ink:#1d2b27;--muted:#718078;--line:#e3eae6;--accent:#24745f;--accent-soft:#eaf4ef;--shadow:0 10px 30px rgba(24,48,38,.055)}
+body{background:linear-gradient(180deg,#f7faf8 0,#f2f5f3 260px);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans Bengali","Segoe UI",sans-serif}
+.app{width:min(900px,100%);padding:30px 20px 56px}
+header{margin-bottom:20px;align-items:center}
+.brand{font-size:20px;letter-spacing:-.5px}
+header .date:last-child{padding:6px 10px;border:1px solid var(--line);border-radius:99px;background:#fff}
+.tabs{display:flex;gap:6px;padding:5px;background:#e9efeb;border:1px solid #e1e9e4;border-radius:13px;margin-bottom:18px}
+.tabs button{flex:1;min-width:0;border:0;border-radius:9px;padding:10px 9px;color:#65746c;background:transparent;font-weight:650;transition:background .15s,color .15s,box-shadow .15s}
+.tabs button:hover{border-color:transparent;background:#ffffff90}
+.tabs button.active{background:#fff;color:var(--accent);box-shadow:0 2px 8px #1b3b2a12}
+.panel{border:1px solid #e4ebe7;border-radius:18px;padding:22px;box-shadow:var(--shadow)}
+h1{font-size:26px;font-weight:800}
+.sub{line-height:1.7}
+button{border-radius:10px;transition:transform .12s,border-color .15s,background .15s}
+button:active{transform:translateY(1px)}
+button.primary{box-shadow:0 3px 8px #24745f20}
+button.primary:hover{background:#1d6552;border-color:#1d6552}
+.field input,.mode-field select{min-height:42px;border:1px solid #dce5df;border-radius:10px;background:#fbfdfb;padding:9px 11px}
+.field input:focus,.mode-field select:focus{border-color:#8bb9a4;outline:3px solid #24745f16}
+.today-panel{padding:25px}
+.today-top{align-items:center}
+.today-title-wrap h1{font-size:30px}
+.eyebrow{letter-spacing:1.7px}
+.progress-card{background:linear-gradient(115deg,#edf6f1,#f7faf8);border-color:#dcebe2}
+#todayTasks{gap:8px}
+#todayTasks .task{display:grid;grid-template-columns:18px 22px minmax(0,1fr) auto;grid-template-rows:auto;align-items:center;gap:10px;padding:13px 14px;min-height:54px;border-color:#e7ede9;border-radius:12px}
+#todayTasks .task-name{grid-column:3;grid-row:1;font-size:14px;line-height:1.55;min-width:0}
+#todayTasks .task-time{grid-column:4;grid-row:1;white-space:nowrap;align-self:center}
+#todayTasks .task input{grid-column:2;grid-row:1;width:18px;height:18px}
+#todayTasks .drag-handle{grid-column:1;grid-row:1}
+#todayTasks .task:hover{box-shadow:0 3px 12px #1b3b2a0a;transform:translateY(-1px)}
+#todayTasks .task.done{background:#f7faf8}
+.task-extra{display:inline-block;padding:1px 6px;border-radius:99px;background:#eaf4ef;font-size:10px}
+#todayView .actions{margin-top:16px}
+#addTodayForm{background:#fbfdfb;border-color:#e3ebe5;padding:15px}
+#editView .sub,#historyView .sub,#backupView .sub{max-width:650px}
+#editModeLabel{display:inline-block;background:var(--accent-soft);color:var(--accent);border-radius:8px;padding:7px 10px;margin:10px 0 14px;font-weight:650}
+.editor-list{gap:8px}
+.editor-item{grid-template-columns:20px minmax(0,1fr) 132px 40px;align-items:end;padding:11px;border-color:#e6ece8;border-radius:12px;background:#fff}
+.editor-item .field{font-size:11px;font-weight:650}
+.editor-item input{font-size:13px;min-width:0}
+.icon-btn{border-color:#f0dddd;background:#fffafa}
+.icon-btn:hover{background:#fff0f0;border-color:#e8bcbc}
+#editView .actions{margin-top:14px}
+.warning{border:1px solid #f1dfc3;line-height:1.6}
+.history-day{padding:15px 2px}
+.history-head{font-size:14px}
+.history-progress{margin-top:10px}
+.history-track{height:9px;background:#edf2ee}
+.history-fill{background:linear-gradient(90deg,#24745f,#59a486)}
+.history-percent{font-size:15px}
+#historyList .empty{background:#fbfdfb}
+.backup-box{background:#fcfdfc;border-color:#e5ece7;border-radius:13px;padding:16px}
+.backup-box strong{font-size:14px}
+.backup-box p{line-height:1.65}
+#backupView input[type=file]{font-size:12px}
+footer{padding-top:6px}
+@media(max-width:640px){
+ .app{padding:18px 12px 38px}
+ header{margin-bottom:16px}
+ .brand{font-size:18px}
+ header .date:last-child{font-size:11px}
+ .tabs{gap:3px;padding:4px;margin-bottom:13px}
+ .tabs button{font-size:11px;padding:9px 4px;line-height:1.4}
+ .panel{padding:16px 13px;border-radius:15px}
+ .today-panel{padding:17px 13px}
+ .today-top{gap:13px}
+ .today-title-wrap h1{font-size:25px}
+ .today-title-wrap .sub{font-size:12px}
+ .progress-card{padding:13px;margin-bottom:13px}
+ .progress-top #todayCount{font-size:17px}
+ .progress-percent{font-size:21px}
+ #todayTasks .task{grid-template-columns:16px 21px minmax(0,1fr);grid-template-rows:auto auto;column-gap:8px;row-gap:2px;padding:10px 9px;min-height:unset}
+ #todayTasks .drag-handle{grid-column:1;grid-row:1 / span 2;align-self:center}
+ #todayTasks .task input{grid-column:2;grid-row:1 / span 2;align-self:center}
+ #todayTasks .task-name{grid-column:3;grid-row:1;align-self:end;font-size:13px}
+ #todayTasks .task-time{grid-column:3;grid-row:2;justify-self:start;align-self:start;margin-top:2px;font-size:10px;padding:1px 7px}
+ .editor-item{grid-template-columns:17px minmax(0,1fr) 92px 34px;gap:6px;padding:8px}
+ .editor-item .field{font-size:10px}
+ .editor-item input{padding:8px 6px;font-size:11px}
+ .icon-btn{width:34px;height:38px}
+ .formrow{grid-template-columns:minmax(0,1fr) 100px 38px;gap:6px}
+ .actions button{font-size:12px}
+}
+@media(max-width:380px){
+ header{align-items:flex-start}
+ header .date:last-child{display:none}
+ .tabs button{font-size:10px}
+ .editor-item{grid-template-columns:15px minmax(0,1fr) 82px 32px;gap:5px}
+ .editor-item input{font-size:10px}
+ .formrow{grid-template-columns:minmax(0,1fr) 88px 36px}
+}
+
 </style>
 </head>
 <body>
