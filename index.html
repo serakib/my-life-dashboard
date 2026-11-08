@@ -643,7 +643,7 @@ function enableDrag(container,selector,onOrder){
   if(!state)return;
   var active=state.item,wasMoved=state.moved,pid=state.pointerId;
   active.classList.remove("dragging","drag-ready");
-  active.style.transform="";active.style.transition="";
+  active.style.pointerEvents="";active.style.transform="";active.style.transition="";
   clearMarkers();
   if(wasMoved){var ids=items().map(function(el){return el.dataset.id});onOrder(ids)}
   state=null;lastTarget="";
