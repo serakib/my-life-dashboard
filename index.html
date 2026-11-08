@@ -222,14 +222,14 @@ footer{padding-top:6px}
  box-shadow:0 3px 10px rgba(31,67,49,.08),0 1px 2px rgba(31,67,49,.04);
  font-weight:750
 }
-.tabs button.active::after{content:"";position:absolute;left:25%;right:25%;bottom:3px;height:2px;border-radius:9px;background:#55a184}
+.tabs button.active::after{content:endTime:t.endTime||"";position:absolute;left:25%;right:25%;bottom:3px;height:2px;border-radius:9px;background:#55a184}
 .mode-field{
  display:grid;gap:7px;min-width:220px;padding:12px 13px;
  border:1px solid #dfe9e3;border-radius:14px;background:linear-gradient(145deg,#fff,#f8fbf9);
  color:#63736a;font-size:12px;font-weight:750;box-shadow:0 4px 14px rgba(30,65,47,.045)
 }
 .mode-field>span{display:flex;align-items:center;gap:7px;color:#52645a}
-.mode-field>span::before{content:"";width:7px;height:7px;border-radius:50%;background:#4a9a7c;box-shadow:0 0 0 4px #e8f4ed}
+.mode-field>span::before{content:endTime:t.endTime||"";width:7px;height:7px;border-radius:50%;background:#4a9a7c;box-shadow:0 0 0 4px #e8f4ed}
 .mode-field select{
  appearance:none;width:100%;min-height:44px;margin:0;padding:10px 38px 10px 12px;
  border:1px solid #dce8e0;border-radius:10px;
@@ -262,56 +262,14 @@ footer{padding-top:6px}
 .task,.editor-item{transition:transform 230ms cubic-bezier(.22,.75,.2,1),box-shadow .2s,border-color .18s,background .18s}
 @media(prefers-reduced-motion:reduce){.task,.editor-item,.drag-handle{transition:none!important}}
 
-/* Clear time chips, optional duration and per-task countdown */
-.task-meta{display:flex;align-items:center;justify-content:flex-end;gap:6px;flex-wrap:wrap;min-width:0}
+/* Start and end time chips */
+.task-meta{display:flex;align-items:center;justify-content:flex-end;gap:6px;min-width:0}
 #todayTasks .task-meta{grid-column:4;grid-row:1;justify-self:end}
-
-.task-time,.task-duration{display:inline-flex;align-items:center;min-height:27px;padding:4px 9px;border:1px solid #e7eee9;border-radius:8px;background:#f6f9f7;color:#52685c;font-size:11px;font-weight:700;letter-spacing:.1px;font-variant-numeric:tabular-nums;white-space:nowrap}
-.task-time{background:#f1f6f3;color:#315e4b}
-.task-duration{background:#f8f7ef;border-color:#eee9d8;color:#786b3d}
-.task-timer{min-height:27px;padding:3px 9px;border-radius:8px;border-color:#dcebe2;background:#fff;color:#28745f;font-size:11px;font-weight:750;white-space:nowrap}
-.task-timer:hover{background:#edf7f1;border-color:#a9cbb8}
-.task-timer.timer-running{background:#e8f4ee;border-color:#a9cdb9;color:#1c654e;font-variant-numeric:tabular-nums}
-.task-timer.timer-finished{background:#fff4e7;border-color:#f0d9b5;color:#875b20}
+.task-time{display:inline-flex;align-items:center;min-height:30px;padding:5px 10px;border:1px solid #dcebe2;border-radius:9px;background:#eff7f2;color:#235d49;font-size:12px;font-weight:750;white-space:nowrap}
+.task-time:before{content:"◷";font-size:14px;margin-right:6px;color:#43866b}
 .editor-item{grid-template-columns:20px minmax(0,1fr) 112px 112px 40px}
-.editor-item .field input[type=number]{font-variant-numeric:tabular-nums}
-@media(max-width:640px){
- #todayTasks .task{grid-template-columns:16px 21px minmax(0,1fr);grid-template-rows:auto auto;}
- #todayTasks .task-meta{grid-column:3;grid-row:2;justify-content:flex-start;gap:5px;margin-top:3px}
- #todayTasks .task-time,#todayTasks .task-duration,#todayTasks .task-timer{font-size:10px;min-height:24px;padding:2px 7px}
- #todayTasks .task-time{grid-column:auto;grid-row:auto;margin:0}
- .editor-item{grid-template-columns:16px minmax(0,1fr) 82px 82px 32px;gap:5px;padding:8px}
- .editor-item .field{font-size:10px}
- .editor-item input{padding:8px 5px;font-size:10px}
-}
-@media(max-width:380px){.editor-item{grid-template-columns:14px minmax(0,1fr) 70px 70px 30px;gap:4px}.task-meta{gap:4px}}
-
-/* Final layout repair: readable time chips and reliable drag affordance */
-#todayTasks .task{grid-template-columns:20px 22px minmax(0,1fr) auto;grid-template-rows:auto;column-gap:11px;row-gap:5px;}
-#todayTasks .task-name{grid-column:3;grid-row:1;min-width:0;}
-#todayTasks .task-meta{grid-column:4;grid-row:1;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:5px;min-width:112px;}
-#todayTasks .task-time{display:inline-flex;align-items:center;justify-content:center;min-height:32px;padding:5px 11px;border:1px solid #dcebe2;border-radius:10px;background:#eff7f2;color:#235d49;font-size:12px;font-weight:750;letter-spacing:.1px;font-variant-numeric:tabular-nums;white-space:nowrap;}
-#todayTasks .task-time:before{content:"◷";font-size:14px;margin-right:6px;color:#43866b;}
-#todayTasks .task-duration{min-height:25px;padding:3px 8px;border-radius:8px;font-size:10px;}
-#todayTasks .task-timer{min-height:29px;padding:4px 10px;border-radius:9px;font-size:11px;}
-#todayTasks .drag-handle,.editor-list .drag-handle{position:relative;z-index:2;min-width:32px;min-height:38px;border:1px solid transparent;border-radius:9px;background:#f3f7f4;color:#71877b;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;}
-#todayTasks .drag-handle:hover,.editor-list .drag-handle:hover{background:#e5f1e9;border-color:#c8dfd1;color:#21654e;}
-#todayTasks .task.drag-ready,.editor-list .editor-item.drag-ready{outline:2px solid #a9cbb8;background:#f5faf7;}
-#todayTasks .task.dragging,.editor-list .editor-item.dragging{position:relative;z-index:5;opacity:.94;transform:scale(1.025) rotate(.35deg);background:#f1f8f4;border:1px solid #8bbba0;box-shadow:0 14px 30px rgba(24,75,51,.18);cursor:grabbing;}
-#todayTasks .task.drag-over-before,.editor-list .editor-item.drag-over-before{border-top:3px solid #24745f;}
-#todayTasks .task.drag-over-after,.editor-list .editor-item.drag-over-after{border-bottom:3px solid #24745f;}
-@media(max-width:640px){
- #todayTasks .task{grid-template-columns:20px 22px minmax(0,1fr);grid-template-rows:auto auto;align-items:center;column-gap:8px;row-gap:5px;padding:12px 10px;}
- #todayTasks .drag-handle{grid-column:1;grid-row:1 / span 2;align-self:center;}
- #todayTasks .task input{grid-column:2;grid-row:1 / span 2;align-self:center;}
- #todayTasks .task-name{grid-column:3;grid-row:1;align-self:end;}
- #todayTasks .task-meta{grid-column:3;grid-row:2;flex-direction:row;justify-content:flex-start;align-items:center;flex-wrap:wrap;min-width:0;margin-top:2px;}
- #todayTasks .task-time{min-height:27px;font-size:11px;padding:3px 9px;}
- #todayTasks .task-time:before{font-size:12px;margin-right:5px;}
- #todayTasks .task-duration,#todayTasks .task-timer{min-height:25px;font-size:10px;padding:2px 7px;}
-}
-@media(prefers-reduced-motion:reduce){#todayTasks .task,.editor-list .editor-item{transition:none!important}}
-</style>
+@media(max-width:640px){#todayTasks .task{grid-template-columns:20px 22px minmax(0,1fr);grid-template-rows:auto auto}#todayTasks .task-meta{grid-column:3;grid-row:2;justify-self:start;justify-content:flex-start;margin-top:2px}#todayTasks .task-time{font-size:10px;min-height:26px;padding:3px 8px}.editor-item{grid-template-columns:17px minmax(0,1fr) 92px 92px 34px}}
+@media(max-width:380px){.editor-item{grid-template-columns:15px minmax(0,1fr) 78px 78px 32px}}</style>
 </head>
 <body>
 <div class="app">
@@ -349,11 +307,11 @@ footer{padding-top:6px}
 <section id="editView" class="panel hidden">
   <h1>রুটিন সম্পাদনা</h1>
   <p class="sub" id="editModeLabel"></p>
-  <p class="sub">কাজের শুরুর সময় ও কতক্ষণ চলবে সেট করো। চাইলে প্রতিটি কাজের পাশে Timer চালাতে পারবে।</p>
+  <p class="sub">প্রতিটি কাজের শুরুর ও শেষের সময় সেট করো। যেমন: ফজর — সকাল ৫:০০ থেকে ৫:৩০।</p>
   <div class="editor-list" id="routineEditor"></div>
   <div class="actions"><button class="primary" id="addRoutineBtn">+ নিয়মিত কাজ যোগ</button><button id="saveRoutineBtn">পরিবর্তন সংরক্ষণ</button></div>
   <div id="overlapWarning" class="warning hidden"></div>
-  <p class="hint">শুরুর সময় ও সময়কাল দুটোই ঐচ্ছিক। Timer চালাতে সময়কাল আগে সেট করতে পারো, অথবা আজকের তালিকা থেকে নিজে মিনিট লিখে চালাতে পারো।</p>
+  <p class="hint">শুরুর ও শেষের সময় আলাদাভাবে সেট করতে পারবে। সময় না দিলেও সমস্যা নেই।</p>
 </section>
 <section id="historyView" class="panel hidden">
   <h1>আগের দিনের progress</h1>
@@ -400,7 +358,7 @@ var defaultRoutine=[
 {id:"study4",title:"Self-study — সন্ধ্যা",time:"17:50"},
 {id:"exercise",title:"হালকা exercise",time:"18:25"},
 {id:"quran",title:"Quran / religious activities",time:"18:40"},
-{id:"shower",title:"Shower ও personal hygiene (৩০–৪০ মিনিট)",time:""},
+{id:"shower",title:"Shower ও personal hygiene (৩০–৪০ মিনিট)",time:endTime:t.endTime||""},
 {id:"dinner",title:"Dinner",time:"19:30"},
 {id:"social",title:"Friends / social time",time:"20:00"},
 {id:"isha",title:"Isha জামাত",time:"20:20"},
@@ -442,6 +400,8 @@ function loadStore(){
   var raw=localStorage.getItem(STORAGE_KEY);
   if(raw){var parsed=JSON.parse(raw);if(parsed&&parsed.version===1&&Array.isArray(parsed.routine)&&parsed.days&&typeof parsed.days==="object"){
    if(!parsed.profiles)parsed.profiles={college:clone(parsed.routine),off:clone(parsed.routine),friday:clone(parsed.routine),special:clone(parsed.routine)};
+   function migrateTimes(items){(items||[]).forEach(function(t){if(!t.endTime&&t.time&&t.duration){var start=parseMinutes(t.time),end=(start+Number(t.duration))%1440;t.endTime=String(Math.floor(end/60)).padStart(2,"0")+":"+String(end%60).padStart(2,"0")}delete t.duration})}
+   ["college","off","friday","special"].forEach(function(k){migrateTimes(parsed.profiles[k])});migrateTimes(parsed.routine);Object.keys(parsed.days).forEach(function(k){migrateTimes(parsed.days[k].tasks)});
    ["college","off","friday","special"].forEach(function(key){
     if(!parsed.profiles[key])parsed.profiles[key]=clone(parsed.routine);
     else if(JSON.stringify(parsed.profiles[key])===JSON.stringify(legacyDefaultRoutine))parsed.profiles[key]=clone(defaults[key]);
@@ -460,7 +420,7 @@ function loadStore(){
 }
 function save(){store.profiles=store.profiles||{};store.profiles[store.activeProfile]=store.routine;localStorage.setItem(STORAGE_KEY,JSON.stringify(store))}
 function ensureToday(){
- if(!store.days[todayKey]){store.activeProfile="college";store.routine=store.profiles.college;store.days[todayKey]={profile:"college",tasks:store.routine.map(function(t){return {id:t.id,title:t.title,time:t.time||"",duration:t.duration||"",done:false,extra:false}}),createdAt:new Date().toISOString()};}
+ if(!store.days[todayKey]){store.activeProfile="college";store.routine=store.profiles.college;store.days[todayKey]={profile:"college",tasks:store.routine.map(function(t){return {id:t.id,title:t.title,time:t.time||endTime:t.endTime||"",duration:t.duration||endTime:t.endTime||"",done:false,extra:false}}),createdAt:new Date().toISOString()};}
  if(!store.days[todayKey].profile)store.days[todayKey].profile=store.activeProfile;
  store.activeProfile=store.days[todayKey].profile;store.routine=store.profiles[store.activeProfile]||store.profiles.college;
 }
@@ -469,51 +429,20 @@ function setProfile(profile){
  store.activeProfile=profile;store.routine=store.profiles[profile];
  var day=store.days[todayKey],old={};day.tasks.forEach(function(t){old[t.id]=t});
  var extras=day.tasks.filter(function(t){return t.extra});
- day.tasks=store.routine.map(function(t){var prev=old[t.id];return {id:t.id,title:t.title,time:t.time||"",duration:t.duration||"",done:prev?!!prev.done:false,extra:false}}).concat(extras);
+ day.tasks=store.routine.map(function(t){var prev=old[t.id];return {id:t.id,title:t.title,time:t.time||endTime:t.endTime||"",duration:t.duration||endTime:t.endTime||"",done:prev?!!prev.done:false,extra:false}}).concat(extras);
  day.profile=profile;save();renderToday();renderEditor();
 }
 function bn(n){return new Intl.NumberFormat("bn-BD").format(n)}
 function displayDate(key){var d=new Date(key+"T12:00:00");return new Intl.DateTimeFormat("bn-BD",{weekday:"long",day:"numeric",month:"long",year:"numeric"}).format(d)}
-function timeLabel(value){if(!value)return "সময় নির্ধারিত নয়";var p=value.split(":");var h=Number(p[0]),m=Number(p[1]);var hh=h%12||12;var part=h<12?"সকাল":h===12?"দুপুর":h<18?"বিকাল":"রাত";return part+" "+bn(hh)+":"+bn(m)}
+function timeLabel(value){if(!value)return endTime:t.endTime||"";var p=value.split(":");var h=Number(p[0]),m=Number(p[1]);var hh=h%12||12;var part=h<12?"সকাল":h===12?"দুপুর":h<18?"বিকাল":"রাত";return part+" "+bn(hh)+":"+bn(m)}
+function timeRange(start,end){if(start&&end)return timeLabel(start)+" – "+timeLabel(end);if(start)return timeLabel(start)+" থেকে";if(end)return timeLabel(end)+" থেকে";return "সময় নির্ধারিত নয়"}
 function sortTasks(list){return list.slice().sort(function(a,b){if(!a.time)return b.time?1:0;if(!b.time)return -1;return a.time.localeCompare(b.time)})}
-var activeTimer=null,timerInterval=null;
-function formatRemaining(ms){
- var total=Math.max(0,Math.ceil(ms/1000)),mins=Math.floor(total/60),secs=total%60;
- return bn(mins)+":"+String(secs).padStart(2,"0").replace(/[0-9]/g,function(d){return bn(Number(d))});
-}
-function updateTaskTimerUI(taskId,meta){
- var button=meta.querySelector(".task-timer");if(!button)return;
- if(activeTimer&&activeTimer.taskId===taskId){
-  var left=activeTimer.endsAt-Date.now();
-  if(left<=0){button.textContent="সময় শেষ";button.classList.add("timer-finished");}
-  else{button.textContent="Ⅱ "+formatRemaining(left);button.classList.add("timer-running");}
- }else{button.textContent="▶ Timer";button.classList.remove("timer-running","timer-finished");}
-}
-function refreshTimerDisplay(){
- if(!activeTimer)return;
- var meta=document.querySelector('.task[data-id="'+activeTimer.taskId+'"] .task-meta');
- if(meta)updateTaskTimerUI(activeTimer.taskId,meta);
- if(activeTimer.endsAt<=Date.now()){
-  clearInterval(timerInterval);timerInterval=null;activeTimer.finished=true;
-  if(meta)updateTaskTimerUI(activeTimer.taskId,meta);
- }
-}
-function toggleTaskTimer(task){
- if(activeTimer&&activeTimer.taskId===task.id){
-  clearInterval(timerInterval);timerInterval=null;activeTimer=null;renderToday();return;
- }
- var minutes=Number(task.duration)||0;
- if(!minutes){var answer=window.prompt("কত মিনিটের timer দিতে চাও?");if(answer===null)return;minutes=Number(answer);if(!Number.isInteger(minutes)||minutes<1||minutes>1440){alert("১ থেকে ১৪৪০ মিনিটের মধ্যে সময় দাও।");return}}
- clearInterval(timerInterval);
- activeTimer={taskId:task.id,endsAt:Date.now()+minutes*60000,finished:false};
- timerInterval=setInterval(refreshTimerDisplay,250);renderToday();
-}
 function render(){
  document.getElementById("todayDate").textContent=displayDate(todayKey);
  renderToday();renderEditor();renderHistory();
 }
 function renderToday(){
- var day=store.days[todayKey];var root=document.getElementById("todayTasks");root.innerHTML="";
+ var day=store.days[todayKey];var root=document.getElementById("todayTasks");root.innerHTML=endTime:t.endTime||"";
  var tasks=day.tasks;var done=tasks.filter(function(t){return t.done}).length;
  document.getElementById("todayCount").textContent=bn(done)+" / "+bn(tasks.length);
  var percent=tasks.length?Math.round(done/tasks.length*100):0;
@@ -522,14 +451,14 @@ function renderToday(){
  document.getElementById("todayProgress").setAttribute("aria-valuenow",String(percent));
  if(!tasks.length){root.innerHTML='<div class="empty">আজকের জন্য কোনো কাজ নেই।</div>';return}
  tasks.forEach(function(task){
-  var row=document.createElement("label");row.className="task"+(task.done?" done":"");row.draggable=false;row.dataset.id=task.id;
+  var row=document.createElement("label");row.className="task"+(task.done?" done":endTime:t.endTime||"");row.draggable=false;row.dataset.id=task.id;
   var grip=document.createElement("span");grip.className="drag-handle";grip.textContent="⠿";grip.title="টেনে আগে-পরে সাজাও";
   var check=document.createElement("input");check.type="checkbox";check.checked=!!task.done;check.setAttribute("aria-label",task.title);
   check.addEventListener("change",function(){task.done=check.checked;save();renderToday()});
   var name=document.createElement("span");name.className="task-name";name.textContent=task.title;
   if(task.extra){var tag=document.createElement("small");tag.className="task-extra";tag.textContent="আজকের অতিরিক্ত";name.appendChild(tag)}
   var meta=document.createElement("div");meta.className="task-meta";
-  var time=document.createElement("span");time.className="task-time";time.textContent=task.time?timeLabel(task.time):"সময় ঠিক করা হয়নি";
+  var time=document.createElement("span");time.className="task-time";time.textContent=timeRange(task.time,task.endTime);
   meta.appendChild(time);
   if(task.duration){var duration=document.createElement("span");duration.className="task-duration";duration.textContent=bn(task.duration)+" মিনিট";meta.appendChild(duration)}
   var timer=document.createElement("button");timer.type="button";timer.className="task-timer";timer.textContent="▶ Timer";timer.setAttribute("aria-label",task.title+"-এর timer চালু করো");
@@ -540,7 +469,7 @@ function renderToday(){
  });
 }
 function renderEditor(){
- var root=document.getElementById("routineEditor");root.innerHTML="";
+ var root=document.getElementById("routineEditor");root.innerHTML=endTime:t.endTime||"";
  document.getElementById("editModeLabel").textContent="এখন সম্পাদনা হচ্ছে: "+PROFILE_LABELS[store.activeProfile]+"। প্রতিটি mode-এর কাজ আলাদা করে সাজাতে পারবে।";
  store.routine.forEach(function(task){
   var row=document.createElement("div");row.className="editor-item";row.dataset.id=task.id;row.draggable=false;
@@ -548,24 +477,24 @@ function renderEditor(){
   var name=document.createElement("label");name.className="field";name.textContent="কাজের নাম";
   var nameInput=document.createElement("input");nameInput.maxLength=90;nameInput.value=task.title;nameInput.className="edit-title";name.appendChild(nameInput);
   var time=document.createElement("label");time.className="field";time.textContent="শুরুর সময়";
-  var timeInput=document.createElement("input");timeInput.type="time";timeInput.value=task.time||"";timeInput.className="edit-time";time.appendChild(timeInput);
-  var duration=document.createElement("label");duration.className="field";duration.textContent="সময়কাল (মিনিট)";
-  var durationInput=document.createElement("input");durationInput.type="number";durationInput.min="1";durationInput.max="1440";durationInput.placeholder="যেমন ৬০";durationInput.value=task.duration||"";durationInput.className="edit-duration";duration.appendChild(durationInput);
+  var timeInput=document.createElement("input");timeInput.type="time";timeInput.value=task.time||endTime:t.endTime||"";timeInput.className="edit-time";time.appendChild(timeInput);
+  var endTime=document.createElement("label");endTime.className="field";endTime.textContent="শেষের সময়";
+  var endTimeInput=document.createElement("input");endTimeInput.type="time";endTimeInput.value=task.endTime||endTime:t.endTime||"";endTimeInput.className="edit-end-time";endTime.appendChild(endTimeInput);
   var del=document.createElement("button");del.className="icon-btn danger";del.type="button";del.textContent="×";del.title="কাজ বাদ দাও";
   del.addEventListener("click",function(){if(!confirm("এই নিয়মিত কাজটি বাদ দিতে চাও?"))return;store.routine=store.routine.filter(function(t){return t.id!==task.id});syncTodayFromRoutine();save();render()});
-  row.appendChild(grip);row.appendChild(name);row.appendChild(time);row.appendChild(duration);row.appendChild(del);root.appendChild(row);
+  row.appendChild(grip);row.appendChild(name);row.appendChild(time);row.appendChild(endTime);row.appendChild(del);root.appendChild(row);
  });
 }
 function syncTodayFromRoutine(){
  var day=store.days[todayKey];var old={};day.tasks.forEach(function(t){old[t.id]=t});
  var extras=day.tasks.filter(function(t){return t.extra});
- var updated=store.routine.map(function(t){var prev=old[t.id];return {id:t.id,title:t.title,time:t.time||"",duration:t.duration||"",done:prev?!!prev.done:false,extra:false}});
+ var updated=store.routine.map(function(t){var prev=old[t.id];return {id:t.id,title:t.title,time:t.time||endTime:t.endTime||"",duration:t.duration||endTime:t.endTime||"",done:prev?!!prev.done:false,extra:false}});
  day.tasks=updated.concat(extras);
 }
 function parseMinutes(t){if(!t)return null;var p=t.split(":");return Number(p[0])*60+Number(p[1])}
 function findOverlaps(list){
- var sorted=list.filter(function(t){return t.time}).map(function(t){return {title:t.title,time:t.time,minutes:parseMinutes(t.time)}}).sort(function(a,b){return a.minutes-b.minutes});
- var found=[];for(var i=1;i<sorted.length;i++){if(sorted[i].minutes===sorted[i-1].minutes)found.push(sorted[i-1].title+" ও "+sorted[i].title+" একই সময়ে সেট করা");}
+ var sorted=list.filter(function(t){return t.time&&t.endTime}).map(function(t){return {title:t.title,start:parseMinutes(t.time),end:parseMinutes(t.endTime)}}).sort(function(a,b){return a.start-b.start});
+ var found=[];for(var i=1;i<sorted.length;i++){if(sorted[i].start<sorted[i-1].end)found.push(sorted[i-1].title+" ও "+sorted[i].title+" সময়ের মধ্যে overlap করছে");}
  return found;
 }
 function switchTab(tab){
@@ -579,20 +508,20 @@ document.getElementById("dayMode").addEventListener("change",function(){setProfi
 document.getElementById("addTodayBtn").addEventListener("click",function(){document.getElementById("addTodayForm").classList.toggle("hidden");document.getElementById("extraName").focus()});
 document.getElementById("saveExtraBtn").addEventListener("click",function(){
  var name=document.getElementById("extraName").value.trim();if(!name){document.getElementById("extraName").focus();return}
- store.days[todayKey].tasks.push({id:makeId(),title:name,time:document.getElementById("extraTime").value,duration:"",done:false,extra:true});
- document.getElementById("extraName").value="";document.getElementById("extraTime").value="";document.getElementById("addTodayForm").classList.add("hidden");save();renderToday();
+ store.days[todayKey].tasks.push({id:makeId(),title:name,time:document.getElementById("extraTime").value,duration:endTime:t.endTime||"",done:false,extra:true});
+ document.getElementById("extraName").value=endTime:t.endTime||"";document.getElementById("extraTime").value=endTime:t.endTime||"";document.getElementById("addTodayForm").classList.add("hidden");save();renderToday();
 });
 document.getElementById("addRoutineBtn").addEventListener("click",function(){
- store.routine.push({id:makeId(),title:"নতুন কাজ",time:"",duration:""});renderEditor();
+ store.routine.push({id:makeId(),title:"নতুন কাজ",time:endTime:t.endTime||"",duration:endTime:t.endTime||""});renderEditor();
  var inputs=document.querySelectorAll(".editor-item");if(inputs.length)inputs[inputs.length-1].querySelector(".edit-title").select();
 });
 document.getElementById("saveRoutineBtn").addEventListener("click",function(){
  var rows=Array.from(document.querySelectorAll(".editor-item"));var updated=[];
  for(var i=0;i<rows.length;i++){
-  var title=rows[i].querySelector(".edit-title").value.trim();var time=rows[i].querySelector(".edit-time").value;var duration=rows[i].querySelector(".edit-duration").value;
+  var title=rows[i].querySelector(".edit-title").value.trim();var time=rows[i].querySelector(".edit-time").value;var endTime=rows[i].querySelector(".edit-end-time").value;
   if(!title){alert("কাজের নাম খালি রাখা যাবে না।");return}
-  if(duration&&(Number(duration)<1||Number(duration)>1440)){alert("সময়কাল ১ থেকে ১৪৪০ মিনিটের মধ্যে দাও।");return}
-  updated.push({id:rows[i].dataset.id,title:title,time:time,duration:duration?Number(duration):""});
+  if(time&&endTime&&parseMinutes(endTime)<=parseMinutes(time)){alert("শেষের সময় শুরুর সময়ের পরে হতে হবে।");return}
+  updated.push({id:rows[i].dataset.id,title:title,time:time,endTime:endTime});
  }
  store.routine=updated;syncTodayFromRoutine();save();render();var overlaps=findOverlaps(updated);
  var warning=document.getElementById("overlapWarning");
@@ -601,7 +530,7 @@ document.getElementById("saveRoutineBtn").addEventListener("click",function(){
  switchTab("edit");
 });
 function enableDrag(container,selector,onOrder){
- var state=null,lastTarget="";
+ var state=null,lastTarget=endTime:t.endTime||"";
  function items(){return Array.from(container.querySelectorAll(selector))}
  function clearMarkers(){container.querySelectorAll(".drag-over-before,.drag-over-after").forEach(function(el){el.classList.remove("drag-over-before","drag-over-after")})}
  function animateMove(change,active){
@@ -614,17 +543,17 @@ function enableDrag(container,selector,onOrder){
    if(Math.abs(dx)+Math.abs(dy)<1)return;
    el.style.transition="none";el.style.transform="translate3d("+dx+"px,"+dy+"px,0)";
    el.getBoundingClientRect();
-   requestAnimationFrame(function(){el.style.transition="transform 260ms cubic-bezier(.2,.8,.2,1),box-shadow 180ms";el.style.transform=""});
+   requestAnimationFrame(function(){el.style.transition="transform 260ms cubic-bezier(.2,.8,.2,1),box-shadow 180ms";el.style.transform=endTime:t.endTime||""});
   });
  }
  function finish(e){
   if(!state)return;
   var active=state.item,wasMoved=state.moved,pid=state.pointerId;
   active.classList.remove("dragging","drag-ready");
-  active.style.transform="";active.style.transition="";
+  active.style.transform=endTime:t.endTime||"";active.style.transition=endTime:t.endTime||"";
   clearMarkers();
   if(wasMoved){var ids=items().map(function(el){return el.dataset.id});onOrder(ids)}
-  state=null;lastTarget="";
+  state=null;lastTarget=endTime:t.endTime||"";
   try{if(container.hasPointerCapture&&container.hasPointerCapture(pid))container.releasePointerCapture(pid)}catch(err){}
  }
  container.addEventListener("pointerdown",function(e){
@@ -661,7 +590,7 @@ function enableDrag(container,selector,onOrder){
 enableDrag(document.getElementById("todayTasks"),".task",function(ids){var day=store.days[todayKey],map={};day.tasks.forEach(function(t){map[t.id]=t});day.tasks=ids.map(function(id){return map[id]}).filter(Boolean);save();});
 enableDrag(document.getElementById("routineEditor"),".editor-item",function(ids){var map={};store.routine.forEach(function(t){map[t.id]=t});store.routine=ids.map(function(id){return map[id]}).filter(Boolean);save();});
 function renderHistory(){
- var root=document.getElementById("historyList");root.innerHTML="";
+ var root=document.getElementById("historyList");root.innerHTML=endTime:t.endTime||"";
  var keys=Object.keys(store.days).filter(function(k){return k<todayKey}).sort().reverse();
  if(!keys.length){root.innerHTML='<div class="empty">আগের দিনের progress এখানে দেখা যাবে।</div>';return}
  keys.forEach(function(key){
