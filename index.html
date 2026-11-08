@@ -143,6 +143,13 @@ button.primary:hover{background:#1d6552;border-color:#1d6552}
 .icon-btn:hover{background:#fff0f0;border-color:#e8bcbc}
 #editView .actions{margin-top:14px}
 .warning{border:1px solid #f1dfc3;line-height:1.6}
+.warning strong{display:block;font-size:14px;margin-bottom:4px}
+.warning-intro,.warning-tip{margin:5px 0;font-size:12px}
+.warning-list{margin:8px 0;padding-left:20px;font-size:12px}
+.warning-list li{margin:5px 0;font-weight:650}
+.warning-tip{color:inherit;opacity:.9}
+.editor-item.time-conflict{border-color:#d88b78!important;background:#fff8f5!important;box-shadow:0 0 0 2px #d88b781c}
+.editor-item.time-conflict .field input{border-color:#e3a596;background:#fffdfc}
 .history-day{padding:15px 2px}
 .history-head{font-size:14px}
 .history-progress{margin-top:10px}
@@ -538,7 +545,7 @@ function renderEditor(){
   var row=document.createElement("div");row.className="editor-item";row.dataset.id=task.id;row.draggable=false;
   var grip=document.createElement("span");grip.className="drag-handle";grip.textContent="⠿";grip.title="টেনে আগে-পরে সাজাও";
   var name=document.createElement("label");name.className="field";name.textContent="কাজের নাম";
-  var nameInput=document.createElement("input");nameInput.maxLength=90;nameInput.value=task.title;nameInput.className="edit-title";name.appendChild(nameInput);
+  var nameInput=document.createElement("input");nameInput.maxLength=90;nameInput.value=task.title;nameInput.className="edit-title";nameInput.addEventListener("input",validateRoutineTimes);name.appendChild(nameInput);
   var time=document.createElement("label");time.className="field";time.textContent="শুরুর সময়";
   var timeInput=document.createElement("input");timeInput.type="time";timeInput.value=task.time||"";timeInput.className="edit-time";time.appendChild(timeInput);
   var endTime=document.createElement("label");endTime.className="field";endTime.textContent="শেষের সময়";
@@ -600,25 +607,44 @@ function readRoutineEditor(){
   else if(a.end!==null)conflict=b.start>=a.start&&b.start<a.end;
   else if(b.end!==null)conflict=a.start>=b.start&&a.start<b.end;
   else conflict=a.start===b.start;
-  if(conflict)overlaps.push("“"+a.title+"” ও “"+b.title+"”");
+  if(conflict)overlaps.push({a:a.title,b:b.title,aId:updated.find(function(t){return t.title===a.title&&parseMinutes(t.time)===a.start}).id,bId:updated.find(function(t){return t.title===b.title&&parseMinutes(t.time)===b.start}).id});
  }
- if(overlaps.length)issues.push("সময় overlap হচ্ছে: "+overlaps.join("; ")+"। একটি কাজের সময় পরিবর্তন করো।");
- return {updated:updated,issues:Array.from(new Set(issues))};
+ if(overlaps.length)issues.push("সময় overlap হচ্ছে।");
+ return {updated:updated,issues:Array.from(new Set(issues)),overlaps:overlaps};
 }
 function validateRoutineTimes(){
  var result=readRoutineEditor(),warning=document.getElementById("overlapWarning");
  if(!warning)return result;
+ document.querySelectorAll(".editor-item.time-conflict").forEach(function(row){row.classList.remove("time-conflict")});
+ result.overlaps.forEach(function(pair){
+  [pair.aId,pair.bId].forEach(function(id){
+   var row=document.querySelector('.editor-item[data-id="'+CSS.escape(id)+'"]');
+   if(row)row.classList.add("time-conflict");
+  });
+ });
+ warning.innerHTML="";
+ warning.classList.remove("hidden");
+ warning.style.background="";warning.style.color="";warning.style.borderColor="";
  if(result.issues.length){
-  warning.textContent="⚠ "+result.issues.join(" ");
-  warning.classList.remove("hidden");
   warning.setAttribute("role","alert");
+  var heading=document.createElement("strong");heading.textContent="সময় মিলে যাচ্ছে!";warning.appendChild(heading);
+  var intro=document.createElement("p");intro.className="warning-intro";intro.textContent="তোমার কয়েকটি কাজের সময় একে অপরের সঙ্গে overlap করছে।";warning.appendChild(intro);
+  if(result.overlaps.length){
+   var list=document.createElement("ul");list.className="warning-list";
+   result.overlaps.forEach(function(pair){
+    var li=document.createElement("li");li.textContent=pair.a+"  ↔  "+pair.b;list.appendChild(li);
+   });
+   warning.appendChild(list);
+   var tip=document.createElement("p");tip.className="warning-tip";tip.textContent="এই কাজগুলোর সময় একটু পরিবর্তন করো, যাতে প্রতিটি কাজের জন্য আলাদা সময় থাকে।";warning.appendChild(tip);
+  }
+  result.issues.filter(function(issue){return issue!=="সময় overlap হচ্ছে।"}).forEach(function(issue){
+   var p=document.createElement("p");p.className="warning-tip";p.textContent=issue;warning.appendChild(p);
+  });
  }else{
-  warning.textContent="সময়গুলো ঠিক আছে — কোনো overlap নেই।";
-  warning.classList.remove("hidden");
   warning.setAttribute("role","status");
   warning.style.background="#eef7f1";warning.style.color="#315e4b";warning.style.borderColor="#d8e9de";
+  warning.textContent="সময়গুলো ঠিক আছে — কোনো overlap নেই।";
  }
- if(result.issues.length){warning.style.background="";warning.style.color="";warning.style.borderColor=""}
  return result;
 }
 document.getElementById("saveRoutineBtn").addEventListener("click",function(){
