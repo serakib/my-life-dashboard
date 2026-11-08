@@ -418,6 +418,9 @@ button:active{transform:none}
  .drag-ghost.editor-item{grid-template-columns:36px minmax(0,1fr) minmax(0,1fr) 32px!important}
 }
 @media(prefers-reduced-motion:reduce){.drag-placeholder,.drag-landed,.drag-status{animation:none!important;transition:none!important}.drag-shifting{transition:none!important}}
+/* Keep drag and save confirmations from covering one another */
+.save-status{bottom:max(70px,calc(env(safe-area-inset-bottom) + 56px))!important}
+@media(max-width:420px){.save-status{bottom:max(66px,calc(env(safe-area-inset-bottom) + 52px))!important}}
 </style>
 </head>
 <body>
