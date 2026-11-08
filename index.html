@@ -726,7 +726,7 @@ function save(trigger){
   console.error("Routine data could not be saved.",error);
   return false;
  }
- // LocalStorage writes are synchronous; keep the Bengali saving cue visible briefly.
+ // LocalStorage writes are synchronous; briefly show the Saving... feedback.
  saveStatusTimer=setTimeout(function(){
   if(token!==saveStatusToken)return;
   paintSaveStatus("saved");updateSaveButton("saved");
