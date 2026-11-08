@@ -58,7 +58,7 @@ h2{font-size:17px;margin:0 0 14px}
 .backup-box p{font-size:13px;color:var(--muted);margin:4px 0 12px}
 .hidden{display:none!important}
 footer{text-align:center;color:var(--muted);font-size:11px;margin-top:18px}
-@media(max-width:560px){.app{padding:20px 12px 40px}.panel{padding:15px}header{align-items:flex-start}.task{grid-template-columns:22px minmax(0,1fr);gap:9px}.task-time{grid-column:2}.formrow,.editor-item{grid-template-columns:minmax(0,1fr) 105px 38px}.icon-btn{width:38px}}
+ .mode-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:5px}.mode-field{min-width:190px}.mode-field select{border:1px solid var(--line);border-radius:9px;padding:8px;background:#fff;color:var(--ink)}.drag-handle{cursor:grab;color:#84918b;font-size:18px;user-select:none;touch-action:none}.dragging{opacity:.45;border-style:dashed}.task{grid-template-columns:18px 22px minmax(0,1fr) auto}.task-time{grid-column:auto}.editor-item{grid-template-columns:18px minmax(0,1fr) 125px 40px}.editor-item.dragging{background:#f4faf7}@media(max-width:560px){.app{padding:20px 12px 40px}.panel{padding:15px}header{align-items:flex-start}.mode-head{display:block}.mode-field{margin:8px 0 14px}.task{grid-template-columns:18px 22px minmax(0,1fr)}.task-time{grid-column:3}.formrow{grid-template-columns:minmax(0,1fr) 105px 38px}.editor-item{grid-template-columns:18px minmax(0,1fr) 95px 38px}.icon-btn{width:38px}}
 </style>
 </head>
 <body>
@@ -75,7 +75,7 @@ footer{text-align:center;color:var(--muted);font-size:11px;margin-top:18px}
 </nav>
 <main>
 <section id="todayView" class="panel">
-  <h1>আজকের কাজ</h1>
+  <div class="mode-head"><h1>আজকের কাজ</h1><label class="field mode-field">আজকের ধরন<select id="dayMode"><option value="college">Daily — College day</option><option value="off">College off</option><option value="friday">Friday</option><option value="special">Special day</option></select></label></div>
   <p class="sub">কাজ শেষ হলে শুধু টিক দাও। কোনো streak, points বা চাপ নেই।</p>
   <div class="summary"><span>সম্পন্ন কাজ</span><strong id="todayCount">০ / ০</strong></div>
   <div class="task-list" id="todayTasks"></div>
@@ -91,6 +91,7 @@ footer{text-align:center;color:var(--muted);font-size:11px;margin-top:18px}
 </section>
 <section id="editView" class="panel hidden">
   <h1>রুটিন সম্পাদনা</h1>
+  <p class="sub" id="editModeLabel"></p>
   <p class="sub">নিয়মিত কাজের নাম বা সময় বদলাও। পরিবর্তন আজকের তালিকাতেও থাকবে।</p>
   <div class="editor-list" id="routineEditor"></div>
   <div class="actions"><button class="primary" id="addRoutineBtn">+ নিয়মিত কাজ যোগ</button><button id="saveRoutineBtn">পরিবর্তন সংরক্ষণ</button></div>
@@ -151,6 +152,7 @@ var defaultRoutine=[
 {id:"sleep",title:"ঘুম",time:"23:00"}
 ];
 var store=loadStore();
+var PROFILE_LABELS={college:"Daily — College day",off:"College off",friday:"Friday",special:"Special day"};
 ensureToday();
 render();
 
@@ -160,13 +162,26 @@ function clone(v){return JSON.parse(JSON.stringify(v))}
 function loadStore(){
  try{
   var raw=localStorage.getItem(STORAGE_KEY);
-  if(raw){var parsed=JSON.parse(raw);if(parsed&&parsed.version===1&&Array.isArray(parsed.routine)&&parsed.days&&typeof parsed.days==="object")return parsed}
+  if(raw){var parsed=JSON.parse(raw);if(parsed&&parsed.version===1&&Array.isArray(parsed.routine)&&parsed.days&&typeof parsed.days==="object"){
+   if(!parsed.profiles)parsed.profiles={college:clone(parsed.routine),off:clone(parsed.routine),friday:clone(parsed.routine),special:clone(parsed.routine)};
+   if(!parsed.activeProfile||!parsed.profiles[parsed.activeProfile])parsed.activeProfile="college";
+   parsed.routine=parsed.profiles[parsed.activeProfile];return parsed;
+  }}
  }catch(e){}
- return {version:1,routine:clone(defaultRoutine),days:{}};
+ var base=clone(defaultRoutine);return {version:1,routine:base,profiles:{college:clone(base),off:clone(base),friday:clone(base),special:clone(base)},activeProfile:"college",days:{}};
 }
-function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(store))}
+function save(){store.profiles=store.profiles||{};store.profiles[store.activeProfile]=store.routine;localStorage.setItem(STORAGE_KEY,JSON.stringify(store))}
 function ensureToday(){
- if(!store.days[todayKey])store.days[todayKey]={tasks:store.routine.map(function(t){return {id:t.id,title:t.title,time:t.time||"",done:false,extra:false}}),createdAt:new Date().toISOString()};
+ if(!store.days[todayKey])store.days[todayKey]={profile:store.activeProfile,tasks:store.routine.map(function(t){return {id:t.id,title:t.title,time:t.time||"",done:false,extra:false}}),createdAt:new Date().toISOString()};
+ if(!store.days[todayKey].profile)store.days[todayKey].profile=store.activeProfile;
+}
+function setProfile(profile){
+ if(!PROFILE_LABELS[profile])return;
+ store.activeProfile=profile;store.routine=store.profiles[profile];
+ var day=store.days[todayKey],old={};day.tasks.forEach(function(t){old[t.id]=t});
+ var extras=day.tasks.filter(function(t){return t.extra});
+ day.tasks=store.routine.map(function(t){var prev=old[t.id];return {id:t.id,title:t.title,time:t.time||"",done:prev?!!prev.done:false,extra:false}}).concat(extras);
+ day.profile=profile;save();renderToday();renderEditor();
 }
 function bn(n){return new Intl.NumberFormat("bn-BD").format(n)}
 function displayDate(key){var d=new Date(key+"T12:00:00");return new Intl.DateTimeFormat("bn-BD",{weekday:"long",day:"numeric",month:"long",year:"numeric"}).format(d)}
@@ -178,30 +193,33 @@ function render(){
 }
 function renderToday(){
  var day=store.days[todayKey];var root=document.getElementById("todayTasks");root.innerHTML="";
- var tasks=sortTasks(day.tasks);var done=tasks.filter(function(t){return t.done}).length;
+ var tasks=day.tasks;var done=tasks.filter(function(t){return t.done}).length;
  document.getElementById("todayCount").textContent=bn(done)+" / "+bn(tasks.length);
  if(!tasks.length){root.innerHTML='<div class="empty">আজকের জন্য কোনো কাজ নেই।</div>';return}
  tasks.forEach(function(task){
-  var row=document.createElement("label");row.className="task"+(task.done?" done":"");
+  var row=document.createElement("label");row.className="task"+(task.done?" done":"");row.draggable=true;row.dataset.id=task.id;
+  var grip=document.createElement("span");grip.className="drag-handle";grip.textContent="⠿";grip.title="টেনে আগে-পরে সাজাও";
   var check=document.createElement("input");check.type="checkbox";check.checked=!!task.done;check.setAttribute("aria-label",task.title);
   check.addEventListener("change",function(){task.done=check.checked;save();renderToday()});
   var name=document.createElement("span");name.className="task-name";name.textContent=task.title;
   if(task.extra){var tag=document.createElement("small");tag.className="task-extra";tag.textContent="আজকের অতিরিক্ত";name.appendChild(tag)}
   var time=document.createElement("span");time.className="task-time";time.textContent=timeLabel(task.time);
-  row.appendChild(check);row.appendChild(name);row.appendChild(time);root.appendChild(row);
+  row.appendChild(grip);row.appendChild(check);row.appendChild(name);row.appendChild(time);root.appendChild(row);
  });
 }
 function renderEditor(){
  var root=document.getElementById("routineEditor");root.innerHTML="";
- sortTasks(store.routine).forEach(function(task){
-  var row=document.createElement("div");row.className="editor-item";row.dataset.id=task.id;
+ document.getElementById("editModeLabel").textContent="এখন সম্পাদনা হচ্ছে: "+PROFILE_LABELS[store.activeProfile]+"। প্রতিটি mode-এর কাজ আলাদা করে সাজাতে পারবে।";
+ store.routine.forEach(function(task){
+  var row=document.createElement("div");row.className="editor-item";row.dataset.id=task.id;row.draggable=true;
+  var grip=document.createElement("span");grip.className="drag-handle";grip.textContent="⠿";grip.title="টেনে আগে-পরে সাজাও";
   var name=document.createElement("label");name.className="field";name.textContent="কাজের নাম";
   var nameInput=document.createElement("input");nameInput.maxLength=90;nameInput.value=task.title;nameInput.className="edit-title";name.appendChild(nameInput);
   var time=document.createElement("label");time.className="field";time.textContent="সময়";
   var timeInput=document.createElement("input");timeInput.type="time";timeInput.value=task.time||"";timeInput.className="edit-time";time.appendChild(timeInput);
   var del=document.createElement("button");del.className="icon-btn danger";del.type="button";del.textContent="×";del.title="কাজ বাদ দাও";
   del.addEventListener("click",function(){if(!confirm("এই নিয়মিত কাজটি বাদ দিতে চাও?"))return;store.routine=store.routine.filter(function(t){return t.id!==task.id});syncTodayFromRoutine();save();render()});
-  row.appendChild(name);row.appendChild(time);row.appendChild(del);root.appendChild(row);
+  row.appendChild(grip);row.appendChild(name);row.appendChild(time);row.appendChild(del);root.appendChild(row);
  });
 }
 function syncTodayFromRoutine(){
@@ -222,6 +240,8 @@ function switchTab(tab){
  if(tab==="edit")renderEditor();if(tab==="history")renderHistory();
 }
 document.querySelectorAll(".tabs button").forEach(function(b){b.addEventListener("click",function(){switchTab(b.dataset.tab)})});
+document.getElementById("dayMode").value=store.activeProfile;
+document.getElementById("dayMode").addEventListener("change",function(){setProfile(this.value)});
 document.getElementById("addTodayBtn").addEventListener("click",function(){document.getElementById("addTodayForm").classList.toggle("hidden");document.getElementById("extraName").focus()});
 document.getElementById("saveExtraBtn").addEventListener("click",function(){
  var name=document.getElementById("extraName").value.trim();if(!name){document.getElementById("extraName").focus();return}
@@ -245,6 +265,15 @@ document.getElementById("saveRoutineBtn").addEventListener("click",function(){
  else{warning.classList.add("hidden")}
  switchTab("edit");
 });
+function enableDrag(container,selector,onOrder){
+ var dragged=null;
+ container.addEventListener("dragstart",function(e){var item=e.target.closest(selector);if(!item)return;dragged=item;item.classList.add("dragging");e.dataTransfer.effectAllowed="move";});
+ container.addEventListener("dragover",function(e){if(!dragged)return;e.preventDefault();var target=e.target.closest(selector);if(!target||target===dragged)return;var rect=target.getBoundingClientRect();var after=e.clientY>rect.top+rect.height/2;container.insertBefore(dragged,after?target.nextSibling:target);});
+ container.addEventListener("drop",function(e){if(!dragged)return;e.preventDefault();onOrder(Array.from(container.querySelectorAll(selector)).map(function(el){return el.dataset.id}));});
+ container.addEventListener("dragend",function(){if(dragged)dragged.classList.remove("dragging");dragged=null;});
+}
+enableDrag(document.getElementById("todayTasks"),".task",function(ids){var day=store.days[todayKey],map={};day.tasks.forEach(function(t){map[t.id]=t});day.tasks=ids.map(function(id){return map[id]}).filter(Boolean);save();});
+enableDrag(document.getElementById("routineEditor"),".editor-item",function(ids){var map={};store.routine.forEach(function(t){map[t.id]=t});store.routine=ids.map(function(id){return map[id]}).filter(Boolean);save();});
 function renderHistory(){
  var root=document.getElementById("historyList");root.innerHTML="";
  var keys=Object.keys(store.days).filter(function(k){return k<todayKey}).sort().reverse();
