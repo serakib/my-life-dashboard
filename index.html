@@ -503,7 +503,7 @@ function displayDate(key){var d=new Date(key+"T12:00:00");return new Intl.DateTi
 function timeLabel(value){if(!value)return "";var p=value.split(":");var h=Number(p[0]),m=Number(p[1]);var hh=h%12||12;var part=h<12?"সকাল":h===12?"দুপুর":h<18?"বিকাল":"রাত";return part+" "+bn(hh)+":"+bn(m)}
 function timeRange(start,end){if(start&&end)return timeLabel(start)+" – "+timeLabel(end);if(start)return timeLabel(start)+" থেকে";if(end)return timeLabel(end)+" থেকে";return "সময় নির্ধারিত নয়"}
 function sortTasks(list){return list.slice().sort(function(a,b){if(!a.time)return b.time?1:0;if(!b.time)return -1;return a.time.localeCompare(b.time)})}
-function updateClock(){var now=new Date();var el=document.getElementById("currentTime");if(el)el.textContent=new Intl.DateTimeFormat("bn-BD",{hour:"numeric",minute:"2-digit",hour12:true}).format(now)}
+function updateClock(){var now=new Date();var el=document.getElementById("currentTime");if(el)el.textContent=new Intl.DateTimeFormat("bn-BD",{hour:"numeric",minute:"2-digit",second:"2-digit",hour12:true}).format(now)}
 function render(){
  document.getElementById("todayDate").textContent=displayDate(todayKey);
  updateClock();
@@ -702,7 +702,7 @@ function renderHistory(){
   root.appendChild(wrap);
  });
 }
-updateClock();setInterval(updateClock,30000);
+updateClock();setInterval(updateClock,1000);
 document.getElementById("exportBtn").addEventListener("click",function(){
  var blob=new Blob([JSON.stringify(store,null,2)],{type:"application/json"});var url=URL.createObjectURL(blob);var a=document.createElement("a");a.href=url;a.download="my-routine-backup-"+todayKey+".json";a.click();URL.revokeObjectURL(url);
 });
