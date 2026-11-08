@@ -199,6 +199,59 @@ footer{padding-top:6px}
 .task.drag-over-before,.editor-item.drag-over-before{border-top:3px solid var(--accent);padding-top:11px}
 .task.drag-over-after,.editor-item.drag-over-after{border-bottom:3px solid var(--accent);padding-bottom:11px}
 @media(prefers-reduced-motion:reduce){.task,.editor-item,.drag-handle{transition:none!important}}
+/* Navigation + day-type selector refresh */
+.tabs{
+ display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;
+ padding:6px;background:#e9efeb;border:1px solid #dfe8e2;border-radius:16px;
+ margin:0 0 20px;box-shadow:inset 0 1px 2px rgba(25,55,40,.035)
+}
+.tabs button{
+ position:relative;display:flex;align-items:center;justify-content:center;gap:7px;
+ min-height:48px;padding:9px 8px;border:1px solid transparent;border-radius:11px;
+ background:transparent;color:#68776f;font-size:13px;font-weight:650;
+ white-space:nowrap;transition:background .2s ease,color .2s ease,box-shadow .2s ease,transform .2s ease
+}
+.tabs button::before{font-size:15px;line-height:1;opacity:.72}
+.tabs button[data-tab="today"]::before{content:"◷"}
+.tabs button[data-tab="edit"]::before{content:"✎"}
+.tabs button[data-tab="history"]::before{content:"▤"}
+.tabs button[data-tab="backup"]::before{content:"⇧"}
+.tabs button:hover{background:rgba(255,255,255,.65);color:var(--accent);border-color:transparent}
+.tabs button.active{
+ background:#fff;color:var(--accent);border-color:#e0ebe4;
+ box-shadow:0 3px 10px rgba(31,67,49,.08),0 1px 2px rgba(31,67,49,.04);
+ font-weight:750
+}
+.tabs button.active::after{content:"";position:absolute;left:25%;right:25%;bottom:3px;height:2px;border-radius:9px;background:#55a184}
+.mode-field{
+ display:grid;gap:7px;min-width:220px;padding:12px 13px;
+ border:1px solid #dfe9e3;border-radius:14px;background:linear-gradient(145deg,#fff,#f8fbf9);
+ color:#63736a;font-size:12px;font-weight:750;box-shadow:0 4px 14px rgba(30,65,47,.045)
+}
+.mode-field>span{display:flex;align-items:center;gap:7px;color:#52645a}
+.mode-field>span::before{content:"";width:7px;height:7px;border-radius:50%;background:#4a9a7c;box-shadow:0 0 0 4px #e8f4ed}
+.mode-field select{
+ appearance:none;width:100%;min-height:44px;margin:0;padding:10px 38px 10px 12px;
+ border:1px solid #dce8e0;border-radius:10px;
+ background-color:#fff;color:#234b3d;font-size:13px;font-weight:750;cursor:pointer;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2324745f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+ background-repeat:no-repeat;background-position:right 12px center;
+ transition:border-color .18s,box-shadow .18s,background-color .18s
+}
+.mode-field select:hover{border-color:#a9c9b8;background-color:#fcfffd}
+.mode-field select:focus{border-color:#76aa91;outline:0;box-shadow:0 0 0 4px rgba(36,116,95,.12)}
+@media(max-width:640px){
+ .tabs{gap:4px;padding:4px;border-radius:13px;margin-bottom:14px}
+ .tabs button{min-height:46px;gap:4px;padding:8px 3px;font-size:11px;white-space:normal;line-height:1.25;flex-direction:column}
+ .tabs button::before{font-size:14px}
+ .tabs button.active::after{left:30%;right:30%;bottom:2px}
+ .mode-field{width:100%;min-width:0;padding:11px 12px;gap:6px}
+ .mode-field select{min-height:43px}
+}
+@media(max-width:380px){
+ .tabs button{font-size:10px}
+ .tabs button::before{font-size:13px}
+}
 </style>
 </head>
 <body>
@@ -217,7 +270,7 @@ footer{padding-top:6px}
 <section id="todayView" class="panel today-panel">
   <div class="today-top">
     <div class="today-title-wrap"><span class="eyebrow">TODAY'S ROUTINE</span><h1>আজকের কাজ</h1><p class="sub">একটা একটা করে শেষ করো। নিজের গতিতে এগিয়ে যাও।</p></div>
-    <label class="field mode-field"><span>আজকের routine</span><select id="dayMode"><option value="college">Daily — College day</option><option value="off">College off</option><option value="friday">Friday</option><option value="special">Special day</option></select></label>
+    <label class="field mode-field"><span>আজকের দিনের ধরন</span><select id="dayMode"><option value="college">Daily — College day</option><option value="off">College off</option><option value="friday">Friday</option><option value="special">Special day</option></select></label>
   </div>
   <div class="progress-card">
     <div class="progress-top"><div><span class="progress-caption">আজ পর্যন্ত সম্পন্ন</span><strong id="todayCount">০ / ০</strong></div><strong class="progress-percent" id="todayPercent">০%</strong></div>
