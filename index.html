@@ -668,9 +668,11 @@ function readRoutineEditor(){
   var endTime=row.querySelector(".edit-end-time").value;
   var start=time?parseMinutes(time):null;
   var end=endTime?parseMinutes(endTime):null;
+  var missingStart=!!(!time&&endTime);
   var invalidRange=!!(time&&endTime&&end<=start);
   if(!title)errors.push("একটি কাজের নাম লেখা হয়নি।");
-  if(invalidRange)errors.push("“"+(title||"নামহীন কাজ")+"” — শেষের সময় শুরুর সময়ের পরে হতে হবে।");
+  if(missingStart)errors.push("“"+(title||"নামহীন কাজ")+"” — শেষের সময় দেওয়ার আগে শুরুর সময় সেট করো।");
+  else if(invalidRange)errors.push("“"+(title||"নামহীন কাজ")+"” — শেষের সময় শুরুর সময়ের পরে হতে হবে।");
   updated.push({id:row.dataset.id,title:title,time:time,endTime:endTime});
   // Only complete, valid entries take part in overlap detection.
   if(title&&time&&!invalidRange)scheduled.push({id:row.dataset.id,title:title,start:start,end:endTime?end:null});
