@@ -317,13 +317,31 @@ footer{padding-top:6px}
 .editor-item{grid-template-columns:20px minmax(0,1fr) 112px 112px 40px}
 @media(max-width:640px){.editor-item{grid-template-columns:17px minmax(0,1fr) 92px 92px 34px}.task-meta{grid-column:3!important;grid-row:2!important;justify-self:start!important;justify-content:flex-start!important;margin-top:2px}}
 @media(max-width:380px){.editor-item{grid-template-columns:15px minmax(0,1fr) 78px 78px 32px}}
+
+/* Calm header, clear date and current time — no urgency or gamification */
+.app-header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:4px 2px 18px;border-bottom:1px solid #e5ebe7;margin-bottom:18px}
+.header-title{display:grid;gap:3px;min-width:0}
+.header-title .brand{font-size:20px;font-weight:750;color:#24352e}
+.header-title .date{font-size:13px;color:#748078}
+.clock-card{display:flex;align-items:center;gap:10px;padding:8px 12px;border:1px solid #e1e9e4;border-radius:11px;background:#fff;color:#294b3d;flex-shrink:0}
+.clock-caption{font-size:11px;color:#7a8780}
+.clock-card time{font-size:18px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:.2px}
+body{background:#f5f7f5}
+.progress-card{background:#f5f8f6;border-color:#e3ebe5}
+.today-progress-fill{background:#4c8a70;transition:none}
+#todayTasks .task:hover{box-shadow:none;transform:none;background:#fbfcfb}
+button, #todayTasks .task{transition:none}
+button:active{transform:none}
+.tabs button.active{box-shadow:none}
+@media(max-width:560px){.app-header{align-items:center;padding-bottom:14px;margin-bottom:15px}.header-title .brand{font-size:18px}.header-title .date{font-size:11px}.clock-card{padding:7px 9px;gap:7px}.clock-card time{font-size:16px}}
+
 </style>
 </head>
 <body>
 <div class="app">
-<header>
-  <div><div class="brand">আমার রুটিন</div><div class="date" id="todayDate"></div></div>
-  <div class="date">ব্যক্তিগত checklist</div>
+<header class="app-header">
+  <div class="header-title"><div class="brand">আমার রুটিন</div><div class="date" id="todayDate"></div></div>
+  <div class="clock-card" aria-label="বর্তমান সময়"><span class="clock-caption">এখন</span><time id="currentTime">--:--</time></div>
 </header>
 <nav class="tabs" aria-label="প্রধান মেনু">
   <button class="active" data-tab="today">আজকের তালিকা</button>
@@ -485,8 +503,10 @@ function displayDate(key){var d=new Date(key+"T12:00:00");return new Intl.DateTi
 function timeLabel(value){if(!value)return "";var p=value.split(":");var h=Number(p[0]),m=Number(p[1]);var hh=h%12||12;var part=h<12?"সকাল":h===12?"দুপুর":h<18?"বিকাল":"রাত";return part+" "+bn(hh)+":"+bn(m)}
 function timeRange(start,end){if(start&&end)return timeLabel(start)+" – "+timeLabel(end);if(start)return timeLabel(start)+" থেকে";if(end)return timeLabel(end)+" থেকে";return "সময় নির্ধারিত নয়"}
 function sortTasks(list){return list.slice().sort(function(a,b){if(!a.time)return b.time?1:0;if(!b.time)return -1;return a.time.localeCompare(b.time)})}
+function updateClock(){var now=new Date();var el=document.getElementById("currentTime");if(el)el.textContent=new Intl.DateTimeFormat("bn-BD",{hour:"numeric",minute:"2-digit",hour12:true}).format(now)}
 function render(){
  document.getElementById("todayDate").textContent=displayDate(todayKey);
+ updateClock();
  renderToday();renderEditor();renderHistory();
 }
 function renderToday(){
@@ -652,6 +672,7 @@ function renderHistory(){
   root.appendChild(wrap);
  });
 }
+updateClock();setInterval(updateClock,30000);
 document.getElementById("exportBtn").addEventListener("click",function(){
  var blob=new Blob([JSON.stringify(store,null,2)],{type:"application/json"});var url=URL.createObjectURL(blob);var a=document.createElement("a");a.href=url;a.download="my-routine-backup-"+todayKey+".json";a.click();URL.revokeObjectURL(url);
 });
