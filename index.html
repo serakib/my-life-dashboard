@@ -50,6 +50,10 @@ h2{font-size:17px;margin:0 0 14px}
 .history-day:last-child{border-bottom:0}
 .history-head{display:flex;justify-content:space-between;gap:10px;font-weight:650}
 .history-detail{font-size:12px;color:var(--muted);margin-top:3px}
+.history-progress{display:flex;align-items:center;gap:12px;margin-top:9px}
+.history-track{height:8px;flex:1;background:#edf1ef;border-radius:99px;overflow:hidden}
+.history-fill{height:100%;background:var(--accent);border-radius:99px}
+.history-percent{font-size:14px;font-weight:750;color:var(--accent);min-width:42px;text-align:right;font-variant-numeric:tabular-nums}
 .backup-box{padding:14px;border:1px solid var(--line);border-radius:11px;margin-top:12px}
 .backup-box p{font-size:13px;color:var(--muted);margin:4px 0 12px}
 .hidden{display:none!important}
@@ -95,7 +99,7 @@ footer{text-align:center;color:var(--muted);font-size:11px;margin-top:18px}
 </section>
 <section id="historyView" class="panel hidden">
   <h1>আগের দিনের তালিকা</h1>
-  <p class="sub">আগের দিনের checklist ও completion দেখা যাবে।</p>
+  <p class="sub">গত দিনগুলোতে তোমার routine কতটা maintain করতে পেরেছ, শুধু সেই progress দেখাবে।</p>
   <div id="historyList"></div>
 </section>
 <section id="backupView" class="panel hidden">
@@ -244,17 +248,22 @@ document.getElementById("saveRoutineBtn").addEventListener("click",function(){
 function renderHistory(){
  var root=document.getElementById("historyList");root.innerHTML="";
  var keys=Object.keys(store.days).filter(function(k){return k<todayKey}).sort().reverse().slice(0,30);
- if(!keys.length){root.innerHTML='<div class="empty">আগের দিনের কোনো checklist এখনো নেই।</div>';return}
+ if(!keys.length){root.innerHTML='<div class="empty">আগের দিনের progress এখানে দেখা যাবে।</div>';return}
  keys.forEach(function(key){
   var day=store.days[key],total=day.tasks.length,done=day.tasks.filter(function(t){return t.done}).length;
+  var percent=total?Math.round(done/total*100):0;
   var wrap=document.createElement("div");wrap.className="history-day";
   var head=document.createElement("div");head.className="history-head";
   var date=document.createElement("span");date.textContent=displayDate(key);
-  var count=document.createElement("span");count.textContent=bn(done)+" / "+bn(total)+" সম্পন্ন";
+  var count=document.createElement("span");count.textContent=bn(done)+" / "+bn(total);
   head.appendChild(date);head.appendChild(count);wrap.appendChild(head);
-  var detail=document.createElement("div");detail.className="history-detail";
-  detail.textContent=day.tasks.filter(function(t){return t.done}).map(function(t){return t.title}).join(" · ")||"কোনো কাজ complete করা হয়নি";
-  wrap.appendChild(detail);root.appendChild(wrap);
+  var progress=document.createElement("div");progress.className="history-progress";
+  var track=document.createElement("div");track.className="history-track";
+  var fill=document.createElement("div");fill.className="history-fill";fill.style.width=percent+"%";
+  track.appendChild(fill);
+  var label=document.createElement("span");label.className="history-percent";label.textContent=bn(percent)+"%";
+  progress.appendChild(track);progress.appendChild(label);wrap.appendChild(progress);
+  root.appendChild(wrap);
  });
 }
 document.getElementById("exportBtn").addEventListener("click",function(){
