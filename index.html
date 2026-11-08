@@ -543,10 +543,12 @@ function renderEditor(){
   var timeInput=document.createElement("input");timeInput.type="time";timeInput.value=task.time||"";timeInput.className="edit-time";time.appendChild(timeInput);
   var endTime=document.createElement("label");endTime.className="field";endTime.textContent="শেষের সময়";
   var endTimeInput=document.createElement("input");endTimeInput.type="time";endTimeInput.value=task.endTime||"";endTimeInput.className="edit-end-time";endTime.appendChild(endTimeInput);
+  timeInput.addEventListener("input",validateRoutineTimes);timeInput.addEventListener("change",validateRoutineTimes);endTimeInput.addEventListener("input",validateRoutineTimes);endTimeInput.addEventListener("change",validateRoutineTimes);
   var del=document.createElement("button");del.className="icon-btn danger";del.type="button";del.textContent="×";del.title="কাজ বাদ দাও";
   del.addEventListener("click",function(){if(!confirm("এই নিয়মিত কাজটি বাদ দিতে চাও?"))return;store.routine=store.routine.filter(function(t){return t.id!==task.id});syncTodayFromRoutine();save();render()});
   row.appendChild(grip);row.appendChild(name);row.appendChild(time);row.appendChild(endTime);row.appendChild(del);root.appendChild(row);
  });
+ validateRoutineTimes();
 }
 function syncTodayFromRoutine(){
  var day=store.days[todayKey];var old={};day.tasks.forEach(function(t){old[t.id]=t});
@@ -578,19 +580,47 @@ document.getElementById("addRoutineBtn").addEventListener("click",function(){
  store.routine.push({id:makeId(),title:"নতুন কাজ",time:"",endTime:""});renderEditor();
  var inputs=document.querySelectorAll(".editor-item");if(inputs.length)inputs[inputs.length-1].querySelector(".edit-title").select();
 });
-document.getElementById("saveRoutineBtn").addEventListener("click",function(){
- var rows=Array.from(document.querySelectorAll(".editor-item"));var updated=[];
- for(var i=0;i<rows.length;i++){
-  var title=rows[i].querySelector(".edit-title").value.trim();var time=rows[i].querySelector(".edit-time").value;var endTime=rows[i].querySelector(".edit-end-time").value;
-  if(!title){alert("কাজের নাম খালি রাখা যাবে না।");return}
-  if(time&&endTime&&parseMinutes(endTime)<=parseMinutes(time)){alert("শেষের সময় শুরুর সময়ের পরে হতে হবে।");return}
-  updated.push({id:rows[i].dataset.id,title:title,time:time,endTime:endTime});
+function readRoutineEditor(){
+ var rows=Array.from(document.querySelectorAll(".editor-item")),updated=[],issues=[];
+ rows.forEach(function(row){
+  var title=row.querySelector(".edit-title").value.trim();
+  var time=row.querySelector(".edit-time").value;
+  var endTime=row.querySelector(".edit-end-time").value;
+  if(!title)issues.push("কাজের নাম খালি রাখা যাবে না।");
+  if(time&&endTime&&parseMinutes(endTime)<=parseMinutes(time))issues.push((title||"একটি কাজ")+"-এর শেষের সময় শুরুর সময়ের পরে হতে হবে।");
+  updated.push({id:row.dataset.id,title:title,time:time,endTime:endTime});
+ });
+ var scheduled=updated.filter(function(t){return t.time&&t.endTime&&parseMinutes(t.endTime)>parseMinutes(t.time)}).map(function(t){return {title:t.title,start:parseMinutes(t.time),end:parseMinutes(t.endTime)}});
+ var overlaps=[];
+ for(var i=0;i<scheduled.length;i++)for(var j=i+1;j<scheduled.length;j++){
+  if(scheduled[i].start<scheduled[j].end&&scheduled[j].start<scheduled[i].end){
+   overlaps.push("“"+scheduled[i].title+"” ও “"+scheduled[j].title+"”");
+  }
  }
- store.routine=updated;syncTodayFromRoutine();save();render();var overlaps=findOverlaps(updated);
- var warning=document.getElementById("overlapWarning");
- if(overlaps.length){warning.textContent="সময় overlap / একই সময়: "+overlaps.join("। ");warning.classList.remove("hidden")}
- else{warning.classList.add("hidden")}
- switchTab("edit");
+ if(overlaps.length)issues.push("সময় overlap হচ্ছে: "+overlaps.join("; ")+"। একটি কাজের সময় পরিবর্তন করো।");
+ return {updated:updated,issues:Array.from(new Set(issues))};
+}
+function validateRoutineTimes(){
+ var result=readRoutineEditor(),warning=document.getElementById("overlapWarning");
+ if(!warning)return result;
+ if(result.issues.length){
+  warning.textContent="⚠ "+result.issues.join(" ");
+  warning.classList.remove("hidden");
+  warning.setAttribute("role","alert");
+ }else{
+  warning.textContent="সময়গুলো ঠিক আছে — কোনো overlap নেই।";
+  warning.classList.remove("hidden");
+  warning.setAttribute("role","status");
+  warning.style.background="#eef7f1";warning.style.color="#315e4b";warning.style.borderColor="#d8e9de";
+ }
+ if(result.issues.length){warning.style.background="";warning.style.color="";warning.style.borderColor=""}
+ return result;
+}
+document.getElementById("saveRoutineBtn").addEventListener("click",function(){
+ var result=validateRoutineTimes();
+ if(result.issues.length){document.getElementById("overlapWarning").scrollIntoView({behavior:"smooth",block:"nearest"});return}
+ store.routine=result.updated;syncTodayFromRoutine();save();render();switchTab("edit");
+ document.getElementById("overlapWarning").classList.add("hidden");
 });
 function enableDrag(container,selector,onOrder){
  var state=null,lastTarget="";
