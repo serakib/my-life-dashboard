@@ -646,7 +646,7 @@ function renderToday(){
  if(!tasks.length){root.innerHTML='<div class="empty">আজকের জন্য কোনো কাজ নেই।</div>';return}
  tasks.forEach(function(task){
   var row=document.createElement("label");row.className="task"+(task.done?" done":"");row.draggable=false;row.dataset.id=task.id;
-  var grip=document.createElement("span");grip.className="drag-handle";grip.textContent="⠿";grip.title="টেনে আগে-পরে সাজাও";
+  var grip=document.createElement("span");grip.className="drag-handle";grip.textContent="⠿";grip.title="ধরে টেনে যেখানে রাখতে চাও, সেখানে ছেড়ে দাও";
   var check=document.createElement("input");check.type="checkbox";check.checked=!!task.done;check.setAttribute("aria-label",task.title);
   check.addEventListener("change",function(){task.done=check.checked;save();renderToday()});
   var name=document.createElement("span");name.className="task-name";name.textContent=task.title;
@@ -662,7 +662,7 @@ function renderEditor(){
  document.getElementById("editModeLabel").textContent="এখন সম্পাদনা হচ্ছে: "+PROFILE_LABELS[store.activeProfile]+"। প্রতিটি mode-এর কাজ আলাদা করে সাজাতে পারবে।";
  store.routine.forEach(function(task){
   var row=document.createElement("div");row.className="editor-item";row.dataset.id=task.id;row.draggable=false;
-  var grip=document.createElement("span");grip.className="drag-handle";grip.textContent="⠿";grip.title="টেনে আগে-পরে সাজাও";
+  var grip=document.createElement("span");grip.className="drag-handle";grip.textContent="⠿";grip.title="ধরে টেনে যেখানে রাখতে চাও, সেখানে ছেড়ে দাও";
   var name=document.createElement("label");name.className="field";name.textContent="কাজের নাম";
   var nameInput=document.createElement("input");nameInput.maxLength=90;nameInput.value=task.title;nameInput.className="edit-title";nameInput.addEventListener("input",validateRoutineTimes);name.appendChild(nameInput);
   var time=document.createElement("label");time.className="field";time.textContent="শুরুর সময়";
