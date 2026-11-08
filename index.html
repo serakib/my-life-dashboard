@@ -209,7 +209,8 @@ function buildDefaultProfiles(){
   if(t.id==="class2")return Object.assign({},t,{title:"Online class ২ (Jummah-এর পর; Asr-এর বিরতি)",time:"15:00"});
   return t;
  });
- friday.push({id:"jummah",title:"Jummah / জুমার নামাজ (12:00 PM – 2:00 PM)",time:"12:00",done:false,extra:false});
+ var lunchIndex=friday.findIndex(function(t){return t.id==="lunch"});
+ friday.splice(lunchIndex<0?0:lunchIndex,0,{id:"jummah",title:"Jummah / জুমার নামাজ (12:00 PM – 2:00 PM)",time:"12:00",done:false,extra:false});
  return {college:college,off:clone(defaultRoutine),friday:friday,special:clone(defaultRoutine)};
 }
 var store=loadStore();
