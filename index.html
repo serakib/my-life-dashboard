@@ -193,6 +193,25 @@ var defaultRoutine=[
 {id:"reflection",title:"নিজের সঙ্গে reflection / personal growth",time:"22:40"},
 {id:"sleep",title:"ঘুম",time:"23:00"}
 ];
+var legacyDefaultRoutine=clone(defaultRoutine);
+function buildDefaultProfiles(){
+ var college=clone(defaultRoutine);
+ college=college.filter(function(t){return t.id!=="study2"});
+ college=college.map(function(t){
+  if(t.id==="breakfast")return Object.assign({},t,{time:"07:15"});
+  if(t.id==="class1")return Object.assign({},t,{title:"College (8:00 AM – 12:00 PM)",time:"08:00"});
+  return t;
+ });
+ var friday=clone(defaultRoutine).filter(function(t){return t.id!=="zuhr"});
+ friday=friday.map(function(t){
+  if(t.id==="lunch")return Object.assign({},t,{time:"14:00"});
+  if(t.id==="study3")return Object.assign({},t,{time:"14:30"});
+  if(t.id==="class2")return Object.assign({},t,{title:"Online class ২ (Jummah-এর পর; Asr-এর বিরতি)",time:"15:00"});
+  return t;
+ });
+ friday.push({id:"jummah",title:"Jummah / জুমার নামাজ (12:00 PM – 2:00 PM)",time:"12:00",done:false,extra:false});
+ return {college:college,off:clone(defaultRoutine),friday:friday,special:clone(defaultRoutine)};
+}
 var store=loadStore();
 var PROFILE_LABELS={college:"Daily — College day",off:"College off",friday:"Friday",special:"Special day"};
 ensureToday();
@@ -202,15 +221,26 @@ function localDateKey(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padSt
 function makeId(){return "t"+Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
 function clone(v){return JSON.parse(JSON.stringify(v))}
 function loadStore(){
+ var defaults=buildDefaultProfiles();
  try{
   var raw=localStorage.getItem(STORAGE_KEY);
   if(raw){var parsed=JSON.parse(raw);if(parsed&&parsed.version===1&&Array.isArray(parsed.routine)&&parsed.days&&typeof parsed.days==="object"){
    if(!parsed.profiles)parsed.profiles={college:clone(parsed.routine),off:clone(parsed.routine),friday:clone(parsed.routine),special:clone(parsed.routine)};
+   ["college","off","friday","special"].forEach(function(key){
+    if(!parsed.profiles[key])parsed.profiles[key]=clone(parsed.routine);
+    else if(JSON.stringify(parsed.profiles[key])===JSON.stringify(legacyDefaultRoutine))parsed.profiles[key]=clone(defaults[key]);
+   });
    if(!parsed.activeProfile||!parsed.profiles[parsed.activeProfile])parsed.activeProfile="college";
-   parsed.routine=parsed.profiles[parsed.activeProfile];return parsed;
+   parsed.routine=parsed.profiles[parsed.activeProfile];
+   var today=localDateKey(new Date()),day=parsed.days[today];
+   if(day&&day.profile==="college"&&Array.isArray(day.tasks)&&day.tasks.length===legacyDefaultRoutine.length&&day.tasks.every(function(t,i){return t.id===legacyDefaultRoutine[i].id&&t.title===legacyDefaultRoutine[i].title&&t.time===legacyDefaultRoutine[i].time})){
+    var oldDone={};day.tasks.forEach(function(t){oldDone[t.id]=!!t.done});
+    day.tasks=clone(defaults.college).map(function(t){t.done=!!oldDone[t.id];return t});
+   }
+   return parsed;
   }}
  }catch(e){}
- var base=clone(defaultRoutine);return {version:1,routine:base,profiles:{college:clone(base),off:clone(base),friday:clone(base),special:clone(base)},activeProfile:"college",days:{}};
+ var profiles=defaults;return {version:1,routine:clone(profiles.college),profiles:profiles,activeProfile:"college",days:{}};
 }
 function save(){store.profiles=store.profiles||{};store.profiles[store.activeProfile]=store.routine;localStorage.setItem(STORAGE_KEY,JSON.stringify(store))}
 function ensureToday(){
