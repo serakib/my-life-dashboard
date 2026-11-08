@@ -358,6 +358,22 @@ button:active{transform:none}
 @media(max-width:380px){
  .editor-item{grid-template-columns:36px minmax(0,1fr) minmax(0,1fr) 32px;gap:4px;padding:7px}
 }
+/* Clear save feedback in natural Bangla */
+.save-status{position:fixed;left:50%;bottom:max(18px,env(safe-area-inset-bottom));z-index:1100;display:flex;align-items:center;gap:9px;max-width:calc(100vw - 28px);padding:10px 15px;border:1px solid #dce8df;border-radius:999px;background:#fff;color:#294b3d;box-shadow:0 8px 28px rgba(28,55,40,.14);font-size:13px;font-weight:700;white-space:nowrap;opacity:0;visibility:hidden;transform:translate(-50%,12px);pointer-events:none;transition:opacity .2s ease,transform .2s ease,visibility .2s ease}
+.save-status.is-visible{opacity:1;visibility:visible;transform:translate(-50%,0)}
+.save-status.is-saving{background:#f8fbf9;border-color:#d8e8df}
+.save-status.is-saved{background:#edf7f0;border-color:#d4e8da;color:#286247}
+.save-status.is-error{background:#fff6f3;border-color:#f0d4cb;color:#934b3d;white-space:normal;text-align:center}
+.save-spinner{width:15px;height:15px;flex:0 0 15px;border:2px solid #d5e7dc;border-top-color:#28755c;border-radius:50%;animation:saveSpin .75s linear infinite}
+.save-mark{width:19px;height:19px;display:inline-flex;align-items:center;justify-content:center;flex:0 0 19px;border-radius:50%;background:#d9eddf;color:#286247;font-size:13px;font-weight:900}
+.is-error .save-mark{background:#f6e2dc;color:#934b3d}
+.save-dots{display:inline-flex;align-items:center;gap:3px;height:14px}
+.save-dots i{width:4px;height:4px;border-radius:50%;background:currentColor;opacity:.35;animation:saveDot .9s ease-in-out infinite}
+.save-dots i:nth-child(2){animation-delay:.15s}.save-dots i:nth-child(3){animation-delay:.3s}
+@keyframes saveSpin{to{transform:rotate(360deg)}}
+@keyframes saveDot{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+@media(prefers-reduced-motion:reduce){.save-spinner,.save-dots i{animation:none!important}.save-status{transition:none}}
+@media(max-width:420px){.save-status{bottom:max(14px,env(safe-area-inset-bottom));font-size:12px;padding:9px 13px}}
 </style>
 </head>
 <body>
@@ -426,6 +442,7 @@ button:active{transform:none}
 </main>
 <footer>সহজ রাখো। কাজ শেষ হলে বন্ধ করো।</footer>
 </div>
+<div id="saveStatus" class="save-status" role="status" aria-live="polite" aria-atomic="true"></div>
 <script>
 (function(){
 "use strict";
@@ -507,7 +524,47 @@ function loadStore(){
  }catch(e){}
  var profiles=defaults;return {version:1,routine:clone(profiles.college),profiles:profiles,activeProfile:"college",days:{}};
 }
-function save(){store.profiles=store.profiles||{};store.profiles[store.activeProfile]=store.routine;localStorage.setItem(STORAGE_KEY,JSON.stringify(store))}
+var saveStatusToken=0,saveStatusTimer=null,saveStatusHideTimer=null;
+function paintSaveStatus(state){
+ var node=document.getElementById("saveStatus");if(!node)return;
+ node.innerHTML="";node.className="save-status is-visible "+state;
+ var mark=document.createElement("span");mark.className=state==="saving"?"save-spinner":"save-mark";
+ if(state==="saved")mark.textContent="✓";
+ if(state==="error")mark.textContent="!";
+ node.appendChild(mark);
+ var label=document.createElement("span");
+ label.textContent=state==="saving"?"সংরক্ষণ হচ্ছে":state==="saved"?"সংরক্ষণ সম্পন্ন":"সংরক্ষণ করা যায়নি — আবার চেষ্টা করো";
+ node.appendChild(label);
+ if(state==="saving"){
+  var dots=document.createElement("span");dots.className="save-dots";
+  for(var i=0;i<3;i++){var dot=document.createElement("i");dots.appendChild(dot)}
+  node.appendChild(dots);
+ }
+}
+function save(){
+ store.profiles=store.profiles||{};store.profiles[store.activeProfile]=store.routine;
+ var token=++saveStatusToken;
+ if(saveStatusTimer)clearTimeout(saveStatusTimer);
+ if(saveStatusHideTimer)clearTimeout(saveStatusHideTimer);
+ paintSaveStatus("saving");
+ try{
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(store));
+ }catch(error){
+  paintSaveStatus("error");
+  saveStatusHideTimer=setTimeout(function(){if(token===saveStatusToken){var node=document.getElementById("saveStatus");if(node)node.classList.remove("is-visible")}},2600);
+  console.error("Routine data could not be saved.",error);
+  return false;
+ }
+ // LocalStorage writes are synchronous; keep the Bengali saving cue visible briefly.
+ saveStatusTimer=setTimeout(function(){
+  if(token!==saveStatusToken)return;
+  paintSaveStatus("saved");
+  saveStatusHideTimer=setTimeout(function(){
+   if(token===saveStatusToken){var node=document.getElementById("saveStatus");if(node)node.classList.remove("is-visible")}
+  },1500);
+ },420);
+ return true;
+}
 function ensureToday(){
  if(!store.days[todayKey]){store.activeProfile="college";store.routine=store.profiles.college;store.days[todayKey]={profile:"college",tasks:store.routine.map(function(t){return {id:t.id,title:t.title,time:t.time||"",endTime:t.endTime||"",done:false,extra:false}}),createdAt:new Date().toISOString()};}
  if(!store.days[todayKey].profile)store.days[todayKey].profile=store.activeProfile;
@@ -604,18 +661,21 @@ document.getElementById("addRoutineBtn").addEventListener("click",function(){
  var inputs=document.querySelectorAll(".editor-item");if(inputs.length)inputs[inputs.length-1].querySelector(".edit-title").select();
 });
 function readRoutineEditor(){
- var rows=Array.from(document.querySelectorAll(".editor-item")),updated=[],issues=[];
+ var rows=Array.from(document.querySelectorAll(".editor-item")),updated=[],errors=[],scheduled=[];
  rows.forEach(function(row){
   var title=row.querySelector(".edit-title").value.trim();
   var time=row.querySelector(".edit-time").value;
   var endTime=row.querySelector(".edit-end-time").value;
-  if(!title)issues.push("কাজের নাম খালি রাখা যাবে না।");
-  if(time&&endTime&&parseMinutes(endTime)<=parseMinutes(time))issues.push((title||"একটি কাজ")+"-এর শেষের সময় শুরুর সময়ের পরে হতে হবে।");
+  var start=time?parseMinutes(time):null;
+  var end=endTime?parseMinutes(endTime):null;
+  var invalidRange=!!(time&&endTime&&end<=start);
+  if(!title)errors.push("একটি কাজের নাম লেখা হয়নি।");
+  if(invalidRange)errors.push("“"+(title||"নামহীন কাজ")+"” — শেষের সময় শুরুর সময়ের পরে হতে হবে।");
   updated.push({id:row.dataset.id,title:title,time:time,endTime:endTime});
+  // Only complete, valid entries take part in overlap detection.
+  if(title&&time&&!invalidRange)scheduled.push({id:row.dataset.id,title:title,start:start,end:endTime?end:null});
  });
- var scheduled=updated.filter(function(t){return !!t.time}).map(function(t){
-  return {id:t.id,title:t.title,start:parseMinutes(t.time),end:t.endTime&&parseMinutes(t.endTime)>parseMinutes(t.time)?parseMinutes(t.endTime):null};
- });
+ scheduled.sort(function(a,b){return a.start-b.start});
  var overlaps=[];
  for(var i=0;i<scheduled.length;i++)for(var j=i+1;j<scheduled.length;j++){
   var a=scheduled[i],b=scheduled[j],conflict=false;
@@ -625,8 +685,7 @@ function readRoutineEditor(){
   else conflict=a.start===b.start;
   if(conflict)overlaps.push({a:a.title,b:b.title,aId:a.id,bId:b.id});
  }
- if(overlaps.length)issues.push("সময় overlap হচ্ছে।");
- return {updated:updated,issues:Array.from(new Set(issues)),overlaps:overlaps};
+ return {updated:updated,errors:Array.from(new Set(errors)),overlaps:overlaps,issues:errors.concat(overlaps.length?["সময় overlap হচ্ছে।"]:[])};
 }
 function validateRoutineTimes(){
  var result=readRoutineEditor(),warning=document.getElementById("overlapWarning");
@@ -634,32 +693,39 @@ function validateRoutineTimes(){
  document.querySelectorAll(".editor-item.time-conflict").forEach(function(row){row.classList.remove("time-conflict")});
  result.overlaps.forEach(function(pair){
   [pair.aId,pair.bId].forEach(function(id){
-   var row=document.querySelector('.editor-item[data-id="'+CSS.escape(id)+'"]');
+   var row=Array.from(document.querySelectorAll(".editor-item")).find(function(item){return item.dataset.id===id});
    if(row)row.classList.add("time-conflict");
   });
  });
  warning.innerHTML="";
- warning.classList.remove("hidden");
  warning.style.background="";warning.style.color="";warning.style.borderColor="";
- if(result.issues.length){
-  warning.setAttribute("role","alert");
-  var heading=document.createElement("strong");heading.textContent="সময় মিলে যাচ্ছে!";warning.appendChild(heading);
-  var intro=document.createElement("p");intro.className="warning-intro";intro.textContent="তোমার কয়েকটি কাজের সময় একে অপরের সঙ্গে overlap করছে।";warning.appendChild(intro);
-  if(result.overlaps.length){
-   var list=document.createElement("ul");list.className="warning-list";
-   result.overlaps.forEach(function(pair){
-    var li=document.createElement("li");li.textContent=pair.a+"  ↔  "+pair.b;list.appendChild(li);
-   });
-   warning.appendChild(list);
-   var tip=document.createElement("p");tip.className="warning-tip";tip.textContent="এই কাজগুলোর সময় একটু পরিবর্তন করো, যাতে প্রতিটি কাজের জন্য আলাদা সময় থাকে।";warning.appendChild(tip);
-  }
-  result.issues.filter(function(issue){return issue!=="সময় overlap হচ্ছে।"}).forEach(function(issue){
-   var p=document.createElement("p");p.className="warning-tip";p.textContent=issue;warning.appendChild(p);
+ if(!result.errors.length&&!result.overlaps.length){
+  warning.classList.add("hidden");
+  warning.removeAttribute("role");
+  return result;
+ }
+ warning.classList.remove("hidden");
+ warning.setAttribute("role","alert");
+ var heading=document.createElement("strong");
+ heading.textContent=result.overlaps.length?(result.errors.length?"রুটিনে কিছু সংশোধন দরকার":"কিছু কাজের সময় মিলে যাচ্ছে"):"কিছু তথ্য ঠিক করতে হবে";
+ warning.appendChild(heading);
+ if(result.errors.length){
+  var errorList=document.createElement("ul");errorList.className="warning-list";
+  result.errors.forEach(function(message){var li=document.createElement("li");li.textContent=message;errorList.appendChild(li)});
+  warning.appendChild(errorList);
+ }
+ if(result.overlaps.length){
+  var intro=document.createElement("p");intro.className="warning-intro";
+  intro.textContent="শুধু নিচের কাজগুলোর সময় একে অপরের সঙ্গে মিলে যাচ্ছে:";
+  warning.appendChild(intro);
+  var list=document.createElement("ul");list.className="warning-list";
+  result.overlaps.forEach(function(pair){
+   var li=document.createElement("li");li.textContent=pair.a+"  ↔  "+pair.b;list.appendChild(li);
   });
- }else{
-  warning.setAttribute("role","status");
-  warning.style.background="#eef7f1";warning.style.color="#315e4b";warning.style.borderColor="#d8e9de";
-  warning.textContent="সময়গুলো ঠিক আছে — কোনো overlap নেই।";
+  warning.appendChild(list);
+  var tip=document.createElement("p");tip.className="warning-tip";
+  tip.textContent="এই কাজগুলোর সময় একটু বদলে নাও।";
+  warning.appendChild(tip);
  }
  return result;
 }
